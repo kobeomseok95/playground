@@ -1,0 +1,23 @@
+server:
+  port: 8990
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/petclinic?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+#        default_batch_fetch_size: 100
+    open-in-view: false
+# 캐시 설정
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+
+logging.level:
+  org.hibernate.SQL: debug
