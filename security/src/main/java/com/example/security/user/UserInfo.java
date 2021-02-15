@@ -72,7 +72,7 @@ public class UserInfo implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return true;    // 안잠겼음
+        return false;    // 안잠겼음
     }
 
     /**
