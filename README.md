@@ -1,10 +1,6 @@
-# 공부하는 곳
+# 제가 스프링을 가지고 노는 곳 입니다.
 
-### Chapter 01. Practical Modern Java 람다 표현식
+### Update
 
-### Chapter 02. pet-clinic 클론
-
-### Chapter 03. EventListener
-
-### Chapter 04. Security
+- 02-16(화) : @Async
 
