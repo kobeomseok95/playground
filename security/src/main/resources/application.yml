@@ -31,7 +31,5 @@ spring:
             scope:
             - email
             - profile
-
-
 logging.level:
   org.hibernate.SQL: debug

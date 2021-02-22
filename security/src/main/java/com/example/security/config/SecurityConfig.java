@@ -39,5 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .oauth2Login()
                 .loginPage("/loginForm");       // 여기까지는 인증만 되고 로그인한 회원의 정보가 세션에 없다.
+                                                // 후처리가 필요하다.
     }
 }
