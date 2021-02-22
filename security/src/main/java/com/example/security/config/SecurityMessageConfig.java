@@ -7,15 +7,15 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 
 import java.util.Locale;
 
-@Configuration
+//@Configuration
 public class SecurityMessageConfig {
 
-    @Bean
-    public MessageSource messageSource() {
-        Locale.setDefault(Locale.KOREA);
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setBasenames("classpath:message/security_message", "classpath:org/springframework/security/messages");
-        return messageSource;
-    }
+//    @Bean
+//    public MessageSource messageSource() {
+//        Locale.setDefault(Locale.KOREA);
+//        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+//        messageSource.setDefaultEncoding("UTF-8");
+//        messageSource.setBasenames("classpath:message/security_message", "classpath:org/springframework/security/messages");
+//        return messageSource;
+//    }
 }
