@@ -1,5 +1,7 @@
 package com.example.security.config;
 
+import com.example.security.config.oauth.PrincipalOAuth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,11 +17,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private PrincipalOAuth2UserService principalOAuth2UserService;
+
     @Bean   //해당 메서드의 리턴되는 오브젝트를 IoC로 등록
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * OAuth 과정
+     * 1. 코드받기(인증)
+     * 2. 액세스 토큰 받기(권한)
+     * 3. 사용자 프로필 정보를 가져오고
+     * 4-1. 그 정보를 토대로 회원가입 자동 처리
+     * 4-2. 추가 요구 정보사항들을 입력하는 회원가입폼
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -38,7 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                 // 그렇지 않은 경우는 로그인후 원래 요청했던 경로로 이동
             .and()
                 .oauth2Login()
-                .loginPage("/loginForm");       // 여기까지는 인증만 되고 로그인한 회원의 정보가 세션에 없다.
-                                                // 후처리가 필요하다.
+                .loginPage("/loginForm")                    // 여기까지는 인증만 되고 로그인한 회원의 정보가 세션에 없다.
+                .userInfoEndpoint()                         // 후처리가 필요하다.
+                .userService(principalOAuth2UserService);   // Tip : 액세스 토큰 + 사용자 프로필 정보까지 받아옴
     }
 }

@@ -36,7 +36,7 @@ public class PrincipalDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user != null) {
-            return new PrincipalDetails(user);
+            return new PrincipalDetails(user);  //Authentication 객체 안에 들어간다.
         }
         return null;
     }
