@@ -3,6 +3,7 @@ package com.example.security.config.auth;
 import com.example.security.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -25,11 +26,35 @@ import java.util.Map;
  *
  * PrincipalDetails 는 UserDetails를 구현해서 Authentication에 들어갈 수 있다.
  */
-@AllArgsConstructor
 @Data
 public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user;  //Composition
+    private Map<String, Object> attributes;
+
+    public PrincipalDetails(User user) {
+        this.user = user;
+    }
+
+    public PrincipalDetails(User user, Map<String, Object> attributes) {
+        this.user = user;
+        this.attributes = attributes;
+    }
+
+    /**
+     * 해당 유저의 권한을 리턴하는 곳!
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> collect = new ArrayList<>();
+        collect.add(new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                return user.getRole();
+            }
+        });
+        return collect;
+    }
 
     @Override
     public String getPassword() {
@@ -68,11 +93,6 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     @Override
     public Map<String, Object> getAttributes() {
-        return null;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return attributes;
     }
 }

@@ -31,6 +31,8 @@ public class PrincipalDetailsService implements UserDetailsService {
      * Authentication 내부 = PrincipalDetails(UserDetails타입)
      * 시큐리티 세션에 user를 넣어준다!
      * @throws UsernameNotFoundException
+     *
+     * 해당 메서드 종료 시 @AuthenticationPrincipal이 만들어진다.
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
