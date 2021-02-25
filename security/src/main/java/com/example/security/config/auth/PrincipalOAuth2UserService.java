@@ -1,6 +1,9 @@
-package com.example.security.config.oauth;
+package com.example.security.config.auth;
 
-import com.example.security.config.auth.PrincipalDetails;
+import com.example.security.config.auth.provider.FacebookUserInfo;
+import com.example.security.config.auth.provider.GoogleUserInfo;
+import com.example.security.config.auth.provider.NaverUserInfo;
+import com.example.security.config.auth.provider.OAuth2UserInfo;
 import com.example.security.user.User;
 import com.example.security.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +13,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -32,19 +36,34 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
      */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-//        System.out.println("userRequest.getAccessToken() = " + userRequest.getAccessToken().getTokenValue());
-//        System.out.println("userRequest.getClientRegistration() = " + userRequest.getClientRegistration());
-//        System.out.println("userRequest.getClientRegistration().getAuthorizationGrantType().getValue() = " + userRequest.getClientRegistration().getAuthorizationGrantType().getValue());
-//        System.out.println("userRequest.getClientRegistration().getClientId() = " + userRequest.getClientRegistration().getProviderDetails());
-//        System.out.println("super.loadUser(userRequest).getAttributes() = " + super.loadUser(userRequest).getAttributes());
+        System.out.println("=============================확인해=============================");
+        System.out.println("userRequest.getAccessToken() = " + userRequest.getAccessToken().getTokenValue());
+        System.out.println("userRequest.getClientRegistration() = " + userRequest.getClientRegistration());
+        System.out.println("userRequest.getClientRegistration().getAuthorizationGrantType().getValue() = " + userRequest.getClientRegistration().getAuthorizationGrantType().getValue());
+        System.out.println("userRequest.getClientRegistration().getClientId() = " + userRequest.getClientRegistration().getProviderDetails());
+        System.out.println("super.loadUser(userRequest).getAttributes() = " + super.loadUser(userRequest).getAttributes());
 
 //        강제 회원가입
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        String provider = userRequest.getClientRegistration().getClientId();    //google
-        String providerId = oAuth2User.getAttribute("sub");
+        OAuth2UserInfo oAuth2UserInfo = null;
+        if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
+            System.out.println("구글");
+            oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
+            System.out.println("페이스북");
+            oAuth2UserInfo = new FacebookUserInfo(oAuth2User.getAttributes());
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
+            System.out.println("네이버");
+            oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
+        } else {
+            System.out.println("구글과 페이스북, 네이버만 지원");
+        }
+
+        String provider = oAuth2UserInfo.getProvider();
+        String providerId = oAuth2UserInfo.getProviderId();
         String username = provider + "_" + providerId;
         String password = bCryptPasswordEncoder.encode("겟인데어");
-        String email = oAuth2User.getAttribute("sub");
+        String email = oAuth2UserInfo.getEmail();
         String role = "ROLE_USER";
 
         User user = userRepository.findByUsername(username);
@@ -55,6 +74,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
                     .password(password)
                     .provider(provider)
                     .providerId(providerId)
+                    .role(role)
                     .build();
             userRepository.save(user);
         }

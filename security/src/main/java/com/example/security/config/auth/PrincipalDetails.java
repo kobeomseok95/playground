@@ -27,6 +27,8 @@ import java.util.Map;
  * PrincipalDetails 는 UserDetails를 구현해서 Authentication에 들어갈 수 있다.
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user;  //Composition
@@ -36,10 +38,10 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         this.user = user;
     }
 
-    public PrincipalDetails(User user, Map<String, Object> attributes) {
-        this.user = user;
-        this.attributes = attributes;
-    }
+//    public PrincipalDetails(User user, Map<String, Object> attributes) {
+//        this.user = user;
+//        this.attributes = attributes;
+//    }
 
     /**
      * 해당 유저의 권한을 리턴하는 곳!
