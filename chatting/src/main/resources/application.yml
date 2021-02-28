@@ -1,2 +1,12 @@
 server:
   port: 8089
+spring:
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+  freemarker:
+    cache: false
+    template-loader-path: classpath:/templates
+    suffix: .ftl
