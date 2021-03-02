@@ -1,2 +1,4 @@
-package com.example.chatting.config;public class RedisTemplate {
+package com.example.chatting.config;
+
+public class RedisTemplate {
 }
