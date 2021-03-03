@@ -17,8 +17,12 @@ public abstract class Ticket {
     @Column(name = "ticket_id")
     private Long id;
 
-    private String name;
+    @Column(nullable = false)
+    private String ticketName;
 
+    @Column(nullable = false)
     private int price;
 
+    @Column(nullable = false)
+    private Long second;
 }

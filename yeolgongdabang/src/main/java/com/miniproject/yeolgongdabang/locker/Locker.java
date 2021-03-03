@@ -1,6 +1,7 @@
-package com.miniproject.yeolgongdabang.seat;
+package com.miniproject.yeolgongdabang.locker;
 
 import com.miniproject.yeolgongdabang.user.User;
+import com.miniproject.yeolgongdabang.user.UserLocker;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,19 +14,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Seat {
+public class Locker {
 
     @Id
-    @GeneratedValue
-    @Column(name = "seat_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "locker_id")
     private Long id;
 
     @Column(nullable = false)
-    private int seatNumber;
+    private int lockerNumber;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    private boolean empty;
+    @OneToOne(mappedBy = "locker")
+    private UserLocker userLocker;
 }

@@ -1,5 +1,6 @@
 package com.miniproject.yeolgongdabang.user;
 
+import com.miniproject.yeolgongdabang.locker.Locker;
 import com.miniproject.yeolgongdabang.seat.Seat;
 import com.miniproject.yeolgongdabang.ticket.Ticket;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,11 +24,15 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @Column(nullable = false)
     private String phone;
 
-    @OneToOne(mappedBy = "user")
-    private Seat seat;
+    @OneToMany(mappedBy = "user")
+    private List<UserSeat> userSeats;  //일대다 다대일로 풀기
 
     @OneToMany(mappedBy = "user")
-    private List<UserTicket> userTickets;
+    private List<UserTicket> userTickets = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<UserLocker> lockers = new ArrayList<>();
 }

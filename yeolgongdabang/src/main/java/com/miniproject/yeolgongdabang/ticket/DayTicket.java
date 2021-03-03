@@ -14,5 +14,5 @@ import javax.persistence.Entity;
 @Builder
 public class DayTicket extends Ticket {
 
-    private int time;
+    private int hour;
 }
