@@ -28,11 +28,11 @@ public class User {
     private String phone;
 
     @OneToMany(mappedBy = "user")
-    private List<UserSeat> userSeats;  //일대다 다대일로 풀기
+    private final List<UserSeat> userSeats = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<UserTicket> userTickets = new ArrayList<>();
+    private final List<UserTicket> userTickets = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<UserLocker> lockers = new ArrayList<>();
+    private final List<UserLocker> lockers = new ArrayList<>();
 }

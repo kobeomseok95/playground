@@ -33,4 +33,10 @@ public class UserSeat {
     private boolean seated;
 
     private int remainingTime;
+
+    public void takeASeat(User user, Seat seat) {
+        this.seated = true;
+        seat.sitUser(user);
+        user.getUserSeats().add(this);
+    }
 }

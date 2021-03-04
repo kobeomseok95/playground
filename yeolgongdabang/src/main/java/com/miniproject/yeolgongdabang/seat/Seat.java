@@ -28,4 +28,11 @@ public class Seat {
     private User user;
 
     private boolean empty;
+
+    public void sitUser(User user) {
+        if (this.user != null) {
+            throw new IllegalStateException("이미 앉은 사람이 있습니다.");
+        }
+        this.user = user;
+    }
 }
