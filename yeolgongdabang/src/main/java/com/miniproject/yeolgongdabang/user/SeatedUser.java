@@ -32,11 +32,23 @@ public class UserSeat {
     @Column(nullable = false)
     private boolean seated;
 
-    private int remainingTime;
+    private Long remainSecond;
 
-    public void takeASeat(User user, Seat seat) {
-        this.seated = true;
-        seat.sitUser(user);
-        user.getUserSeats().add(this);
+//    연관관계 편의 메서드
+    public static UserSeat takeASeat(User user, Seat seat, Long ticketSecond) {
+        UserSeat userSeat = UserSeat.builder()
+                .user(user)
+                .seat(seat)
+                .seated(true)
+                .remainSecond(ticketSecond)
+                .build();
+
+        changeUserAndSeat(user, userSeat, seat);
+        return userSeat;
+    }
+
+    private static void changeUserAndSeat(User user, UserSeat userSeat, Seat seat) {
+        user.getUserSeats().add(userSeat);
+        seat.changeToNotEmpty(userSeat);
     }
 }
