@@ -1,4 +1,4 @@
-package com.miniproject.yeolgongdabang.user;
+package com.miniproject.yeolgongdabang.user.api;
 
 import com.miniproject.yeolgongdabang.user.dto.DayTicketRequestDto;
 import com.miniproject.yeolgongdabang.user.service.UserService;
@@ -24,9 +24,9 @@ public class UserApi {
         binder.addValidators(dayTicketRequestValidator);
     }
 
-    @PostMapping("/api/v1/buy_day_ticket")
-    public void buyTicket(@RequestBody @Valid DayTicketRequestDto request) {
-        userService.buyDayTicket(request);
+    @PostMapping("/api/v1/purchase_day_ticket")
+    public void purchaseDayTicket(@RequestBody @Valid DayTicketRequestDto request) {
+        userService.purchaseDayTicket(request);
     }
 
 }

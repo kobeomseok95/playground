@@ -1,15 +1,19 @@
 package com.miniproject.yeolgongdabang.user.service;
 
+import com.miniproject.yeolgongdabang.seat.Seat;
+import com.miniproject.yeolgongdabang.seat.SeatRepository;
+import com.miniproject.yeolgongdabang.ticket.Ticket;
+import com.miniproject.yeolgongdabang.ticket.TicketRepository;
 import com.miniproject.yeolgongdabang.user.User;
-import com.miniproject.yeolgongdabang.user.UserSeat;
+import com.miniproject.yeolgongdabang.user.SeatedUser;
+import com.miniproject.yeolgongdabang.user.TicketPurchasedUser;
+import com.miniproject.yeolgongdabang.user.dto.DayTicketRequestDto;
+import com.miniproject.yeolgongdabang.user.dto.EnterResponseDto;
 import com.miniproject.yeolgongdabang.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -18,20 +22,55 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final TicketRepository ticketRepository;
+    private final SeatRepository seatRepository;
 
-    public void join(String phone) {
-        UserSeat userSeat = userRepository.findByPhoneFetchSeatedAndEnableSeat(phone);
+    /**
+     *  phone, seatId, ticketId
+     *  User, TicketPurchasedUser, SeatedUser 생성
+     *  연관관계 설정하기
+     *  =================================
+     *  ResponseDto 리턴
+     */
+    public void purchaseDayTicket(DayTicketRequestDto request) {
+        Seat seat = seatRepository.findBySeatNumber(request.getSeatNumber());
+        Ticket ticket = ticketRepository.findById(request.getTicketId()).orElseThrow();
+        checkEmptySeat(seat);
 
-        if (userSeat.getUser() == null) {
-            log.info("===================유효한 회원이 아닙니다.===================");
-        } else if (isEnableJoin(userSeat)) {
-            log.info("===================출입문이 열립니다.===================");
-        } else {
-            log.info("===================좌석 선택하기===================");
+        User user = User.builder()
+                .phone(request.getPhone())
+                .build();
+
+        TicketPurchasedUser ticketPurchasedUser = TicketPurchasedUser.createTicketPurchasedUser(user, ticket);
+        SeatedUser seatedUser = SeatedUser.createSeatedUser(user, seat, ticketPurchasedUser.getEndDate());
+        userRepository.save(user);
+
+    }
+
+    private void checkEmptySeat(Seat seat) {
+        if (!seat.isEmpty()) {
+            throw new IllegalStateException("빈 자리가 아닙니다!");
         }
     }
 
-    public boolean isEnableJoin(UserSeat userSeat) {
-        return userSeat != null;
-    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

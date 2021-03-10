@@ -1,6 +1,7 @@
 package com.miniproject.yeolgongdabang.user;
 
 import com.miniproject.yeolgongdabang.seat.Seat;
+import com.miniproject.yeolgongdabang.ticket.Ticket;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserSeat {
+public class SeatedUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,26 +30,20 @@ public class UserSeat {
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
-    @Column(nullable = false)
-    private boolean seated;
+    private LocalDateTime endDate;
 
-    private Long remainSecond;
+    public static SeatedUser createSeatedUser(User user, Seat seat, LocalDateTime endDate) {
 
-//    연관관계 편의 메서드
-    public static UserSeat takeASeat(User user, Seat seat, Long ticketSecond) {
-        UserSeat userSeat = UserSeat.builder()
+        SeatedUser seatedUser = SeatedUser.builder()
                 .user(user)
                 .seat(seat)
-                .seated(true)
-                .remainSecond(ticketSecond)
+                .endDate(endDate)
                 .build();
 
-        changeUserAndSeat(user, userSeat, seat);
-        return userSeat;
-    }
+//        연관관계 편의 메서드
+        seat.addSeatedUser(seatedUser);
+        user.changeSeated(seatedUser);
 
-    private static void changeUserAndSeat(User user, UserSeat userSeat, Seat seat) {
-        user.getUserSeats().add(userSeat);
-        seat.changeToNotEmpty(userSeat);
+        return seatedUser;
     }
 }

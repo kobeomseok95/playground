@@ -1,16 +1,18 @@
 package com.miniproject.yeolgongdabang.ticket;
 
-import com.miniproject.yeolgongdabang.user.User;
-import com.miniproject.yeolgongdabang.user.UserTicket;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "dtype")
 @Getter
-public abstract class Ticket {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +27,7 @@ public abstract class Ticket {
 
     @Column(nullable = false)
     private Long second;
+
+    @Enumerated(EnumType.STRING)
+    private TicketType ticketType;
 }

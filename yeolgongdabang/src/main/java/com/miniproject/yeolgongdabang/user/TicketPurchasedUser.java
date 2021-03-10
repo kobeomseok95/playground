@@ -5,19 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.CodePointLength;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserTicket {
+public class TicketPurchasedUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,23 +30,27 @@ public class UserTicket {
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
-    private boolean nonExpired; //true 사용중, false 만료
-
     private LocalDateTime payDate;
 
     private LocalDateTime endDate;
 
-//    연관관계 편의 메서드
-    public static UserTicket buyATicket(User user, Ticket ticket) {
-        UserTicket userTicket = UserTicket.builder()
+    private boolean nonExpired; //true 사용중, false 만료
+
+    public static TicketPurchasedUser createTicketPurchasedUser(User user, Ticket ticket) {
+        LocalDateTime payDate = LocalDateTime.now();
+        LocalDateTime endDate = payDate.plusSeconds(ticket.getSecond());
+
+        TicketPurchasedUser ticketPurchasedUser = TicketPurchasedUser.builder()
                 .user(user)
                 .ticket(ticket)
+                .payDate(payDate)
+                .endDate(endDate)
                 .nonExpired(true)
-                .payDate(LocalDateTime.now())
                 .build();
 
-        user.getUserTickets().add(userTicket);
+        // 연관관계 세팅
+        user.addTicket(ticketPurchasedUser);
 
-        return userTicket;
+        return ticketPurchasedUser;
     }
 }
