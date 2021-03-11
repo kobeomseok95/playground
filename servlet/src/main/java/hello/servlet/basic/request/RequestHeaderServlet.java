@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @WebServlet(name = "requestHeaderServlet", urlPatterns = "/request-header")
 public class RequestHeaderServlet extends HttpServlet {
-    //HttpServletRequest - 기본 사용법 까지!
+
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         printStartLine(req);
