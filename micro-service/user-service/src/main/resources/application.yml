@@ -1,0 +1,14 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: user-service
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    #서비스 등록
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
