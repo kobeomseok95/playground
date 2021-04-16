@@ -1,0 +1,17 @@
+{
+  "name": "nodestudy",
+  "version": "1.0.0",
+  "description": "hello nodejs",
+  "main": "helloColors.js",
+  "scripts": {
+    "start": "node helloColors.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "socket.io": "^4.0.1",
+    "socket.io-client": "^4.0.1"
+  }
+}
