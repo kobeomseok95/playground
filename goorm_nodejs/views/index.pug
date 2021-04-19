@@ -1,0 +1,13 @@
+// index.pug
+
+html
+	head
+		title= title
+	body
+		h1 Hello #{title}!
+		ul
+			-for(var i=0; i<5; i++)
+				li 순서없는목록 #{i + 1}
+		ol
+			-for(var i=0; i<5; i++)
+				li 순서있는목록 #{i + 1}

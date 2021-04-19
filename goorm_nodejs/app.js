@@ -11,7 +11,7 @@ var app = express();    // app 객체 선언, express()로 생성, 웹 서버 �
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));    // 뷰 템플릿 경로 라우팅
-app.set('view engine', 'jade');   // 뷰에 사용되는 엔진
+app.set('view engine', 'pug');   // 뷰에 사용되는 엔진
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -21,6 +21,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// 코드 추가
+app.locals.pretty = true;
+
+// 추가 완료
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
