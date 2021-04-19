@@ -24,11 +24,19 @@ function f() {
     var a = [];
     var i;
 
-    for (i = 0; i < 3; i++) {
-        a[i] = function () {
-            return i;
+    // for (i = 0; i < 3; i++) { 모두 3이 출력, 
+    //     a[i] = function () {
+    //         return i;
+    //     }
+    // }
+
+        for (i = 0; i < 3; i++){
+            a[i] = (function(x) {
+                return function() {
+                    return x;
+                }
+            })(i);
         }
-    }
     return a;
 }
 
