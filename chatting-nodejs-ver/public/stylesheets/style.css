@@ -6,3 +6,22 @@ body {
 a {
   color: #00B7FF;
 }
+
+#chatLog{
+	width: 50%; 
+	height: 500px;
+}
+
+#name{ 
+	width: 10%; 
+}
+
+#message{ 
+	width: 35%; 
+}
+
+.btn.btn-info{
+	width: 50%;
+	height: 45px;
+	font-size: 20px;
+}

@@ -1,0 +1,50 @@
+// chat.pug
+
+doctype 5
+html
+  head
+    title= 'Chat'
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css", integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous")
+    // 위 link와 이 script는 부트스트랩 연결
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js", integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous")  
+    script(src='/socket.io/socket.io.js')
+    script(src='//code.jquery.com/jquery-1.11.1.js')
+  body
+    center
+      div
+        // 부트스트랩 버튼
+        button.btn.btn-info(type='button') Goorm 채팅방  
+      div
+        // 부트스트랩 textarea
+        textarea#chatLog.form-control(readonly='')  
+      form#chat
+        // 부트스트랩 input
+        input#name.form-control(type='text')
+        // 부트스트랩 input
+        input#message.form-control(type='text')
+        // 부트스트랩 버튼
+        button.btn.btn-primary(type='submit') 전송
+      #box.box
+
+    script.
+      var socket = io(); 
+
+      // 전송 버튼을 누를 때 - 1
+      $('#chat').on('submit', function(e){   
+        socket.emit('send message', $('#name').val(), $('#message').val());
+        $('#message').val('');
+        $('#message').focus();
+        e.preventDefault();
+      });
+			
+      // 이름 셋팅 - 2
+      socket.on('create name', function(name){
+        $('#name').val(name);
+      });
+
+      // 메세지를 받았을 때 - 3
+      socket.on('receive message', function(msg){
+        $('#chatLog').append(msg+'\n');
+        $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
+      });
