@@ -1,0 +1,12 @@
+<!-- index.html -->
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://localhost:3001');
+
+    socket.on('news', function (data) {
+        console.log('접속 요청');
+        console.log(data);
+        socket.emit('client login', { clientData : '클라이언트 접속' });
+    });
+</script>
