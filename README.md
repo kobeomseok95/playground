@@ -1,4 +1,4 @@
-# 실습장소입니다!
+# 고딩왕 코범석 실습장소
 
 ### Update
 
@@ -17,3 +17,5 @@
   - docker build
 - 04/03(토)
   - Micro Service Architecture
+- 04/20(화)
+  - nodejs를 다루어보자!
