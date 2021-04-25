@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-mongoose.connect('', 
-  {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://user:1234@mongo-memo.mp7qr.mongodb.net/mongo-memo?retryWrites=true&w=majority', 
+	{useNewUrlParser: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "connection error:"));
 db.once('open', () => {
