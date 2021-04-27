@@ -1,0 +1,3 @@
+enum_training/EasyEnumExample.java
+ enum_training.EasyEnumExample
+ enum_training.EasyEnumExample$Status
