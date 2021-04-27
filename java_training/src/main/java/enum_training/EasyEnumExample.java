@@ -54,6 +54,5 @@ public class EasyEnumExample {
         Status proceeding = Status.valueOf("PROCEEDING");
         System.out.println(proceeding.getName());
         System.out.println(proceeding.getValue());
-
     }
 }
