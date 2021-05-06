@@ -1,6 +1,6 @@
 # 고딩왕 코범석 실습장소
 
-### Update
+<hr></hr>
 
 - 02/16(화)
   - @Async
@@ -10,12 +10,11 @@
   - 채팅 튜토리얼
 - 03/02(화)
   - JWT
-  - 열공다방 기능들을 클론코딩해보자!
 - 03/07(월) ~ 03/13(토)
   - 스프링 웹 mvc 강의 response header, cookie, redirect 까지 완료
 - 03/16(화)
   - docker build
-- 04/03(토)
-  - Micro Service Architecture
 - 04/20(화)
   - nodejs를 다루어보자!
+- 05.06(목)
+  - MSA 다시 학습하기
