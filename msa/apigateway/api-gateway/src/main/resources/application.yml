@@ -31,6 +31,12 @@ spring:
           predicates:
             - Path=/second-service/**
           filters:
-            - CustomFilter
+            # 부가 파라미터를 적용시킬 거면 name을 명시하자
+            - name: CustomFilter
+            - name: LoggingFilter
+              args:
+                baseMessage: This is Logging Filter
+                preLogger: true
+                postLogger: true
 #            - AddRequestHeader=second-request, second-request-header-withyml
 #            - AddResponseHeader=second-response, second-response-header-withyml
