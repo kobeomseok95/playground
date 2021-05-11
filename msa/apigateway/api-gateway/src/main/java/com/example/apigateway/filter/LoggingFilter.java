@@ -38,7 +38,7 @@ public class LoggingFilter extends AbstractGatewayFilterFactory<LoggingFilter.Co
 //        });
 
         /** 직접 GatewayFilter 정의
-         *      WebFluxo에서는 ServerWebExchange로 request, response를 받을 수 있다.
+         *      WebFlux에서는 ServerWebExchange로 request, response를 받을 수 있다.
          */
         GatewayFilter filter = new OrderedGatewayFilter((exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();

@@ -3,13 +3,18 @@ server:
 
 spring:
   application:
-    name: user-service
+    name: order-service
   h2:
     console:
       enabled: true
       settings:
         web-allow-others: true
       path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    generate-ddl: true
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb
@@ -18,11 +23,6 @@ spring:
       enabled: true
       poll-interval: 4s
       quiet-period: 3s
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
 
 eureka:
   instance:
@@ -31,7 +31,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
-
-greeting:
-  message: Welcome To the Simple E-Commerce.
+      defalutZone: http://127.0.0.1:8761/eureka

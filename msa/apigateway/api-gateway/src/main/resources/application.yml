@@ -18,25 +18,38 @@ spring:
             preLogger: true
             postLogger: true
       routes:
-        - id: first-service
-          uri: lb://MY-FIRST-SERVICE
+        - id: user-service
+          uri: lb://USER-SERVICE    # 유레카에 등록된 서비스명 기재
           predicates:
-            - Path=/first-service/**
-          filters:
-            - CustomFilter
+            - Path=/user-service/**
+        - id: catalog-service
+          uri: lb://CATALOG-SERVICE
+          predicates:
+            - Path=/catalog-service/**
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order-service/**
+
+#        - id: first-service
+#          uri: lb://MY-FIRST-SERVICE
+#          predicates:
+#            - Path=/first-service/**
+#          filters:
+#            - CustomFilter
 #            - AddRequestHeader=first-request, first-request-header-withyml
 #            - AddResponseHeader=first-response, first-response-header-withyml
-        - id: second-service
-          uri: lb://MY-SECOND-SERVICE
-          predicates:
-            - Path=/second-service/**
-          filters:
+#        - id: second-service
+#          uri: lb://MY-SECOND-SERVICE
+#          predicates:
+#            - Path=/second-service/**
+#          filters:
             # 부가 파라미터를 적용시킬 거면 name을 명시하자
-            - name: CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: This is Logging Filter
-                preLogger: true
-                postLogger: true
+#            - name: CustomFilter
+#            - name: LoggingFilter
+#              args:
+#                baseMessage: This is Logging Filter
+#                preLogger: true
+#                postLogger: true
 #            - AddRequestHeader=second-request, second-request-header-withyml
 #            - AddResponseHeader=second-response, second-response-header-withyml
