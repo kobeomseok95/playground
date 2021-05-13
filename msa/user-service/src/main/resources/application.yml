@@ -13,11 +13,6 @@ spring:
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb
-  devtools:
-    restart:
-      enabled: true
-      poll-interval: 4s
-      quiet-period: 3s
   jpa:
     show-sql: true
     properties:
@@ -27,6 +22,7 @@ spring:
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    prefer-ip-address: true
   client:
     register-with-eureka: true
     fetch-registry: true
@@ -35,3 +31,7 @@ eureka:
 
 greeting:
   message: Welcome To the Simple E-Commerce.
+
+token:
+  expiration_time: 86400000
+  secret: user_token

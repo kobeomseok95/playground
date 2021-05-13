@@ -26,14 +26,16 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests().antMatchers("/**")
-                .hasIpAddress("220.72.129.233")
+//                .hasIpAddress("220.72.129.233")
+//                .hasIpAddress("220.72.109.152")
+                .hasIpAddress("192.168.56.1")
                 .and()
                 .addFilter(getAuthenticationFilter());
         http.headers().frameOptions().disable();
     }
 
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(env, userService);
         authenticationFilter.setAuthenticationManager(authenticationManager());
         return authenticationFilter;
     }
