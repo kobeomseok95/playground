@@ -1,0 +1,153 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.4.5)
+
+2021-05-15 15:07:34.209  INFO 12676 --- [           main] c.e.s.ServiceDiscoveryApplication        : Starting ServiceDiscoveryApplication v0.0.1-SNAPSHOT using Java 11.0.8 on DESKTOP-O5DQE4O with PID 12676 (C:\study\playground\msa\service_discovery\target\service_discovery-0.0.1-SNAPSHOT.jar started by kobeomseok in C:\study\playground\msa\service_discovery)
+2021-05-15 15:07:34.243  INFO 12676 --- [           main] c.e.s.ServiceDiscoveryApplication        : No active profile set, falling back to default profiles: default
+2021-05-15 15:07:45.491  INFO 12676 --- [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=fc274f6f-f279-38f4-8f80-2a1c9e4de043
+2021-05-15 15:07:50.676  INFO 12676 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8761 (http)
+2021-05-15 15:07:50.712  INFO 12676 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-05-15 15:07:50.713  INFO 12676 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.45]
+2021-05-15 15:07:50.969  INFO 12676 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-05-15 15:07:50.969  INFO 12676 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 16227 ms
+2021-05-15 15:07:53.438  INFO 12676 --- [           main] c.s.j.s.i.a.WebApplicationImpl           : Initiating Jersey application, version 'Jersey: 1.19.4 05/24/2017 03:20 PM'
+2021-05-15 15:07:54.040  INFO 12676 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2021-05-15 15:07:54.051  INFO 12676 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2021-05-15 15:07:54.986  INFO 12676 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2021-05-15 15:07:54.987  INFO 12676 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.springframework.boot.loader.jar.Handler (file:/C:/study/playground/msa/service_discovery/target/service_discovery-0.0.1-SNAPSHOT.jar) to constructor sun.net.www.protocol.jar.Handler()
+WARNING: Please consider reporting this to the maintainers of org.springframework.boot.loader.jar.Handler
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+2021-05-15 15:07:58.842  INFO 12676 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-05-15 15:08:07.820  INFO 12676 --- [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2021-05-15 15:08:17.977  INFO 12676 --- [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2021-05-15 15:08:18.083  INFO 12676 --- [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses Jersey
+2021-05-15 15:08:18.559  WARN 12676 --- [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2021-05-15 15:08:18.682  INFO 12676 --- [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2021-05-15 15:08:18.842  INFO 12676 --- [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2021-05-15 15:08:18.843  INFO 12676 --- [           main] com.netflix.discovery.DiscoveryClient    : Client configured to neither register nor query for data.
+2021-05-15 15:08:18.871  INFO 12676 --- [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1621058898866 with initial instances count: 0
+2021-05-15 15:08:19.012  INFO 12676 --- [           main] c.n.eureka.DefaultEurekaServerContext    : Initializing ...
+2021-05-15 15:08:19.019  WARN 12676 --- [           main] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2021-05-15 15:08:19.249  INFO 12676 --- [           main] c.n.e.registry.AbstractInstanceRegistry  : Finished initializing remote region registries. All known remote regions: []
+2021-05-15 15:08:19.251  INFO 12676 --- [           main] c.n.eureka.DefaultEurekaServerContext    : Initialized
+2021-05-15 15:08:19.284  INFO 12676 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-05-15 15:08:19.505  INFO 12676 --- [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application SERVICEDISCOVERY with eureka with status UP
+2021-05-15 15:08:19.532  INFO 12676 --- [       Thread-9] o.s.c.n.e.server.EurekaServerBootstrap   : Setting the eureka configuration..
+2021-05-15 15:08:19.626  INFO 12676 --- [       Thread-9] o.s.c.n.e.server.EurekaServerBootstrap   : isAws returned false
+2021-05-15 15:08:19.628  INFO 12676 --- [       Thread-9] o.s.c.n.e.server.EurekaServerBootstrap   : Initialized server context
+2021-05-15 15:08:19.628  INFO 12676 --- [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Got 1 instances from neighboring DS node
+2021-05-15 15:08:19.628  INFO 12676 --- [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Renew threshold is: 1
+2021-05-15 15:08:19.628  INFO 12676 --- [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Changing status to UP
+2021-05-15 15:08:19.691  INFO 12676 --- [       Thread-9] e.s.EurekaServerInitializerConfiguration : Started Eureka Server
+2021-05-15 15:08:19.716  INFO 12676 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8761 (http) with context path ''
+2021-05-15 15:08:19.718  INFO 12676 --- [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8761
+2021-05-15 15:08:26.786  INFO 12676 --- [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2021-05-15 15:08:26.831  INFO 12676 --- [           main] c.e.s.ServiceDiscoveryApplication        : Started ServiceDiscoveryApplication in 60.047 seconds (JVM running for 62.408)
+2021-05-15 15:08:44.551  INFO 12676 --- [nio-8761-exec-8] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-05-15 15:08:44.552  INFO 12676 --- [nio-8761-exec-8] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-05-15 15:08:44.553  INFO 12676 --- [nio-8761-exec-8] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2021-05-15 15:08:45.001  WARN 12676 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - user-service:0d4725f768c023f1d50542ef63df7e08
+2021-05-15 15:08:45.002  WARN 12676 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - user-service:0d4725f768c023f1d50542ef63df7e08
+2021-05-15 15:08:45.586  INFO 12676 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:0d4725f768c023f1d50542ef63df7e08 with status UP (replication=false)
+2021-05-15 15:09:19.634  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:09:48.274  INFO 12676 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:5e4ec2906a73a546141aa93747138d0c with status UP (replication=false)
+2021-05-15 15:10:19.639  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2021-05-15 15:11:19.640  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:12:19.644  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2021-05-15 15:13:19.653  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 9ms
+2021-05-15 15:14:19.666  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 13ms
+2021-05-15 15:15:19.667  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:16:19.667  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:17:16.470  INFO 12676 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:5e4ec2906a73a546141aa93747138d0c with status DOWN (replication=false)
+2021-05-15 15:17:19.694  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 27ms
+2021-05-15 15:17:25.481  INFO 12676 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance USER-SERVICE/user-service:5e4ec2906a73a546141aa93747138d0c (replication=false)
+2021-05-15 15:18:02.017  INFO 12676 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:0099fd7b9ed8b8f6fa512e11e79342a8 with status UP (replication=false)
+2021-05-15 15:18:19.041  WARN 12676 --- [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2021-05-15 15:18:19.700  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2021-05-15 15:19:19.707  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 7ms
+2021-05-15 15:20:19.720  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 12ms
+2021-05-15 15:20:52.008  INFO 12676 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:0099fd7b9ed8b8f6fa512e11e79342a8 with status DOWN (replication=false)
+2021-05-15 15:21:00.624  INFO 12676 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance USER-SERVICE/user-service:0099fd7b9ed8b8f6fa512e11e79342a8 (replication=false)
+2021-05-15 15:21:19.724  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 3ms
+2021-05-15 15:21:20.092  INFO 12676 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:7de161beabad9926563d7cd7e291927e with status UP (replication=false)
+2021-05-15 15:22:19.730  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2021-05-15 15:22:54.280  INFO 12676 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:7de161beabad9926563d7cd7e291927e with status DOWN (replication=false)
+2021-05-15 15:23:03.812  INFO 12676 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance USER-SERVICE/user-service:7de161beabad9926563d7cd7e291927e (replication=false)
+2021-05-15 15:23:19.254  INFO 12676 --- [hresholdUpdater] c.n.e.r.PeerAwareInstanceRegistryImpl    : Current renewal threshold is : 3
+2021-05-15 15:23:19.734  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2021-05-15 15:23:24.328  INFO 12676 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:f19652499cde839dff4079509d92d61b with status UP (replication=false)
+2021-05-15 15:24:19.749  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 14ms
+2021-05-15 15:25:19.751  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2021-05-15 15:26:19.762  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 11ms
+2021-05-15 15:27:19.766  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 3ms
+2021-05-15 15:28:19.056  WARN 12676 --- [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2021-05-15 15:28:19.771  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2021-05-15 15:29:19.781  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 9ms
+2021-05-15 15:30:19.796  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 15ms
+2021-05-15 15:31:19.802  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2021-05-15 15:32:19.807  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2021-05-15 15:33:19.808  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:34:19.808  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:35:19.814  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2021-05-15 15:36:19.814  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:37:19.814  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:38:19.058  WARN 12676 --- [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2021-05-15 15:38:19.254  INFO 12676 --- [hresholdUpdater] c.n.e.r.PeerAwareInstanceRegistryImpl    : Current renewal threshold is : 5
+2021-05-15 15:38:19.815  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:39:19.816  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:40:19.816  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:41:19.829  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 13ms
+2021-05-15 15:42:19.830  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:43:19.831  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2021-05-15 15:44:19.832  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:44:49.083  INFO 12676 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:f19652499cde839dff4079509d92d61b with status DOWN (replication=false)
+2021-05-15 15:44:58.047  INFO 12676 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance USER-SERVICE/user-service:f19652499cde839dff4079509d92d61b (replication=false)
+2021-05-15 15:45:19.833  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2021-05-15 15:45:24.966  INFO 12676 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:dd77955ea84cdf23763973edace6b872 with status UP (replication=false)
+2021-05-15 15:46:19.834  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:47:19.847  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 13ms
+2021-05-15 15:48:19.061  WARN 12676 --- [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2021-05-15 15:48:19.848  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 15:49:19.862  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 14ms
+2021-05-15 15:50:19.883  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 21ms
+2021-05-15 15:51:19.891  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 7ms
+2021-05-15 15:52:20.961  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1070ms
+2021-05-15 15:52:37.587  INFO 12676 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:6406442682528f2a3ed3d1abefd1961d with status UP (replication=false)
+2021-05-15 15:53:19.266  INFO 12676 --- [hresholdUpdater] c.n.e.r.PeerAwareInstanceRegistryImpl    : Current renewal threshold is : 6
+2021-05-15 15:53:20.969  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 7ms
+2021-05-15 15:54:20.970  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2021-05-15 15:55:20.978  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 8ms
+2021-05-15 15:56:20.994  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 14ms
+2021-05-15 15:57:00.290  INFO 12676 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:6406442682528f2a3ed3d1abefd1961d with status DOWN (replication=false)
+2021-05-15 15:57:07.293  INFO 12676 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance USER-SERVICE/user-service:6406442682528f2a3ed3d1abefd1961d (replication=false)
+2021-05-15 15:57:21.003  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 9ms
+2021-05-15 15:57:29.604  INFO 12676 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:c7510b05f9ca8a8594a71b7ff62e5461 with status UP (replication=false)
+2021-05-15 15:58:19.076  WARN 12676 --- [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2021-05-15 15:58:21.011  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 8ms
+2021-05-15 15:59:21.012  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 16:00:21.019  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 6ms
+2021-05-15 16:00:23.284  INFO 12676 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance USER-SERVICE/user-service:c7510b05f9ca8a8594a71b7ff62e5461 (replication=false)
+2021-05-15 16:00:23.348  INFO 12676 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:17824064f6ed2630a5bda242beff4827 with status UP (replication=false)
+2021-05-15 16:00:23.353  INFO 12676 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:17824064f6ed2630a5bda242beff4827 with status UP (replication=false)
+2021-05-15 16:01:21.045  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 25ms
+2021-05-15 16:01:53.378  INFO 12676 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : Cancelled instance USER-SERVICE/user-service:17824064f6ed2630a5bda242beff4827 (replication=false)
+2021-05-15 16:01:53.745  INFO 12676 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : Registered instance USER-SERVICE/user-service:518232346e204cdcac0e06e0c0b8dec4 with status UP (replication=false)
+2021-05-15 16:02:21.046  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 16:03:21.046  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 16:04:21.047  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 16:05:21.063  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 16ms
+2021-05-15 16:06:21.063  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 16:07:21.063  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2021-05-15 16:08:19.087  WARN 12676 --- [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2021-05-15 16:08:19.277  INFO 12676 --- [hresholdUpdater] c.n.e.r.PeerAwareInstanceRegistryImpl    : Current renewal threshold is : 6
+2021-05-15 16:08:21.070  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 7ms
+2021-05-15 16:09:21.084  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 13ms
+2021-05-15 16:10:21.093  INFO 12676 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 8ms

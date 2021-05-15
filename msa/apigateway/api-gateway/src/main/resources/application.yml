@@ -32,6 +32,14 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE    # 유레카에 등록된 서비스명 기재
           predicates:
+            - Path=/user-service/actuator/**
+            - Method=GET, POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+        - id: user-service
+          uri: lb://USER-SERVICE    # 유레카에 등록된 서비스명 기재
+          predicates:
             - Path=/user-service/users
             - Method=POST
           filters:
@@ -54,8 +62,13 @@ spring:
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/order-service/**
-token:
-  secret: user_token
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, httptrace
+#token:
+#  secret: user_token
 #        - id: first-service
 #          uri: lb://MY-FIRST-SERVICE
 #          predicates:
