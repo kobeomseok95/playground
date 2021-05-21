@@ -1,6 +1,0 @@
-encrypt:
-#  key: abcde12345
-  key-store:
-    location: file:///${user.home}/../../study/keystore/apiEncryptionKey.jks
-    password: test1234
-    alias: apiencryptionkey
