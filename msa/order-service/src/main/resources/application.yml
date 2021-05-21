@@ -12,17 +12,12 @@ spring:
       path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
     generate-ddl: true
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb
-  devtools:
-    restart:
-      enabled: true
-      poll-interval: 4s
-      quiet-period: 3s
 
 eureka:
   instance:

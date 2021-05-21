@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serverList>
+    <server name="server1">
+        <handler header="0x5001">StreamSayHelloEventHandler</handler>
+        <handler header="0x6001">StreamUpdateProfileEventHandler</handler>
+    </server>
+    <server name="server2">
+        <handler header="0x5001">StreamSayHelloEventHandler</handler>
+        <handler header="0x6001">StreamUpdateProfileEventHandler</handler>
+    </server>
+</serverList>

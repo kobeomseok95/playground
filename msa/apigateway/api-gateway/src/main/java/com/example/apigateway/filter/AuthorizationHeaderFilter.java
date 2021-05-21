@@ -1,7 +1,6 @@
 package com.example.apigateway.filter;
 
 import io.jsonwebtoken.Jwts;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;

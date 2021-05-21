@@ -10,6 +10,11 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
 spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
   application:
     name: apigateway-service
   cloud:
@@ -66,7 +71,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans, httptrace
+        include: refresh, health, beans, httptrace, busrefresh
 #token:
 #  secret: user_token
 #        - id: first-service
