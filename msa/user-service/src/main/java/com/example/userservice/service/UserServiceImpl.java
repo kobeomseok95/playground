@@ -5,6 +5,7 @@ import com.example.userservice.dto.UserDto;
 import com.example.userservice.repository.UserEntity;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.vo.ResponseOrder;
+import feign.FeignException;
 import io.micrometer.core.ipc.http.HttpSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -72,7 +73,7 @@ public class UserServiceImpl implements UserService {
 //                });
 //        List<ResponseOrder> orderList = orderListResponse.getBody();
 
-        // FeignClient
+        // FeignClient, Error Decoder
         List<ResponseOrder> orderList = orderServiceClient.getOrders(userId);
         userDto.setOrders(orderList);
 
