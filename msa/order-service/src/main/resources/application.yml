@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: order-service
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
+  slueth:
+    sampler:
+      probability: 1.0
   h2:
     console:
       enabled: true
@@ -15,10 +21,12 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:mariadb://localhost:3307/test
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: root
-    password: 1234
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+#    url: jdbc:mariadb://localhost:3307/test
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    username: root
+#    password: 1234
 
 eureka:
   instance:
@@ -28,3 +36,8 @@ eureka:
     fetch-registry: true
     service-url:
       defalutZone: http://127.0.0.1:8761/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, httptrace, busrefresh, info, metrics, prometheus

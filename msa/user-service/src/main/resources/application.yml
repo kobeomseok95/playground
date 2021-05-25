@@ -9,6 +9,12 @@ spring:
     password: guest
   application:
     name: user-service
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
+  slueth:
+    sampler:
+      probability: 1.0
   h2:
     console:
       enabled: true
@@ -40,7 +46,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans, busrefresh
+        include: refresh, health, beans, busrefresh, info, metrics, prometheus
 
 logging:
   level:
