@@ -27,10 +27,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests().antMatchers("/actuator/**").permitAll();
         http.authorizeRequests().antMatchers("/**")
-//                .hasIpAddress("220.72.129.233")
-//                .hasIpAddress("220.72.109.152")
-//                .hasIpAddress("220.72.109.152")
-                .hasIpAddress("192.168.56.1")
+                //Docker Discovery Service IP
+                .hasIpAddress(env.getProperty("gateway.ip"))
                 .and()
                 .addFilter(getAuthenticationFilter());
         http.headers().frameOptions().disable();

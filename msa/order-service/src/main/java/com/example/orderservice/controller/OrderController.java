@@ -57,7 +57,8 @@ public class OrderController {
 //        orderDto.setTotalPrice(request.getUnitPrice() * request.getQuantity());
 
         // send this order to the kafka
-//        kafkaProducer.send(catalogTopic, orderDto);
+        // 주문한 수량만큼 차감해주는 kafkaProducer
+        kafkaProducer.send(catalogTopic, orderDto);
 //        orderProducer.send(orderTopic, orderDto);
 
 //        ResponseOrder responseOrder = modelMapper.map(orderDto, ResponseOrder.class);
@@ -74,13 +75,6 @@ public class OrderController {
         orderList.forEach(o -> {
             result.add(new ModelMapper().map(o, ResponseOrder.class));
         });
-
-        try {
-            Thread.sleep(3000);
-            throw new Exception("장애 발생!");
-        } catch(InterruptedException e) {
-            log.error(e.getMessage());
-        }
 
         log.info("==========add retrieved orders data");
         return ResponseEntity.status(HttpStatus.OK).body(result);
