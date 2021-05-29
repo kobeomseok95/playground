@@ -26,7 +26,7 @@ public class Category {
 
     // 자신의 테이블도 부모 자식 관계 형성 가능
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_ID")
+    @JoinColumn(name = "GIMOZZI_ID")
     private Category parent;
 
     @OneToMany(mappedBy = "parent")
