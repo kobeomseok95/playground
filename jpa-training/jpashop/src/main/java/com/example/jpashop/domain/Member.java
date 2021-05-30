@@ -1,9 +1,6 @@
 package com.example.jpashop.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,5 +25,4 @@ public class Member extends BaseEntity{
 
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
-
 }

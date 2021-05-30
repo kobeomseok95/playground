@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 @Getter
 // 생성자를 protected로 막고, setter를 비활성화시켜
 // 불변객체임을 설정해두기
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Address {
