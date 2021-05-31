@@ -2,7 +2,6 @@ package com.example.jpashop.service;
 
 import com.example.jpashop.domain.Member;
 import com.example.jpashop.dto.MemberDto;
-import com.example.jpashop.dummy.MemberDummy;
 import com.example.jpashop.repository.MemberRepository;
 import com.example.jpashop.util.MemberMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -10,10 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -25,12 +27,12 @@ class MemberServiceTest {
     @Mock
     MemberMapper memberMapper;
 
-    @InjectMocks
+    @Spy @InjectMocks
     MemberServiceImpl memberService;
 
     @Test
     @DisplayName("회원가입")
-    void join() {
+    void join() throws Exception {
 
         // given
         MemberDto.JoinRequest request = mock(MemberDto.JoinRequest.class);
@@ -45,8 +47,26 @@ class MemberServiceTest {
         memberService.join(request);
 
         // then
+        verify(memberService).validDuplicateMemberName(any());
         verify(memberMapper).joinRequestToMember(request);
         verify(memberRepository).save(member);
         verify(memberMapper).memberToJoinResponse(member);
+    }
+
+    @Test
+    @DisplayName("회원명 중복시 예외")
+    void validDuplicateMemberName() throws Exception{
+
+        // given
+        when(memberRepository.findByName(anyString()).isPresent())
+                .thenThrow(IllegalStateException.class);
+
+        // when
+        assertThrows(IllegalStateException.class, () -> {
+            memberService.validDuplicateMemberName(anyString());
+        });
+
+        // then
+        verify(memberRepository).findByName(anyString());
     }
 }

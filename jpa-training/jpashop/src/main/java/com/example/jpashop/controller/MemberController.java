@@ -15,10 +15,14 @@ public class MemberController {
     private final MemberService memberService;
 
 //    @GetMapping("/")
+//    public ResponseEntity<> getMembers() {
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(memberService.getMembers());
+//    }
 //    @GetMapping("/{memberId}")
 
     @PostMapping("/")
-    public ResponseEntity<MemberDto.JoinResponse> join(@RequestBody MemberDto.JoinRequest request) {
+    public ResponseEntity<MemberDto.JoinResponse> join(@RequestBody MemberDto.JoinRequest request) throws Exception {
 
         return ResponseEntity.status(HttpStatus.OK).body(memberService.join(request));
     }

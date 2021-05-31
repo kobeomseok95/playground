@@ -1,6 +1,5 @@
 package com.example.jpashop.util;
 
-import com.example.jpashop.domain.Address;
 import com.example.jpashop.domain.Member;
 import com.example.jpashop.dto.MemberDto;
 import org.mapstruct.InjectionStrategy;

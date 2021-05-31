@@ -29,4 +29,11 @@ public class MemberDto {
         private String street;
         private String zipcode;
     }
+
+//    @Getter
+//    @Setter
+//    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+//    @AllArgsConstructor
+//    @Builder
+//    public static class
 }

@@ -1,6 +1,5 @@
 package com.example.jpashop.service;
 
-import com.example.jpashop.domain.Address;
 import com.example.jpashop.domain.Member;
 import com.example.jpashop.dto.MemberDto;
 import com.example.jpashop.repository.MemberRepository;
@@ -30,10 +29,18 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDto.JoinResponse join(MemberDto.JoinRequest request) {
+    public MemberDto.JoinResponse join(MemberDto.JoinRequest request) throws Exception {
 
+        validDuplicateMemberName(request.getName());
         Member member = memberMapper.joinRequestToMember(request);
         memberRepository.save(member);
         return memberMapper.memberToJoinResponse(member);
+    }
+
+    @Override
+    public void validDuplicateMemberName(String name) throws Exception {
+        memberRepository.findByName(name).ifPresent(m -> {
+            throw new IllegalStateException("이미 가입된 회원입니다.");
+        });
     }
 }

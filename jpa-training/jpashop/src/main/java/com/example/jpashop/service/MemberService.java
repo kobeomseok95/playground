@@ -11,5 +11,7 @@ public interface MemberService {
 
     Member getMember();
 
-    MemberDto.JoinResponse join(MemberDto.JoinRequest request);
+    MemberDto.JoinResponse join(MemberDto.JoinRequest request) throws Exception;
+
+    void validDuplicateMemberName(String name) throws Exception;
 }
