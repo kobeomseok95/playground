@@ -22,7 +22,7 @@ public class MemberController {
 //    @GetMapping("/{memberId}")
 
     @PostMapping("/")
-    public ResponseEntity<MemberDto.JoinResponse> join(@RequestBody MemberDto.JoinRequest request) throws Exception {
+    public ResponseEntity<MemberDto> join(@RequestBody MemberDto request) throws Exception {
 
         return ResponseEntity.status(HttpStatus.OK).body(memberService.join(request));
     }

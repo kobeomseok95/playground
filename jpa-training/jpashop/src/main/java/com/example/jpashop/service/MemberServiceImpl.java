@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,22 +20,27 @@ public class MemberServiceImpl implements MemberService {
     private final MemberMapper memberMapper;
 
     @Override
-    public List<Member> getMembers() {
-        return null;
+    public List<MemberDto> getMembers() {
+        return memberRepository.findAll()
+                .stream()
+                .map(memberMapper::memberToMemberDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Member getMember() {
-        return null;
+    public MemberDto getMember(Long id) {
+        return memberMapper.memberToMemberDto(memberRepository.findById(id).orElseThrow(() -> {
+            throw new IllegalStateException("일치하는 회원이 없습니다.");
+        }));
     }
 
     @Override
-    public MemberDto.JoinResponse join(MemberDto.JoinRequest request) throws Exception {
+    public MemberDto join(MemberDto request) throws Exception {
 
         validDuplicateMemberName(request.getName());
-        Member member = memberMapper.joinRequestToMember(request);
+        Member member = memberMapper.memberDtoToMember(request);
         memberRepository.save(member);
-        return memberMapper.memberToJoinResponse(member);
+        return memberMapper.memberToMemberDto(member);
     }
 
     @Override

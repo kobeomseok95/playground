@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface MemberService {
 
-    List<Member> getMembers();
+    List<MemberDto> getMembers();
 
-    Member getMember();
+    MemberDto getMember(Long id);
 
-    MemberDto.JoinResponse join(MemberDto.JoinRequest request) throws Exception;
+    MemberDto join(MemberDto request) throws Exception;
 
     void validDuplicateMemberName(String name) throws Exception;
 }

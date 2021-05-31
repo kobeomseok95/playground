@@ -15,10 +15,10 @@ public interface MemberMapper {
     @Mapping(source = "city", target = "address.city")
     @Mapping(source = "street", target = "address.street")
     @Mapping(source = "zipcode", target = "address.zipcode")
-    Member joinRequestToMember(MemberDto.JoinRequest request);
+    Member memberDtoToMember(MemberDto request);
 
     @Mapping(source = "address.city", target = "city")
     @Mapping(source = "address.street", target = "street")
     @Mapping(source = "address.zipcode", target = "zipcode")
-    MemberDto.JoinResponse memberToJoinResponse(Member member);
+    MemberDto memberToMemberDto(Member member);
 }
