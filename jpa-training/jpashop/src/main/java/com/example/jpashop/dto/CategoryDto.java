@@ -7,10 +7,8 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class MemberDto {
+public class CategoryDto {
 
     private String name;
-    private String city;
-    private String street;
-    private String zipcode;
+    private String parentId;
 }

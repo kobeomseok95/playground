@@ -21,7 +21,8 @@ public class Category {
 
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    // 연관된 아이템 삭제
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CategoryItem> categoryItems = new ArrayList<>();
 
     // 자신의 테이블도 부모 자식 관계 형성 가능
@@ -29,6 +30,13 @@ public class Category {
     @JoinColumn(name = "PARENT_ID")
     private Category parent;
 
-    @OneToMany(mappedBy = "parent")
+    // 영속성 전이, 부모 카테고리 삭제시 연쇄 삭제
+    @Builder.Default
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> children = new ArrayList<>();
+
+    public void addParent(Category parent) {
+        this.parent = parent;
+        parent.getChildren().add(this);
+    }
 }

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/members")
@@ -14,12 +16,17 @@ public class MemberController {
 
     private final MemberService memberService;
 
-//    @GetMapping("/")
-//    public ResponseEntity<> getMembers() {
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(memberService.getMembers());
-//    }
-//    @GetMapping("/{memberId}")
+    @GetMapping("/")
+    public ResponseEntity<List<MemberDto>> getMembers() {
+
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.getMembers());
+    }
+
+    @GetMapping("/{memberId}")
+    public ResponseEntity<MemberDto> getMembers(@PathVariable("memberId") Long id) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.getMember(id));
+    }
 
     @PostMapping("/")
     public ResponseEntity<MemberDto> join(@RequestBody MemberDto request) throws Exception {
