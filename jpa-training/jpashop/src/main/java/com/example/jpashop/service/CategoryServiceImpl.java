@@ -6,9 +6,13 @@ import com.example.jpashop.repository.CategoryRepository;
 import com.example.jpashop.util.CategoryMapper;
 import com.example.jpashop.util.CategoryUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -43,5 +47,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public List<CategoryDto.ParentCategory> getCategories() {
+        List<Category> categories = categoryRepository.findByParentIdIsNull();
+        return categoryMapper.categoryListToCategoryDtoList(categories);
     }
 }

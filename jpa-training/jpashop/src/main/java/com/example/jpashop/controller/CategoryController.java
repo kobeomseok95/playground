@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/category")
@@ -25,5 +27,11 @@ public class CategoryController {
 
         categoryService.deleteCategory(id);
         return "삭제 완료";
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<CategoryDto.ParentCategory>> getCategories() {
+
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.getCategories());
     }
 }

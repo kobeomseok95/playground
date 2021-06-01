@@ -95,4 +95,15 @@ class CategoryServiceTest {
         // then
         verify(categoryRepository).deleteById(anyLong());
     }
+
+    @Test
+    @DisplayName("모든 카테고리 찾기, 부모가 없는 것만 찾고 나머지는 List로 반환")
+    void getCategories() throws Exception {
+
+        // given, when
+        categoryService.getCategories();
+
+        // then
+        verify(categoryRepository).findByParentIdIsNull();
+    }
 }

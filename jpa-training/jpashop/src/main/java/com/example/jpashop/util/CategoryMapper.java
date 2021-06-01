@@ -6,6 +6,8 @@ import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface CategoryMapper {
 
@@ -14,4 +16,6 @@ public interface CategoryMapper {
     Category categoryDtoToCategory(CategoryDto request);
 
     CategoryDto categoryToCategoryDto(Category category);
+
+    List<CategoryDto.ParentCategory> categoryListToCategoryDtoList(List<Category> categories);
 }
