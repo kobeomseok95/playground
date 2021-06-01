@@ -24,6 +24,7 @@ public abstract class Item extends BaseEntity {
     private Long id;
 
     // 영속성 전이
+    @Builder.Default
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CategoryItem> categoryItems = new ArrayList<>();
 
@@ -42,5 +43,11 @@ public abstract class Item extends BaseEntity {
         }
 
         this.stockQuantity -= quantity;
+    }
+
+    public void addCategoryItem(CategoryItem categoryItem) {
+        if (!this.getCategoryItems().contains(categoryItem)) {
+            this.getCategoryItems().add(categoryItem);
+        }
     }
 }

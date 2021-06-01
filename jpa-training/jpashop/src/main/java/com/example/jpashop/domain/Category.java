@@ -22,6 +22,7 @@ public class Category {
     private String name;
 
     // 연관된 아이템 삭제
+    @Builder.Default
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CategoryItem> categoryItems = new ArrayList<>();
 
@@ -38,5 +39,11 @@ public class Category {
     public void addParent(Category parent) {
         this.parent = parent;
         parent.getChildren().add(this);
+    }
+
+    public void addCategoryItem(CategoryItem categoryItem) {
+        if (!this.getCategoryItems().contains(categoryItem)) {
+            this.getCategoryItems().add(categoryItem);
+        }
     }
 }

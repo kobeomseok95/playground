@@ -1,5 +1,6 @@
 package com.example.jpashop.domain;
 
+import com.example.jpashop.domain.item.Album;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ public class CategoryTest {
 
     @Test
     @DisplayName("계층형 카테고리 생성")
-    public void addParent() {
+    void addParent() throws Exception {
 
         // given
         Category parent = Category.builder().name("부모").id(1L).build();
@@ -24,5 +25,22 @@ public class CategoryTest {
         assertAll(
                 () -> assertTrue(parent.getChildren().contains(child)),
                 () -> assertEquals(child.getParent(), parent));
+    }
+
+    @Test
+    @DisplayName("CategoryItem 생성")
+    void addCategoryItem() throws Exception {
+
+        // given
+        Category category = Category.builder().build();
+        CategoryItem categoryItem = CategoryItem.builder().build();
+
+        // when
+        category.addCategoryItem(categoryItem);
+        category.addCategoryItem(categoryItem);
+
+        // then
+        assertTrue(category.getCategoryItems().contains(categoryItem));
+        assertEquals(category.getCategoryItems().size(), 1);
     }
 }
