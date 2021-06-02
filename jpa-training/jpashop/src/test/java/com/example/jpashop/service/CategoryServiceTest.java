@@ -3,6 +3,7 @@ package com.example.jpashop.service;
 import com.example.jpashop.domain.Category;
 import com.example.jpashop.dto.CategoryDto;
 import com.example.jpashop.repository.CategoryRepository;
+import com.example.jpashop.repository.ItemRepository;
 import com.example.jpashop.util.CategoryMapper;
 import com.example.jpashop.util.CategoryUtil;
 import org.junit.jupiter.api.DisplayName;
@@ -90,7 +91,7 @@ class CategoryServiceTest {
     void deleteCategory() throws Exception {
 
         // given, when
-        categoryService.deleteCategory(1L);
+        categoryService.deleteCategory("1");
 
         // then
         verify(categoryRepository).deleteById(anyLong());

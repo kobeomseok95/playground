@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/category")
+@RequestMapping("/categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -23,7 +23,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{categoryId}")
-    public String deleteCategory(@RequestParam("categoryId") Long id) {
+    public String deleteCategory(@PathVariable("categoryId") String id) {
 
         categoryService.deleteCategory(id);
         return "삭제 완료";

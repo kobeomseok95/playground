@@ -8,7 +8,7 @@ public interface CategoryService {
 
     CategoryDto createCategory(CategoryDto categoryDto);
 
-    void deleteCategory(Long id);
+    void deleteCategory(String id);
 
     List<CategoryDto.ParentCategory> getCategories();
 }

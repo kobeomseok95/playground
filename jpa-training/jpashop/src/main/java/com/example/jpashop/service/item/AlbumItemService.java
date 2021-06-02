@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@Transactional
+//@Transactional  // 여기서 트랜잭션 없애보기
 public class AlbumItemService implements ItemService{
 
     private final AlbumMapper albumMapper;
@@ -35,7 +35,8 @@ public class AlbumItemService implements ItemService{
     @Override
     public <T extends ItemDto> void createItem(T request) {
 
-        Category category = categoryRepository.findById(Long.parseLong(request.getCategoryId())).orElseThrow();
+        // category_item이 프록시로 조회되는데 이걸 fetch로 가져오기
+        Category category = categoryRepository.findByIdFetch(Long.parseLong(request.getCategoryId())).orElseThrow();
         Album album = albumMapper.albumDtoToAlbum((ItemDto.AlbumDto) request);
         CategoryItem categoryItem = CategoryItem.builder().category(category).item(album).build();
 

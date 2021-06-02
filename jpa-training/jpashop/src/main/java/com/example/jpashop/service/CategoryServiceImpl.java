@@ -3,6 +3,7 @@ package com.example.jpashop.service;
 import com.example.jpashop.domain.Category;
 import com.example.jpashop.dto.CategoryDto;
 import com.example.jpashop.repository.CategoryRepository;
+import com.example.jpashop.repository.ItemRepository;
 import com.example.jpashop.util.CategoryMapper;
 import com.example.jpashop.util.CategoryUtil;
 import lombok.RequiredArgsConstructor;
@@ -12,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ItemRepository itemRepository;
     private final CategoryMapper categoryMapper;
     private final CategoryUtil categoryUtil;
 
@@ -44,9 +45,11 @@ public class CategoryServiceImpl implements CategoryService {
         return response;
     }
 
+    // 일대다 다대일의 경우 OneToMany쪽 (지금 예제에서는 Item과 Category)
+    // 에서 다 지워줘야 한다.
     @Override
-    public void deleteCategory(Long id) {
-        categoryRepository.deleteById(id);
+    public void deleteCategory(String id) {
+        categoryRepository.deleteById(Long.parseLong(id));
     }
 
     @Override

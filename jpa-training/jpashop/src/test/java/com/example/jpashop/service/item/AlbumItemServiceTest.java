@@ -41,14 +41,14 @@ class AlbumItemServiceTest {
         Category category = mock(Category.class);
 
         when(albumMapper.albumDtoToAlbum(request)).thenReturn(album);
-        when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
+        when(categoryRepository.findByIdFetch(anyLong())).thenReturn(Optional.of(category));
 
         // when
         albumItemService.createItem(request);
 
         // then
         verify(albumMapper).albumDtoToAlbum(request);
-        verify(categoryRepository).findById(anyLong());
+        verify(categoryRepository).findByIdFetch(anyLong());
         verify(itemRepository).save(album);
         verify(category).addCategoryItem(any(CategoryItem.class));
         verify(album).addCategoryItem(any(CategoryItem.class));
