@@ -15,17 +15,11 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-//@Transactional  // 여기서 트랜잭션 없애보기
 public class AlbumItemService implements ItemService{
 
     private final AlbumMapper albumMapper;
     private final ItemRepository itemRepository;
     private final CategoryRepository categoryRepository;
-
-    @Override
-    public List<ItemDto> getItems() {
-        return null;
-    }
 
     @Override
     public ItemDto getItem(String itemId) {

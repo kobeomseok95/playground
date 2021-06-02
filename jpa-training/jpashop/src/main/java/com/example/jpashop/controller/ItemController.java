@@ -23,15 +23,17 @@ public class ItemController {
         return "생성 완료";
     }
 
-//    @PostMapping("/book")
-//    public ResponseEntity<ItemDto> createItem(@RequestBody ItemDto.BookDto bookDto) {
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(itemCRUDService.createItem(bookDto));
-//    }
-//
-//    @PostMapping("/movie")
-//    public ResponseEntity<ItemDto> createItem(@RequestBody ItemDto.MovieDto movieDto) {
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(itemCRUDService.createItem(movieDto));
-//    }
+    @PostMapping("/book")
+    public String createItem(@RequestBody ItemDto.BookDto request) {
+
+        itemCRUDService.createItem(request);
+        return "생성 완료";
+    }
+
+    @PostMapping("/movie")
+    public String createItem(@RequestBody ItemDto.MovieDto request) {
+
+        itemCRUDService.createItem(request);
+        return "생성 완료";
+    }
 }

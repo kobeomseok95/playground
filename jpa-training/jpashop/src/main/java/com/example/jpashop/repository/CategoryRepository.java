@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    @Query("select distinct c from Category c join fetch c.children cc where c.parent is null")
+    @Query("select distinct c from Category c left join fetch c.children cc where c.parent is null")
     List<Category> findByParentIdIsNull();
 
     // left join시 명시

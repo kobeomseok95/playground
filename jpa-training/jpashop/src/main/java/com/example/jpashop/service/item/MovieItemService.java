@@ -1,18 +1,25 @@
 package com.example.jpashop.service.item;
 
+import com.example.jpashop.domain.Category;
+import com.example.jpashop.domain.CategoryItem;
+import com.example.jpashop.domain.item.Book;
+import com.example.jpashop.domain.item.Movie;
 import com.example.jpashop.dto.ItemDto;
+import com.example.jpashop.repository.CategoryRepository;
+import com.example.jpashop.repository.ItemRepository;
+import com.example.jpashop.util.MovieMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class MovieItemService implements ItemService {
 
-
-    @Override
-    public List<ItemDto> getItems() {
-        return null;
-    }
+    private final ItemRepository itemRepository;
+    private final CategoryRepository categoryRepository;
+    private final MovieMapper movieMapper;
 
     @Override
     public ItemDto getItem(String itemId) {
@@ -20,8 +27,15 @@ public class MovieItemService implements ItemService {
     }
 
     @Override
-    public void createItem(ItemDto request) {
+    public <T extends ItemDto> void createItem(T request) {
 
+        Category category = categoryRepository.findByIdFetch(Long.parseLong(request.getCategoryId())).orElseThrow();
+        Movie movie = movieMapper.movieDtoToMovie((ItemDto.MovieDto) request);
+        CategoryItem categoryItem = CategoryItem.builder().category(category).item(movie).build();
+
+        category.addCategoryItem(categoryItem);
+        movie.addCategoryItem(categoryItem);
+        itemRepository.save(movie);
     }
 
     @Override

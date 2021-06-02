@@ -5,12 +5,13 @@ import com.example.jpashop.domain.Address.AddressBuilder;
 import com.example.jpashop.domain.Member;
 import com.example.jpashop.domain.Member.MemberBuilder;
 import com.example.jpashop.dto.MemberDto;
+import com.example.jpashop.dto.MemberDto.MemberDtoBuilder;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-05-31T16:36:16+0900",
+    date = "2021-06-02T16:57:31+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.10 (Amazon.com Inc.)"
 )
 @Component
@@ -36,19 +37,14 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        String city = null;
-        String street = null;
-        String zipcode = null;
-        String name = null;
+        MemberDtoBuilder memberDto = MemberDto.builder();
 
-        city = memberAddressCity( member );
-        street = memberAddressStreet( member );
-        zipcode = memberAddressZipcode( member );
-        name = member.getName();
+        memberDto.city( memberAddressCity( member ) );
+        memberDto.street( memberAddressStreet( member ) );
+        memberDto.zipcode( memberAddressZipcode( member ) );
+        memberDto.name( member.getName() );
 
-        MemberDto memberDto = new MemberDto( name, city, street, zipcode );
-
-        return memberDto;
+        return memberDto.build();
     }
 
     protected Address memberDtoToAddress(MemberDto memberDto) {

@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface ItemService {
 
-    List<ItemDto> getItems();
-
     ItemDto getItem(String itemId);
 
     <T extends ItemDto> void createItem(T request);
