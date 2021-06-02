@@ -37,11 +37,9 @@ public abstract class Item extends BaseEntity {
     }
 
     public void removeStock(int quantity) {
-
         if (this.stockQuantity < quantity) {
             throw new IllegalStateException("재고가 부족합니다.");
         }
-
         this.stockQuantity -= quantity;
     }
 

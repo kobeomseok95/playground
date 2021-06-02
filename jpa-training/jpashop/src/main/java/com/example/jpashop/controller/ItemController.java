@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -15,6 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class ItemController {
 
     private final ItemCRUDService itemCRUDService;
+
+    @GetMapping("/{itemId}")
+    public ResponseEntity<? extends ItemDto> getItem(@PathVariable("itemId") String itemId) {
+        // itemType, categoryId가 나오지 않음
+        return ResponseEntity.status(HttpStatus.OK).body(itemCRUDService.getItem(itemId));
+    }
 
     @PostMapping("/album")
     public String createItem(@RequestBody ItemDto.AlbumDto request) {
