@@ -2,6 +2,7 @@ package com.example.jpashop.domain.item;
 
 import com.example.jpashop.domain.BaseEntity;
 import com.example.jpashop.domain.CategoryItem;
+import com.example.jpashop.dto.ItemDto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -47,5 +48,11 @@ public abstract class Item extends BaseEntity {
         if (!this.getCategoryItems().contains(categoryItem)) {
             this.getCategoryItems().add(categoryItem);
         }
+    }
+
+    public <T extends ItemDto> void updateItem(T request) {
+        this.name = request.getName();
+        this.price = request.getPrice();
+        this.stockQuantity = request.getStockQuantity();
     }
 }

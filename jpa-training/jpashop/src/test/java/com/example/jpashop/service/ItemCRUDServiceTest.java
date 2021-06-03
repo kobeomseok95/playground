@@ -3,6 +3,7 @@ package com.example.jpashop.service;
 import com.example.jpashop.domain.item.Album;
 import com.example.jpashop.domain.item.Book;
 import com.example.jpashop.domain.item.Movie;
+import com.example.jpashop.dto.ItemDto;
 import com.example.jpashop.repository.ItemRepository;
 import com.example.jpashop.service.item.ItemService;
 import com.example.jpashop.util.ItemMapper;
@@ -24,7 +25,7 @@ class ItemCRUDServiceTest {
     @Spy ItemRepository itemRepository;
     @Spy List<ItemService> itemServices;
     @Spy ItemMapper itemMapper;
-    @InjectMocks ItemCRUDService itemCRUDService;
+    @Spy @InjectMocks ItemCRUDService itemCRUDService;
 
     @Test
     @DisplayName("앨범 조회")
@@ -72,5 +73,56 @@ class ItemCRUDServiceTest {
         // then
         verify(itemRepository).findByIdFetch(anyLong());
         verify(itemMapper).map(movie);
+    }
+
+    @Test
+    @DisplayName("앨범 수정")
+    void updateAlbum() throws Exception {
+
+        // given
+        ItemDto.AlbumDto request = mock(ItemDto.AlbumDto.class);
+        Album album = mock(Album.class);
+        when(itemRepository.findById(anyLong())).thenReturn(Optional.of(album));
+
+        // when
+        itemCRUDService.updateItem("1", request);
+
+        // then
+        verify(itemRepository).findById(anyLong());
+        verify(album).updateAlbum(request);
+    }
+
+    @Test
+    @DisplayName("책 수정")
+    void updateBook() throws Exception {
+
+        // given
+        ItemDto.BookDto request = mock(ItemDto.BookDto.class);
+        Book book = mock(Book.class);
+        when(itemRepository.findById(anyLong())).thenReturn(Optional.of(book));
+
+        // when
+        itemCRUDService.updateItem("1", request);
+
+        // then
+        verify(itemRepository).findById(anyLong());
+        verify(book).updateBook(request);
+    }
+
+    @Test
+    @DisplayName("영화 수정")
+    void updateMovie() throws Exception {
+
+        // given
+        ItemDto.MovieDto request = mock(ItemDto.MovieDto.class);
+        Movie movie = mock(Movie.class);
+        when(itemRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+
+        // when
+        itemCRUDService.updateItem("1", request);
+
+        // then
+        verify(itemRepository).findById(anyLong());
+        verify(movie).updateMovie(request);
     }
 }

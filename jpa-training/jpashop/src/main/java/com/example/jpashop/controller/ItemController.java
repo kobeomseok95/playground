@@ -18,13 +18,6 @@ public class ItemController {
 
     private final ItemCRUDService itemCRUDService;
 
-    @GetMapping("/{itemId}")
-    public ResponseEntity<? extends ItemDto> getItem(@PathVariable("itemId") String itemId) {
-
-        // itemType, categoryId가 나오지 않음
-        return ResponseEntity.status(HttpStatus.OK).body(itemCRUDService.getItem(itemId));
-    }
-
     @PostMapping("/")
     public String createItem(@RequestBody ItemDto request) {
 
@@ -32,17 +25,16 @@ public class ItemController {
         return "생성 완료";
     }
 
-//    @PostMapping("/book")
-//    public String createItem(@RequestBody ItemDto.BookDto request) {
-//
-//        itemCRUDService.createItem(request);
-//        return "생성 완료";
-//    }
-//
-//    @PostMapping("/movie")
-//    public String createItem(@RequestBody ItemDto.MovieDto request) {
-//
-//        itemCRUDService.createItem(request);
-//        return "생성 완료";
-//    }
+    @GetMapping("/{itemId}")
+    public ResponseEntity<? extends ItemDto> getItem(@PathVariable("itemId") String itemId) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(itemCRUDService.getItem(itemId));
+    }
+
+    @PatchMapping("/{itemId}")
+    public String updateItem(@PathVariable("itemId") String itemId, @RequestBody ItemDto request) {
+
+        itemCRUDService.updateItem(itemId, request);
+        return "수정 완료";
+    }
 }

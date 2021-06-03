@@ -35,6 +35,26 @@ public class ItemCRUDService {
         return getItemDto(item);
     }
 
+    public void updateItem(String itemId, ItemDto request) {
+        Item item = itemRepository.findById(Long.parseLong(itemId)).orElseThrow();
+        updateItemType(item, request);
+    }
+
+    public void deleteItem(String itemId) {
+
+    }
+
+    // TODO : 리팩토링 필요
+    private void updateItemType(Item item, ItemDto request) {
+        if (item instanceof Album && request instanceof ItemDto.AlbumDto) {
+            ((Album) item).updateAlbum((ItemDto.AlbumDto) request);
+        } else if (item instanceof Book && request instanceof ItemDto.BookDto) {
+            ((Book) item).updateBook((ItemDto.BookDto) request);
+        } else if (item instanceof Movie && request instanceof ItemDto.MovieDto){
+            ((Movie) item).updateMovie((ItemDto.MovieDto) request);
+        }
+    }
+
     private ItemDto getItemDto(Item item) {
         if (item instanceof Album) {
             return itemMapper.map((Album) item);
