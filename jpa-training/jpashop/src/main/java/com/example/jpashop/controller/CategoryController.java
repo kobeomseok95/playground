@@ -19,7 +19,7 @@ public class CategoryController {
     @PostMapping("/")
     public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(categoryService.createCategory(categoryDto));
+        return ResponseEntity.ok(categoryService.createCategory(categoryDto));
     }
 
     @DeleteMapping("/{categoryId}")
@@ -32,6 +32,6 @@ public class CategoryController {
     @GetMapping("/")
     public ResponseEntity<List<CategoryDto.ParentCategory>> getCategories() {
 
-        return ResponseEntity.status(HttpStatus.OK).body(categoryService.getCategories());
+        return ResponseEntity.ok(categoryService.getCategories());
     }
 }

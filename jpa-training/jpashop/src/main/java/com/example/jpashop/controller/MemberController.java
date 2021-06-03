@@ -19,18 +19,18 @@ public class MemberController {
     @GetMapping("/")
     public ResponseEntity<List<MemberDto>> getMembers() {
 
-        return ResponseEntity.status(HttpStatus.OK).body(memberService.getMembers());
+        return ResponseEntity.ok(memberService.getMembers());
     }
 
     @GetMapping("/{memberId}")
     public ResponseEntity<MemberDto> getMembers(@PathVariable("memberId") Long id) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(memberService.getMember(id));
+        return ResponseEntity.ok(memberService.getMember(id));
     }
 
     @PostMapping("/")
     public ResponseEntity<MemberDto> join(@RequestBody MemberDto request) throws Exception {
 
-        return ResponseEntity.status(HttpStatus.OK).body(memberService.join(request));
+        return ResponseEntity.ok(memberService.join(request));
     }
 }
