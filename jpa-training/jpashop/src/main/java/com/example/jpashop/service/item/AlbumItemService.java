@@ -6,18 +6,15 @@ import com.example.jpashop.domain.item.Album;
 import com.example.jpashop.dto.ItemDto;
 import com.example.jpashop.repository.CategoryRepository;
 import com.example.jpashop.repository.ItemRepository;
-import com.example.jpashop.util.AlbumMapper;
+import com.example.jpashop.util.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class AlbumItemService implements ItemService{
 
-    private final AlbumMapper albumMapper;
+    private final ItemMapper itemMapper;
     private final ItemRepository itemRepository;
     private final CategoryRepository categoryRepository;
 
@@ -31,7 +28,7 @@ public class AlbumItemService implements ItemService{
 
         // category_item이 프록시로 조회되는데 이걸 fetch로 가져오기
         Category category = categoryRepository.findByIdFetch(Long.parseLong(request.getCategoryId())).orElseThrow();
-        Album album = albumMapper.albumDtoToAlbum((ItemDto.AlbumDto) request);
+        Album album = itemMapper.map((ItemDto.AlbumDto) request);
         CategoryItem categoryItem = CategoryItem.builder().category(category).item(album).build();
 
         category.addCategoryItem(categoryItem);

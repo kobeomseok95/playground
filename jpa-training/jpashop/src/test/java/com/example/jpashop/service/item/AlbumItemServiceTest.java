@@ -6,7 +6,7 @@ import com.example.jpashop.domain.item.Album;
 import com.example.jpashop.dto.ItemDto;
 import com.example.jpashop.repository.CategoryRepository;
 import com.example.jpashop.repository.ItemRepository;
-import com.example.jpashop.util.AlbumMapper;
+import com.example.jpashop.util.ItemMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,13 +16,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AlbumItemServiceTest {
 
-    @Mock AlbumMapper albumMapper;
+    @Mock ItemMapper albumMapper;
     @Mock ItemRepository itemRepository;
     @Mock CategoryRepository categoryRepository;
     @InjectMocks AlbumItemService albumItemService;
@@ -40,14 +39,14 @@ class AlbumItemServiceTest {
         Album album = mock(Album.class);
         Category category = mock(Category.class);
 
-        when(albumMapper.albumDtoToAlbum(request)).thenReturn(album);
+        when(albumMapper.map(request)).thenReturn(album);
         when(categoryRepository.findByIdFetch(anyLong())).thenReturn(Optional.of(category));
 
         // when
         albumItemService.createItem(request);
 
         // then
-        verify(albumMapper).albumDtoToAlbum(request);
+        verify(albumMapper).map(request);
         verify(categoryRepository).findByIdFetch(anyLong());
         verify(itemRepository).save(album);
         verify(category).addCategoryItem(any(CategoryItem.class));

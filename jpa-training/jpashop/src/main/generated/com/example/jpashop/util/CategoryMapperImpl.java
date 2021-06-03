@@ -1,13 +1,10 @@
 package com.example.jpashop.util;
 
 import com.example.jpashop.domain.Category;
-import com.example.jpashop.domain.Category.CategoryBuilder;
+import com.example.jpashop.domain.CategoryItem;
 import com.example.jpashop.dto.CategoryDto;
-import com.example.jpashop.dto.CategoryDto.CategoryDtoBuilder;
 import com.example.jpashop.dto.CategoryDto.ChildrenCategories;
-import com.example.jpashop.dto.CategoryDto.ChildrenCategories.ChildrenCategoriesBuilder;
 import com.example.jpashop.dto.CategoryDto.ParentCategory;
-import com.example.jpashop.dto.CategoryDto.ParentCategory.ParentCategoryBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -15,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-01T17:40:35+0900",
+    date = "2021-06-03T16:23:19+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.10 (Amazon.com Inc.)"
 )
 @Component
@@ -27,11 +24,18 @@ public class CategoryMapperImpl implements CategoryMapper {
             return null;
         }
 
-        CategoryBuilder category = Category.builder();
+        String name = null;
 
-        category.name( request.getName() );
+        name = request.getName();
 
-        return category.build();
+        Long id = null;
+        List<CategoryItem> categoryItems = null;
+        Category parent = null;
+        List<Category> children = null;
+
+        Category category = new Category( id, name, categoryItems, parent, children );
+
+        return category;
     }
 
     @Override
@@ -40,11 +44,11 @@ public class CategoryMapperImpl implements CategoryMapper {
             return null;
         }
 
-        CategoryDtoBuilder categoryDto = CategoryDto.builder();
+        CategoryDto categoryDto = new CategoryDto();
 
-        categoryDto.name( category.getName() );
+        categoryDto.setName( category.getName() );
 
-        return categoryDto.build();
+        return categoryDto;
     }
 
     @Override
@@ -66,14 +70,14 @@ public class CategoryMapperImpl implements CategoryMapper {
             return null;
         }
 
-        ChildrenCategoriesBuilder childrenCategories = ChildrenCategories.builder();
+        ChildrenCategories childrenCategories = new ChildrenCategories();
 
         if ( category.getId() != null ) {
-            childrenCategories.id( String.valueOf( category.getId() ) );
+            childrenCategories.setId( String.valueOf( category.getId() ) );
         }
-        childrenCategories.name( category.getName() );
+        childrenCategories.setName( category.getName() );
 
-        return childrenCategories.build();
+        return childrenCategories;
     }
 
     protected List<ChildrenCategories> categoryListToChildrenCategoriesList(List<Category> list) {
@@ -94,14 +98,14 @@ public class CategoryMapperImpl implements CategoryMapper {
             return null;
         }
 
-        ParentCategoryBuilder parentCategory = ParentCategory.builder();
+        ParentCategory parentCategory = new ParentCategory();
 
         if ( category.getId() != null ) {
-            parentCategory.id( String.valueOf( category.getId() ) );
+            parentCategory.setId( String.valueOf( category.getId() ) );
         }
-        parentCategory.name( category.getName() );
-        parentCategory.children( categoryListToChildrenCategoriesList( category.getChildren() ) );
+        parentCategory.setName( category.getName() );
+        parentCategory.setChildren( categoryListToChildrenCategoriesList( category.getChildren() ) );
 
-        return parentCategory.build();
+        return parentCategory;
     }
 }

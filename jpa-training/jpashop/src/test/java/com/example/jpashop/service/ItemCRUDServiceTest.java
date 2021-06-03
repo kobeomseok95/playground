@@ -2,7 +2,6 @@ package com.example.jpashop.service;
 
 import com.example.jpashop.domain.item.Album;
 import com.example.jpashop.domain.item.Book;
-import com.example.jpashop.domain.item.Item;
 import com.example.jpashop.domain.item.Movie;
 import com.example.jpashop.repository.ItemRepository;
 import com.example.jpashop.service.item.ItemService;
@@ -11,14 +10,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,14 +32,14 @@ class ItemCRUDServiceTest {
 
         // given
         Album album = mock(Album.class);
-        when(itemRepository.findById(anyLong())).thenReturn(Optional.of(album));
+        when(itemRepository.findByIdFetch(anyLong())).thenReturn(Optional.of(album));
 
         // when
         itemCRUDService.getItem("1");
 
         // then
-        verify(itemRepository).findById(anyLong());
-        verify(itemMapper).albumToAlbumDto(album);
+        verify(itemRepository).findByIdFetch(anyLong());
+        verify(itemMapper).map(album);
     }
 
     @Test
@@ -51,14 +48,14 @@ class ItemCRUDServiceTest {
 
         // given
         Book book = mock(Book.class);
-        when(itemRepository.findById(anyLong())).thenReturn(Optional.of(book));
+        when(itemRepository.findByIdFetch(anyLong())).thenReturn(Optional.of(book));
 
         // when
         itemCRUDService.getItem("1");
 
         // then
-        verify(itemRepository).findById(anyLong());
-        verify(itemMapper).bookToBookDto(book);
+        verify(itemRepository).findByIdFetch(anyLong());
+        verify(itemMapper).map(book);
     }
 
     @Test
@@ -67,13 +64,13 @@ class ItemCRUDServiceTest {
 
         // given
         Movie movie = mock(Movie.class);
-        when(itemRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+        when(itemRepository.findByIdFetch(anyLong())).thenReturn(Optional.of(movie));
 
         // when
         itemCRUDService.getItem("1");
 
         // then
-        verify(itemRepository).findById(anyLong());
-        verify(itemMapper).movieToMovieDto(movie);
+        verify(itemRepository).findByIdFetch(anyLong());
+        verify(itemMapper).map(movie);
     }
 }

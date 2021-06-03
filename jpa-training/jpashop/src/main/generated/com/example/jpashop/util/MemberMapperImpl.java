@@ -1,17 +1,16 @@
 package com.example.jpashop.util;
 
 import com.example.jpashop.domain.Address;
-import com.example.jpashop.domain.Address.AddressBuilder;
 import com.example.jpashop.domain.Member;
-import com.example.jpashop.domain.Member.MemberBuilder;
+import com.example.jpashop.domain.Order;
 import com.example.jpashop.dto.MemberDto;
-import com.example.jpashop.dto.MemberDto.MemberDtoBuilder;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-02T16:57:31+0900",
+    date = "2021-06-03T16:23:19+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.10 (Amazon.com Inc.)"
 )
 @Component
@@ -23,12 +22,18 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        MemberBuilder member = Member.builder();
+        Address address = null;
+        String name = null;
 
-        member.address( memberDtoToAddress( request ) );
-        member.name( request.getName() );
+        address = memberDtoToAddress( request );
+        name = request.getName();
 
-        return member.build();
+        Long id = null;
+        List<Order> orders = null;
+
+        Member member = new Member( id, name, address, orders );
+
+        return member;
     }
 
     @Override
@@ -37,14 +42,19 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        MemberDtoBuilder memberDto = MemberDto.builder();
+        String city = null;
+        String street = null;
+        String zipcode = null;
+        String name = null;
 
-        memberDto.city( memberAddressCity( member ) );
-        memberDto.street( memberAddressStreet( member ) );
-        memberDto.zipcode( memberAddressZipcode( member ) );
-        memberDto.name( member.getName() );
+        city = memberAddressCity( member );
+        street = memberAddressStreet( member );
+        zipcode = memberAddressZipcode( member );
+        name = member.getName();
 
-        return memberDto.build();
+        MemberDto memberDto = new MemberDto( name, city, street, zipcode );
+
+        return memberDto;
     }
 
     protected Address memberDtoToAddress(MemberDto memberDto) {
@@ -52,13 +62,17 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        AddressBuilder address = Address.builder();
+        String city = null;
+        String street = null;
+        String zipcode = null;
 
-        address.city( memberDto.getCity() );
-        address.street( memberDto.getStreet() );
-        address.zipcode( memberDto.getZipcode() );
+        city = memberDto.getCity();
+        street = memberDto.getStreet();
+        zipcode = memberDto.getZipcode();
 
-        return address.build();
+        Address address = new Address( city, street, zipcode );
+
+        return address;
     }
 
     private String memberAddressCity(Member member) {

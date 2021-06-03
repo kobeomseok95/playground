@@ -1,10 +1,22 @@
 package com.example.jpashop.dto;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @SuperBuilder
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "itemType",
+        visible = true)
+@JsonSubTypes({
+        @JsonSubTypes.Type(name = "ALBUM", value = ItemDto.AlbumDto.class),
+        @JsonSubTypes.Type(name = "BOOK", value = ItemDto.BookDto.class),
+        @JsonSubTypes.Type(name = "MOVIE", value = ItemDto.MovieDto.class)
+})
+@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @SuperBuilder
 public abstract class ItemDto {
 
     private String name;

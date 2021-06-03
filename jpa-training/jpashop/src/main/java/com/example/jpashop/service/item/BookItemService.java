@@ -2,22 +2,19 @@ package com.example.jpashop.service.item;
 
 import com.example.jpashop.domain.Category;
 import com.example.jpashop.domain.CategoryItem;
-import com.example.jpashop.domain.item.Album;
 import com.example.jpashop.domain.item.Book;
 import com.example.jpashop.dto.ItemDto;
 import com.example.jpashop.repository.CategoryRepository;
 import com.example.jpashop.repository.ItemRepository;
-import com.example.jpashop.util.BookMapper;
+import com.example.jpashop.util.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class BookItemService implements ItemService {
 
-    private final BookMapper bookMapper;
+    private final ItemMapper itemMapper;
     private final CategoryRepository categoryRepository;
     private final ItemRepository itemRepository;
 
@@ -30,7 +27,7 @@ public class BookItemService implements ItemService {
     public <T extends ItemDto> void createItem(T request) {
 
         Category category = categoryRepository.findByIdFetch(Long.parseLong(request.getCategoryId())).orElseThrow();
-        Book book = bookMapper.bookDtoToBook((ItemDto.BookDto) request);
+        Book book = itemMapper.map((ItemDto.BookDto) request);
         CategoryItem categoryItem = CategoryItem.builder().category(category).item(book).build();
 
         category.addCategoryItem(categoryItem);

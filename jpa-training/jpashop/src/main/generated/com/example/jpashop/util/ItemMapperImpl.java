@@ -4,70 +4,67 @@ import com.example.jpashop.domain.item.Album;
 import com.example.jpashop.domain.item.Book;
 import com.example.jpashop.domain.item.Movie;
 import com.example.jpashop.dto.ItemDto.AlbumDto;
-import com.example.jpashop.dto.ItemDto.AlbumDto.AlbumDtoBuilder;
 import com.example.jpashop.dto.ItemDto.BookDto;
-import com.example.jpashop.dto.ItemDto.BookDto.BookDtoBuilder;
 import com.example.jpashop.dto.ItemDto.MovieDto;
-import com.example.jpashop.dto.ItemDto.MovieDto.MovieDtoBuilder;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-02T20:25:42+0900",
+    date = "2021-06-03T16:23:19+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.10 (Amazon.com Inc.)"
 )
 @Component
 public class ItemMapperImpl implements ItemMapper {
 
     @Override
-    public AlbumDto albumToAlbumDto(Album album) {
+    public AlbumDto map(Album album) {
         if ( album == null ) {
             return null;
         }
 
-        AlbumDtoBuilder<?, ?> albumDto = AlbumDto.builder();
+        AlbumDto albumDto = new AlbumDto();
 
-        albumDto.name( album.getName() );
-        albumDto.price( album.getPrice() );
-        albumDto.stockQuantity( album.getStockQuantity() );
-        albumDto.artist( album.getArtist() );
-        albumDto.genre( album.getGenre() );
+        albumDto.setName( album.getName() );
+        albumDto.setPrice( album.getPrice() );
+        albumDto.setStockQuantity( album.getStockQuantity() );
+        albumDto.setArtist( album.getArtist() );
+        albumDto.setGenre( album.getGenre() );
 
-        return albumDto.build();
+        return albumDto;
     }
 
     @Override
-    public BookDto bookToBookDto(Book book) {
+    public BookDto map(Book book) {
         if ( book == null ) {
             return null;
         }
 
-        BookDtoBuilder<?, ?> bookDto = BookDto.builder();
+        BookDto bookDto = new BookDto();
 
-        bookDto.name( book.getName() );
-        bookDto.price( book.getPrice() );
-        bookDto.stockQuantity( book.getStockQuantity() );
-        bookDto.author( book.getAuthor() );
-        bookDto.isbn( book.getIsbn() );
+        bookDto.setName( book.getName() );
+        bookDto.setPrice( book.getPrice() );
+        bookDto.setStockQuantity( book.getStockQuantity() );
+        bookDto.setAuthor( book.getAuthor() );
+        bookDto.setIsbn( book.getIsbn() );
 
-        return bookDto.build();
+        return bookDto;
     }
 
     @Override
-    public MovieDto movieToMovieDto(Movie movie) {
+    public MovieDto map(Movie movie) {
         if ( movie == null ) {
             return null;
         }
 
-        MovieDtoBuilder<?, ?> movieDto = MovieDto.builder();
+        MovieDto movieDto = new MovieDto();
 
-        movieDto.name( movie.getName() );
-        movieDto.price( movie.getPrice() );
-        movieDto.stockQuantity( movie.getStockQuantity() );
-        movieDto.director( movie.getDirector() );
-        movieDto.distributor( movie.getDistributor() );
+        movieDto.setName( movie.getName() );
+        movieDto.setPrice( movie.getPrice() );
+        movieDto.setStockQuantity( movie.getStockQuantity() );
+        movieDto.setDirector( movie.getDirector() );
+        movieDto.setDistributor( movie.getDistributor() );
 
-        return movieDto.build();
+        return movieDto;
     }
 }

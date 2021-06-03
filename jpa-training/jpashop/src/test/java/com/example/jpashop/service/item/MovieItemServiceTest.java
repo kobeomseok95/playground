@@ -2,12 +2,11 @@ package com.example.jpashop.service.item;
 
 import com.example.jpashop.domain.Category;
 import com.example.jpashop.domain.CategoryItem;
-import com.example.jpashop.domain.item.Book;
 import com.example.jpashop.domain.item.Movie;
 import com.example.jpashop.dto.ItemDto;
 import com.example.jpashop.repository.CategoryRepository;
 import com.example.jpashop.repository.ItemRepository;
-import com.example.jpashop.util.MovieMapper;
+import com.example.jpashop.util.ItemMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -27,7 +25,7 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class MovieItemServiceTest {
 
-    @Mock MovieMapper movieMapper;
+    @Mock ItemMapper movieMapper;
     @Mock CategoryRepository categoryRepository;
     @Mock ItemRepository itemRepository;
 
@@ -46,14 +44,14 @@ class MovieItemServiceTest {
         Movie movie = mock(Movie.class);
         Category category = mock(Category.class);
 
-        when(movieMapper.movieDtoToMovie(request)).thenReturn(movie);
+        when(movieMapper.map(request)).thenReturn(movie);
         when(categoryRepository.findByIdFetch(anyLong())).thenReturn(Optional.of(category));
 
         // when
         movieItemService.createItem(request);
 
         // then
-        verify(movieMapper).movieDtoToMovie(request);
+        verify(movieMapper).map(request);
         verify(categoryRepository).findByIdFetch(anyLong());
         verify(itemRepository).save(movie);
         verify(category).addCategoryItem(any(CategoryItem.class));

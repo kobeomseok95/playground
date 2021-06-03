@@ -5,7 +5,7 @@ import lombok.*;
 import java.util.List;
 
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
+@NoArgsConstructor @AllArgsConstructor @Builder
 public class CategoryDto {
 
     private String name;
@@ -13,7 +13,7 @@ public class CategoryDto {
 
 
     @Getter @Setter
-    @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
+    @NoArgsConstructor @AllArgsConstructor @Builder
     public static class ParentCategory {
 
         private String id;
@@ -23,7 +23,7 @@ public class CategoryDto {
     }
 
     @Getter @Setter
-    @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
+    @NoArgsConstructor @AllArgsConstructor @Builder
     public static class ChildrenCategories {
 
         private String id;

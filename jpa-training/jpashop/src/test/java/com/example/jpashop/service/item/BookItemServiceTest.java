@@ -2,12 +2,11 @@ package com.example.jpashop.service.item;
 
 import com.example.jpashop.domain.Category;
 import com.example.jpashop.domain.CategoryItem;
-import com.example.jpashop.domain.item.Album;
 import com.example.jpashop.domain.item.Book;
 import com.example.jpashop.dto.ItemDto;
 import com.example.jpashop.repository.CategoryRepository;
 import com.example.jpashop.repository.ItemRepository;
-import com.example.jpashop.util.BookMapper;
+import com.example.jpashop.util.ItemMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -29,7 +27,7 @@ class BookItemServiceTest {
 
     @Mock ItemRepository itemRepository;
     @Mock CategoryRepository categoryRepository;
-    @Mock BookMapper bookMapper;
+    @Mock ItemMapper bookMapper;
 
     @Spy @InjectMocks BookItemService bookItemService;
 
@@ -46,14 +44,14 @@ class BookItemServiceTest {
         Book book = mock(Book.class);
         Category category = mock(Category.class);
 
-        when(bookMapper.bookDtoToBook(request)).thenReturn(book);
+        when(bookMapper.map(request)).thenReturn(book);
         when(categoryRepository.findByIdFetch(anyLong())).thenReturn(Optional.of(category));
 
         // when
         bookItemService.createItem(request);
 
         // then
-        verify(bookMapper).bookDtoToBook(request);
+        verify(bookMapper).map(request);
         verify(categoryRepository).findByIdFetch(anyLong());
         verify(itemRepository).save(book);
         verify(category).addCategoryItem(any(CategoryItem.class));

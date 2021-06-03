@@ -37,11 +37,11 @@ public class ItemCRUDService {
 
     private ItemDto getItemDto(Item item) {
         if (item instanceof Album) {
-            return itemMapper.albumToAlbumDto((Album) item);
+            return itemMapper.map((Album) item);
         } else if (item instanceof Book) {
-            return itemMapper.bookToBookDto((Book) item);
+            return itemMapper.map((Book) item);
         } else {
-            return itemMapper.movieToMovieDto((Movie) item);
+            return itemMapper.map((Movie) item);
         }
     }
 
