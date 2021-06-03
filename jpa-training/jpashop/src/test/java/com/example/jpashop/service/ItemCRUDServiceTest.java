@@ -125,4 +125,15 @@ class ItemCRUDServiceTest {
         verify(itemRepository).findById(anyLong());
         verify(movie).updateMovie(request);
     }
+
+    @Test
+    @DisplayName("상품(아무거나) 삭제")
+    void deleteItem() throws Exception {
+
+        // given, when
+        itemCRUDService.deleteItem("1");
+
+        // then
+        verify(itemRepository).deleteById(anyLong());
+    }
 }

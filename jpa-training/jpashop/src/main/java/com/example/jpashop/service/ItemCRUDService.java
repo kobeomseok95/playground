@@ -41,7 +41,7 @@ public class ItemCRUDService {
     }
 
     public void deleteItem(String itemId) {
-
+        itemRepository.deleteById(Long.parseLong(itemId));
     }
 
     // TODO : 리팩토링 필요

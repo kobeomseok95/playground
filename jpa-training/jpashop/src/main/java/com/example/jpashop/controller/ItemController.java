@@ -28,7 +28,7 @@ public class ItemController {
     @GetMapping("/{itemId}")
     public ResponseEntity<? extends ItemDto> getItem(@PathVariable("itemId") String itemId) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(itemCRUDService.getItem(itemId));
+        return ResponseEntity.ok(itemCRUDService.getItem(itemId));
     }
 
     @PatchMapping("/{itemId}")
@@ -36,5 +36,12 @@ public class ItemController {
 
         itemCRUDService.updateItem(itemId, request);
         return "수정 완료";
+    }
+
+    @DeleteMapping("/{itemId}")
+    public String deleteItem(@PathVariable("itemId") String itemId) {
+
+        itemCRUDService.deleteItem(itemId);
+        return "삭제 완료";
     }
 }
