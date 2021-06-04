@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public void createOrder(OrderDto orderDto) {
 
-        // TODO : 도메인에게 Delivery 생성 위임하기
+        // TODO : 아이템들을 한번에 가져오고 재고를 remove 해주는 방법 고민하기
         // member
         Member member = memberRepository.findById(Long.parseLong(orderDto.getMemberId())).orElseThrow();
 
@@ -46,12 +46,12 @@ public class OrderServiceImpl implements OrderService{
 
         Order order = Order.createOrder(member, delivery, orderItems);
         orderRepository.save(order);
-        
-        // TODO : ORDER_ITEM 에서 ORDER ID가 NULL로 나옴
     }
 
     @Override
     public void cancelOrder(String orderId) {
-
+        
+        // TODO : 주문 취소 작성시 Order 객체 상태가 Cancel, 아이템들의 재고 원상태로 복구
+        
     }
 }
