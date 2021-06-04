@@ -1,15 +1,13 @@
 package com.example.jpashop.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.example.jpashop.dto.OrderDto;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 public class Delivery {
@@ -27,4 +25,13 @@ public class Delivery {
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
+
+    public static Delivery createDelivery(OrderDto.AddressDto request) {
+        return Delivery.builder()
+                .address(Address.builder()
+                        .city(request.getCity()).street(request.getStreet()).zipcode(request.getZipcode())
+                        .build())
+                .status(DeliveryStatus.READY)
+                .build();
+    }
 }

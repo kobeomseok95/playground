@@ -13,14 +13,14 @@ public interface MemberMapper {
 
     MemberMapper memberMapper = Mappers.getMapper(MemberMapper.class);
 
-    @Mappings(value = {
-        @Mapping(source = "city", target = "address.city"),
-        @Mapping(source = "street", target = "address.street"),
-        @Mapping(source = "zipcode", target = "address.zipcode")
+    @Mappings({
+            @Mapping(source = "city", target = "address.city"),
+            @Mapping(source = "street", target = "address.street"),
+            @Mapping(source = "zipcode", target = "address.zipcode")
     })
     Member memberDtoToMember(MemberDto request);
 
-    @Mappings(value = {
+    @Mappings({
             @Mapping(source = "address.city", target = "city"),
             @Mapping(source = "address.street", target = "street"),
             @Mapping(source = "address.zipcode", target = "zipcode")

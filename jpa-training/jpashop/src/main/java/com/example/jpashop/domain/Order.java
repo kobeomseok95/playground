@@ -1,9 +1,7 @@
 package com.example.jpashop.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.example.jpashop.domain.item.Item;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "ORDERS")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 public class Order extends BaseEntity {
@@ -26,14 +24,33 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<OrderItem> orderItems = new ArrayList<>();
 
     // cascade : Order가 삭제되면 Delivery 정보도 같이 삭제됨.
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "DELIVERY_ID")
     private Delivery delivery;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
+
+        Order order = Order.builder()
+                .member(member)
+                .orderItems(orderItems)
+                .delivery(delivery)
+                .status(OrderStatus.ORDER)
+                .build();
+
+        orderItems.forEach(o -> o.addOrder(order));
+
+        return order;
+    }
+
+    public void cancelOrder() {
+        this.status = OrderStatus.CANCEL;
+    }
 }

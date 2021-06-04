@@ -1,16 +1,17 @@
 package com.example.jpashop.domain;
 
 import com.example.jpashop.domain.item.Item;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.example.jpashop.dto.OrderDto;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 public class OrderItem {
@@ -28,6 +29,15 @@ public class OrderItem {
     @JoinColumn(name = "ITEM_ID")
     private Item item;
 
-    private int orderPride;
     private int count;
+
+    public static OrderItem createOrderItem(Item item, OrderDto.OrderItemDto orderItemDto) {
+
+        item.removeStock(orderItemDto.getCount());
+        return OrderItem.builder().item(item).count(orderItemDto.getCount()).build();
+    }
+
+    public void addOrder(Order order) {
+        this.order = order;
+    }
 }
