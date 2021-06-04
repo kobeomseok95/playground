@@ -81,12 +81,13 @@ public class OrderServiceTest {
     void cancelOrder() throws Exception {
 
         // given
-
+        Order order = mock(Order.class);
+        when(orderRepository.findIdFetch(anyLong())).thenReturn(Optional.of(order));
 
         // when
-
+        orderService.cancelOrder("1");
 
         // then
-
+        verify(orderRepository).findIdFetch(anyLong());
     }
 }

@@ -11,9 +11,14 @@ import java.util.List;
 
 public class OrderDummy {
 
-    public Order createOrderedOrder() {
+    public Order createOrdered(Item item1, Item item2) {
         return Order.builder()
-                .id(100L).status(OrderStatus.ORDER)
+                .id(100L)
+                .delivery(Delivery.builder().status(DeliveryStatus.READY).build())
+                .orderItems(
+                        List.of(OrderItem.builder().item(item1).count(10).build(),
+                                OrderItem.builder().item(item2).count(30).build()
+                )).status(OrderStatus.ORDER)
                 .build();
     }
 

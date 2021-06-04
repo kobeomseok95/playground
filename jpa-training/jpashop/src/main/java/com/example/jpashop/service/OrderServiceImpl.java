@@ -50,8 +50,8 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void cancelOrder(String orderId) {
-        
-        // TODO : 주문 취소 작성시 Order 객체 상태가 Cancel, 아이템들의 재고 원상태로 복구
-        
+
+        Order order = orderRepository.findIdFetch(Long.parseLong(orderId)).orElseThrow();
+        order.cancelOrder();
     }
 }

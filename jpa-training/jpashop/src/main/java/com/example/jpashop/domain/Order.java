@@ -52,5 +52,9 @@ public class Order extends BaseEntity {
 
     public void cancelOrder() {
         this.status = OrderStatus.CANCEL;
+        this.getDelivery().cancelDelivery();
+        this.getOrderItems().forEach(oi -> {
+            oi.getItem().addStock(oi.getCount());
+        });
     }
 }

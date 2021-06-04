@@ -34,4 +34,8 @@ public class Delivery {
                 .status(DeliveryStatus.READY)
                 .build();
     }
+
+    public void cancelDelivery() {
+        this.status = DeliveryStatus.CANCEL;
+    }
 }

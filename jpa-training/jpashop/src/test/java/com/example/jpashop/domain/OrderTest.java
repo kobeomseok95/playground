@@ -1,6 +1,7 @@
 package com.example.jpashop.domain;
 
-import com.example.jpashop.domain.item.Item;
+import com.example.jpashop.domain.item.Album;
+import com.example.jpashop.domain.item.Book;
 import com.example.jpashop.dummy.OrderDummy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,12 +41,18 @@ public class OrderTest {
     void cancelOrder() throws Exception {
 
         // given
-        Order ordered = orderDummy.createOrderedOrder();
+        Album album = Album.builder().stockQuantity(50).build();
+        Book book = Book.builder().stockQuantity(40).build();
+        Order ordered = orderDummy.createOrdered(album, book);
 
         // when
         ordered.cancelOrder();
 
         // then
-        assertEquals(ordered.getStatus(), OrderStatus.CANCEL);
+        assertAll(
+                () -> assertEquals(ordered.getStatus(), OrderStatus.CANCEL),
+                () -> assertEquals(ordered.getDelivery().getStatus(), DeliveryStatus.CANCEL),
+                () -> assertEquals(album.getStockQuantity(), 60),
+                () -> assertEquals(book.getStockQuantity(), 70));
     }
 }
