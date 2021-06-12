@@ -93,7 +93,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("회원 한명 조회")
+    @DisplayName("회원 한명 조회시, 회원의 주문까지 같이 조회하기")
     void getMember() throws Exception {
 
         // given

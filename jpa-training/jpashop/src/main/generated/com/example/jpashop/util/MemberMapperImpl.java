@@ -1,16 +1,22 @@
 package com.example.jpashop.util;
 
 import com.example.jpashop.domain.Address;
+import com.example.jpashop.domain.Address.AddressBuilder;
 import com.example.jpashop.domain.Member;
+import com.example.jpashop.domain.Member.MemberBuilder;
 import com.example.jpashop.domain.Order;
+import com.example.jpashop.domain.Order.OrderBuilder;
 import com.example.jpashop.dto.MemberDto;
+import com.example.jpashop.dto.OrderDto;
+import com.example.jpashop.dto.OrderDto.OrderDtoBuilder;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-04T14:25:00+0900",
+    date = "2021-06-12T21:25:56+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.10 (Amazon.com Inc.)"
 )
 @Component
@@ -22,18 +28,13 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        Address address = null;
-        String name = null;
+        MemberBuilder member = Member.builder();
 
-        address = memberDtoToAddress( request );
-        name = request.getName();
+        member.address( memberDtoToAddress( request ) );
+        member.name( request.getName() );
+        member.orders( orderDtoListToOrderList( request.getOrders() ) );
 
-        Long id = null;
-        List<Order> orders = null;
-
-        Member member = new Member( id, name, address, orders );
-
-        return member;
+        return member.build();
     }
 
     @Override
@@ -46,13 +47,15 @@ public class MemberMapperImpl implements MemberMapper {
         String street = null;
         String zipcode = null;
         String name = null;
+        List<OrderDto> orders = null;
 
         city = memberAddressCity( member );
         street = memberAddressStreet( member );
         zipcode = memberAddressZipcode( member );
         name = member.getName();
+        orders = orderListToOrderDtoList( member.getOrders() );
 
-        MemberDto memberDto = new MemberDto( name, city, street, zipcode );
+        MemberDto memberDto = new MemberDto( name, city, street, zipcode, orders );
 
         return memberDto;
     }
@@ -62,17 +65,36 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        String city = null;
-        String street = null;
-        String zipcode = null;
+        AddressBuilder address = Address.builder();
 
-        city = memberDto.getCity();
-        street = memberDto.getStreet();
-        zipcode = memberDto.getZipcode();
+        address.city( memberDto.getCity() );
+        address.street( memberDto.getStreet() );
+        address.zipcode( memberDto.getZipcode() );
 
-        Address address = new Address( city, street, zipcode );
+        return address.build();
+    }
 
-        return address;
+    protected Order orderDtoToOrder(OrderDto orderDto) {
+        if ( orderDto == null ) {
+            return null;
+        }
+
+        OrderBuilder order = Order.builder();
+
+        return order.build();
+    }
+
+    protected List<Order> orderDtoListToOrderList(List<OrderDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<Order> list1 = new ArrayList<Order>( list.size() );
+        for ( OrderDto orderDto : list ) {
+            list1.add( orderDtoToOrder( orderDto ) );
+        }
+
+        return list1;
     }
 
     private String memberAddressCity(Member member) {
@@ -118,5 +140,28 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
         return zipcode;
+    }
+
+    protected OrderDto orderToOrderDto(Order order) {
+        if ( order == null ) {
+            return null;
+        }
+
+        OrderDtoBuilder orderDto = OrderDto.builder();
+
+        return orderDto.build();
+    }
+
+    protected List<OrderDto> orderListToOrderDtoList(List<Order> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<OrderDto> list1 = new ArrayList<OrderDto>( list.size() );
+        for ( Order order : list ) {
+            list1.add( orderToOrderDto( order ) );
+        }
+
+        return list1;
     }
 }
