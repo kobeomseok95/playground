@@ -14,6 +14,7 @@ import java.util.List;
 @RequestMapping("/categories")
 public class CategoryController {
 
+    // TODO : 카테고리 번호 조회 시, 해당하는 아이템 페이징 처리해서 가져오기
     private final CategoryService categoryService;
 
     @PostMapping("/")

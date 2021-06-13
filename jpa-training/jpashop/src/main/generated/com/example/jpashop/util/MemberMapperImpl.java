@@ -1,14 +1,15 @@
 package com.example.jpashop.util;
 
 import com.example.jpashop.domain.Address;
-import com.example.jpashop.domain.Address.AddressBuilder;
+import com.example.jpashop.domain.Delivery;
 import com.example.jpashop.domain.Member;
-import com.example.jpashop.domain.Member.MemberBuilder;
 import com.example.jpashop.domain.Order;
-import com.example.jpashop.domain.Order.OrderBuilder;
+import com.example.jpashop.domain.OrderItem;
+import com.example.jpashop.domain.OrderStatus;
 import com.example.jpashop.dto.MemberDto;
 import com.example.jpashop.dto.OrderDto;
-import com.example.jpashop.dto.OrderDto.OrderDtoBuilder;
+import com.example.jpashop.dto.OrderDto.AddressDto;
+import com.example.jpashop.dto.OrderDto.OrderItemDto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-12T21:25:56+0900",
+    date = "2021-06-13T20:17:56+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.10 (Amazon.com Inc.)"
 )
 @Component
@@ -28,13 +29,19 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        MemberBuilder member = Member.builder();
+        Address address = null;
+        List<Order> orders = null;
+        String name = null;
 
-        member.address( memberDtoToAddress( request ) );
-        member.name( request.getName() );
-        member.orders( orderDtoListToOrderList( request.getOrders() ) );
+        address = memberDtoToAddress( request );
+        orders = orderDtoListToOrderList( request.getOrders() );
+        name = request.getName();
 
-        return member.build();
+        Long id = null;
+
+        Member member = new Member( id, name, address, orders );
+
+        return member;
     }
 
     @Override
@@ -65,13 +72,17 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        AddressBuilder address = Address.builder();
+        String city = null;
+        String street = null;
+        String zipcode = null;
 
-        address.city( memberDto.getCity() );
-        address.street( memberDto.getStreet() );
-        address.zipcode( memberDto.getZipcode() );
+        city = memberDto.getCity();
+        street = memberDto.getStreet();
+        zipcode = memberDto.getZipcode();
 
-        return address.build();
+        Address address = new Address( city, street, zipcode );
+
+        return address;
     }
 
     protected Order orderDtoToOrder(OrderDto orderDto) {
@@ -79,9 +90,15 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        OrderBuilder order = Order.builder();
+        Long id = null;
+        Member member = null;
+        List<OrderItem> orderItems = null;
+        Delivery delivery = null;
+        OrderStatus status = null;
 
-        return order.build();
+        Order order = new Order( id, member, orderItems, delivery, status );
+
+        return order;
     }
 
     protected List<Order> orderDtoListToOrderList(List<OrderDto> list) {
@@ -147,9 +164,13 @@ public class MemberMapperImpl implements MemberMapper {
             return null;
         }
 
-        OrderDtoBuilder orderDto = OrderDto.builder();
+        String memberId = null;
+        AddressDto addressDto = null;
+        List<OrderItemDto> orderItemDtos = null;
 
-        return orderDto.build();
+        OrderDto orderDto = new OrderDto( memberId, addressDto, orderItemDtos );
+
+        return orderDto;
     }
 
     protected List<OrderDto> orderListToOrderDtoList(List<Order> list) {

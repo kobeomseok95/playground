@@ -5,10 +5,12 @@ import com.example.jpashop.domain.Member;
 import com.example.jpashop.domain.Order;
 import com.example.jpashop.domain.OrderItem;
 import com.example.jpashop.domain.item.Album;
+import com.example.jpashop.domain.item.Book;
 import com.example.jpashop.domain.item.Item;
 import com.example.jpashop.dto.OrderDto;
 import com.example.jpashop.repository.ItemRepository;
 import com.example.jpashop.repository.MemberRepository;
+import com.example.jpashop.repository.OrderItemRepository;
 import com.example.jpashop.repository.OrderRepository;
 import com.example.jpashop.util.OrderMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -33,6 +35,7 @@ public class OrderServiceTest {
     @Mock OrderRepository orderRepository;
     @Mock MemberRepository memberRepository;
     @Mock ItemRepository itemRepository;
+    @Mock OrderItemRepository orderItemRepository;
     @InjectMocks OrderServiceImpl orderService;
 
     @Test
