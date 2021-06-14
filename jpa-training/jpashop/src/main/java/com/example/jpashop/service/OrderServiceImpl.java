@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,19 +37,15 @@ public class OrderServiceImpl implements OrderService{
     public void createOrder(OrderDto orderDto) {
 
         // TODO : 벌크 연산 해결 참고하기, 2개의 아이템 주문 기준 총 9번의 쿼리 발생
-        // member
+        // TODO : expect : query 6, 실패! 1번 줄었다..
         Member member = memberRepository.findById(Long.parseLong(orderDto.getMemberId())).orElseThrow();
-
-        // delivery
         Delivery delivery = Delivery.createDelivery(orderDto.getAddressDto());
 
-        // orderItems
-        List<OrderItem> orderItems = orderDto.getOrderItemDtos()
-                .stream().map(i -> {
-                    Item item = itemRepository.findById(Long.parseLong(i.getItemId())).orElseThrow();
-                    return OrderItem.createOrderItem(item, i);
-                }).collect(Collectors.toList());
+        List<Item> items = itemRepository.findByIdIn(orderDto.getOrderItemDtos()
+                .stream().map(o -> Long.parseLong(o.getItemId())).collect(toList()))
+                .stream().sorted(Comparator.comparing(Item::getId)).collect(toList());
 
+        List<OrderItem> orderItems = OrderItem.createOrderItem(orderDto.getOrderItemDtos(), items);
         Order order = Order.createOrder(member, delivery, orderItems);
         orderRepository.save(order);
     }

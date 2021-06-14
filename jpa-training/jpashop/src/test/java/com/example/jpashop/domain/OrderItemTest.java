@@ -10,8 +10,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderItemTest {
@@ -22,15 +25,22 @@ class OrderItemTest {
 
         // given
         Album album = Album.builder().id(100L).stockQuantity(100).build();
-        OrderDto.OrderItemDto orderItemDto = OrderDto.OrderItemDto.builder().itemId("100")
-                .count(10).build();
+        Book book = Book.builder().id(101L).stockQuantity(20).build();
+        Book book2 = Book.builder().id(99L).stockQuantity(70).build();
+        List<Item> sortedItems = List.of(album, book, book2).stream()
+                .sorted(Comparator.comparing(Item::getId)).collect(toList());
+        List<OrderDto.OrderItemDto> orderItemDtos = List.of(
+                OrderDto.OrderItemDto.builder().itemId("99").count(30).build(),
+                OrderDto.OrderItemDto.builder().itemId("100").count(10).build(),
+                OrderDto.OrderItemDto.builder().itemId("101").count(10).build());
 
         // when
-        OrderItem orderItem = OrderItem.createOrderItem(album, orderItemDto);
+        List<OrderItem> orderItem = OrderItem.createOrderItem(orderItemDtos, sortedItems);
 
         // then
         assertAll(
-                () -> assertEquals(orderItem.getItem(), album),
-                () -> assertEquals(90, album.getStockQuantity()));
+                () -> assertEquals(album.getStockQuantity(), 90),
+                () -> assertEquals(book.getStockQuantity(), 10),
+                () -> assertEquals(book2.getStockQuantity(), 40));
     }
 }

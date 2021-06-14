@@ -17,10 +17,20 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SuperBuilder
+@TableGenerator(
+        name = "ITEM_GENERATOR",
+        table = "ITEM_SEQUENCE",
+        pkColumnName = "SEQUENCE_NUMBER",
+        valueColumnName = "next_val",
+        allocationSize = 1000
+)
 public abstract class Item extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy = GenerationType.TABLE,
+            generator = "ITEM_GENERATOR"
+    )
     @Column(name = "ITEM_ID")
     private Long id;
 
