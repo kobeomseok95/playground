@@ -10,6 +10,8 @@ import com.example.jpashop.service.item.ItemService;
 import com.example.jpashop.util.ItemMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,19 @@ public class ItemCRUDService {
     private final List<ItemService> itemServices;
     private final ItemMapper itemMapper;
     private final ItemRepository itemRepository;
+
+    public Page<ItemDto> getItems(Pageable pageable) {
+
+        return itemRepository.findAll(pageable).map(i -> {
+            if (i instanceof Album) {
+                return itemMapper.map((Album) i);
+            } else if (i instanceof Book) {
+                return itemMapper.map((Book) i);
+            } else {
+                return itemMapper.map((Movie) i);
+            }
+        });
+    }
 
     public void createItem(ItemDto request) {
         ItemService itemService = getItemService(request.getItemType());

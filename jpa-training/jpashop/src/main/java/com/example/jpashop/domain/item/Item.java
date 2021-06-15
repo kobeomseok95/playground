@@ -16,7 +16,7 @@ import java.util.List;
 @DiscriminatorColumn(name = "ITEM_TYPE")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 @TableGenerator(
         name = "ITEM_GENERATOR",

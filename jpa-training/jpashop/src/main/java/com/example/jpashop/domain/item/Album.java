@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("album")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 public class Album extends Item {
 

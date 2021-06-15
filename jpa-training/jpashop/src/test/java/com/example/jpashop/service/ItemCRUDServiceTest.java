@@ -2,6 +2,7 @@ package com.example.jpashop.service;
 
 import com.example.jpashop.domain.item.Album;
 import com.example.jpashop.domain.item.Book;
+import com.example.jpashop.domain.item.Item;
 import com.example.jpashop.domain.item.Movie;
 import com.example.jpashop.dto.ItemDto;
 import com.example.jpashop.repository.ItemRepository;
@@ -13,7 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +30,23 @@ class ItemCRUDServiceTest {
     @Spy List<ItemService> itemServices;
     @Spy ItemMapper itemMapper;
     @Spy @InjectMocks ItemCRUDService itemCRUDService;
+
+    @Test
+    @DisplayName("전체 아이템 페이징 조회")
+    void getItems() throws Exception {
+
+        // given
+        PageRequest pageRequest = mock(PageRequest.class);
+        Page<Item> items = mock(Page.class);
+        when(itemRepository.findAll(pageRequest)).thenReturn(items);
+
+        // when
+        itemCRUDService.getItems(pageRequest);
+
+        // then
+        verify(itemRepository).findAll(pageRequest);
+        verify(items, atLeastOnce()).map(any());
+    }
 
     @Test
     @DisplayName("앨범 조회")

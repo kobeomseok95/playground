@@ -4,6 +4,9 @@ import com.example.jpashop.dto.ItemDto;
 import com.example.jpashop.service.ItemCRUDService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,18 @@ import java.util.Map;
 public class ItemController {
 
     private final ItemCRUDService itemCRUDService;
+
+    @GetMapping("/web")
+    public ResponseEntity<Page<ItemDto>> getItemsWeb(Pageable pageable) {
+
+        return ResponseEntity.ok(itemCRUDService.getItems(pageable));
+    }
+
+//    @GetMapping("/mobile")
+//    public ResponseEntity<Slice<ItemDto>> getItemsMobile(Pageable pageable) {
+//
+//        return ResponseEntity.ok(itemCRUDService.getItems(pageable));
+//    }
 
     @PostMapping("/")
     public String createItem(@RequestBody ItemDto request) {

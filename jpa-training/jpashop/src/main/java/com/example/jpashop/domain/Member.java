@@ -24,5 +24,6 @@ public class Member extends BaseEntity {
     private Address address;
 
     @OneToMany(mappedBy = "member")
+    @Builder.Default
     private List<Order> orders = new ArrayList<>();
 }

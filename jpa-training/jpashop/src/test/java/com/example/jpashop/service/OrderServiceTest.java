@@ -10,22 +10,17 @@ import com.example.jpashop.domain.item.Item;
 import com.example.jpashop.dto.OrderDto;
 import com.example.jpashop.repository.ItemRepository;
 import com.example.jpashop.repository.MemberRepository;
-import com.example.jpashop.repository.OrderItemRepository;
 import com.example.jpashop.repository.OrderRepository;
-import com.example.jpashop.util.OrderMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.*;
 

@@ -17,6 +17,7 @@ public class JpashopApplication {
         SpringApplication.run(JpashopApplication.class, args);
     }
 
+    // random UUID로 생성
     @Bean
     public AuditorAware<String> auditorProvider() {
         return () -> Optional.of(UUID.randomUUID().toString());

@@ -1,5 +1,6 @@
 package com.example.jpashop.service;
 
+import com.example.jpashop.domain.Address;
 import com.example.jpashop.domain.Member;
 import com.example.jpashop.dto.MemberDto;
 import com.example.jpashop.repository.MemberRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
