@@ -4,14 +4,17 @@ import com.example.jpashop.domain.item.Album;
 import com.example.jpashop.domain.item.Book;
 import com.example.jpashop.domain.item.Movie;
 import com.example.jpashop.dto.ItemDto.AlbumDto;
+import com.example.jpashop.dto.ItemDto.AlbumDto.AlbumDtoBuilder;
 import com.example.jpashop.dto.ItemDto.BookDto;
+import com.example.jpashop.dto.ItemDto.BookDto.BookDtoBuilder;
 import com.example.jpashop.dto.ItemDto.MovieDto;
+import com.example.jpashop.dto.ItemDto.MovieDto.MovieDtoBuilder;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-14T14:50:56+0900",
+    date = "2021-06-15T12:29:50+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.10 (Amazon.com Inc.)"
 )
 @Component
@@ -23,15 +26,15 @@ public class ItemMapperImpl implements ItemMapper {
             return null;
         }
 
-        AlbumDto albumDto = new AlbumDto();
+        AlbumDtoBuilder<?, ?> albumDto = AlbumDto.builder();
 
-        albumDto.setName( album.getName() );
-        albumDto.setPrice( album.getPrice() );
-        albumDto.setStockQuantity( album.getStockQuantity() );
-        albumDto.setArtist( album.getArtist() );
-        albumDto.setGenre( album.getGenre() );
+        albumDto.name( album.getName() );
+        albumDto.price( album.getPrice() );
+        albumDto.stockQuantity( album.getStockQuantity() );
+        albumDto.artist( album.getArtist() );
+        albumDto.genre( album.getGenre() );
 
-        return albumDto;
+        return albumDto.build();
     }
 
     @Override
@@ -40,15 +43,15 @@ public class ItemMapperImpl implements ItemMapper {
             return null;
         }
 
-        BookDto bookDto = new BookDto();
+        BookDtoBuilder<?, ?> bookDto = BookDto.builder();
 
-        bookDto.setName( book.getName() );
-        bookDto.setPrice( book.getPrice() );
-        bookDto.setStockQuantity( book.getStockQuantity() );
-        bookDto.setAuthor( book.getAuthor() );
-        bookDto.setIsbn( book.getIsbn() );
+        bookDto.name( book.getName() );
+        bookDto.price( book.getPrice() );
+        bookDto.stockQuantity( book.getStockQuantity() );
+        bookDto.author( book.getAuthor() );
+        bookDto.isbn( book.getIsbn() );
 
-        return bookDto;
+        return bookDto.build();
     }
 
     @Override
@@ -57,14 +60,14 @@ public class ItemMapperImpl implements ItemMapper {
             return null;
         }
 
-        MovieDto movieDto = new MovieDto();
+        MovieDtoBuilder<?, ?> movieDto = MovieDto.builder();
 
-        movieDto.setName( movie.getName() );
-        movieDto.setPrice( movie.getPrice() );
-        movieDto.setStockQuantity( movie.getStockQuantity() );
-        movieDto.setDirector( movie.getDirector() );
-        movieDto.setDistributor( movie.getDistributor() );
+        movieDto.name( movie.getName() );
+        movieDto.price( movie.getPrice() );
+        movieDto.stockQuantity( movie.getStockQuantity() );
+        movieDto.director( movie.getDirector() );
+        movieDto.distributor( movie.getDistributor() );
 
-        return movieDto;
+        return movieDto.build();
     }
 }

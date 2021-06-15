@@ -25,7 +25,7 @@ import static java.util.stream.Collectors.*;
         valueColumnName = "next_val",
         allocationSize = 1000
 )
-public class OrderItem {
+public class OrderItem extends BaseEntity{
 
     @Id
     @GeneratedValue(

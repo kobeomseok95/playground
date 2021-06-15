@@ -1,6 +1,7 @@
 package com.example.jpashop.domain.item;
 
 import com.example.jpashop.domain.BaseEntity;
+import com.example.jpashop.domain.BaseTimeEntity;
 import com.example.jpashop.domain.CategoryItem;
 import com.example.jpashop.dto.ItemDto;
 import lombok.*;

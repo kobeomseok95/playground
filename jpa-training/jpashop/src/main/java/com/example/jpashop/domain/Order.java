@@ -1,6 +1,5 @@
 package com.example.jpashop.domain;
 
-import com.example.jpashop.domain.item.Item;
 import lombok.*;
 
 import javax.persistence.*;
