@@ -27,12 +27,6 @@ public class ItemController {
         return ResponseEntity.ok(itemCRUDService.getItems(pageable));
     }
 
-//    @GetMapping("/mobile")
-//    public ResponseEntity<Slice<ItemDto>> getItemsMobile(Pageable pageable) {
-//
-//        return ResponseEntity.ok(itemCRUDService.getItems(pageable));
-//    }
-
     @PostMapping("/")
     public String createItem(@RequestBody ItemDto request) {
 

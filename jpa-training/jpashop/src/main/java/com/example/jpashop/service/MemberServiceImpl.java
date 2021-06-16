@@ -1,17 +1,21 @@
 package com.example.jpashop.service;
 
-import com.example.jpashop.domain.Address;
 import com.example.jpashop.domain.Member;
+import com.example.jpashop.domain.Order;
+import com.example.jpashop.domain.OrderItem;
 import com.example.jpashop.dto.MemberDto;
 import com.example.jpashop.repository.MemberRepository;
+import com.example.jpashop.repository.OrderItemRepository;
+import com.example.jpashop.repository.OrderRepository;
 import com.example.jpashop.util.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+    private final OrderRepository orderRepository;
     private final MemberMapper memberMapper;
 
     @Override
@@ -26,14 +31,17 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findAll()
                 .stream()
                 .map(memberMapper::memberToMemberDto)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     @Override
     public MemberDto getMember(Long id) {
-        return memberMapper.memberToMemberDto(memberRepository.findById(id).orElseThrow(() -> {
-            throw new IllegalStateException("일치하는 회원이 없습니다.");
-        }));
+
+        Member member = memberRepository.findByIdFetch(id).orElseThrow();
+        List<Order> orders = orderRepository.findByOrderIdsFetch(member.getOrders()
+                .stream().map(Order::getId).collect(toList()));
+
+        return MemberDto.mapMemberDto(member, orders);
     }
 
     @Override

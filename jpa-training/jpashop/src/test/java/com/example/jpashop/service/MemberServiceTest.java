@@ -1,14 +1,19 @@
 package com.example.jpashop.service;
 
 import com.example.jpashop.domain.Member;
+import com.example.jpashop.domain.Order;
+import com.example.jpashop.domain.OrderItem;
 import com.example.jpashop.dto.MemberDto;
 import com.example.jpashop.repository.MemberRepository;
+import com.example.jpashop.repository.OrderItemRepository;
+import com.example.jpashop.repository.OrderRepository;
 import com.example.jpashop.util.MemberMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -28,10 +33,37 @@ class MemberServiceTest {
     MemberRepository memberRepository;
     @Mock
     MemberMapper memberMapper;
+    @Mock
+    OrderRepository orderRepository;
 
     @Spy
     @InjectMocks
     MemberServiceImpl memberService;
+
+    @Test
+    @DisplayName("회원 조회시, 주문 정보 모두 가져오기")
+    public void getMember() throws Exception {
+
+        // given
+        Member member = mock(Member.class);
+        when(memberRepository.findByIdFetch(anyLong())).thenReturn(Optional.of(member));
+
+        List<Order> orderList = mock(List.class);
+        when(orderRepository.findByOrderIdsFetch(anyList())).thenReturn(orderList);
+
+        MemberDto memberDto = mock(MemberDto.class);
+        MockedStatic<MemberDto> staticMemberDto = mockStatic(MemberDto.class);
+        staticMemberDto.when(() -> MemberDto.mapMemberDto(member, orderList))
+                .thenReturn(memberDto);
+
+        // when
+        memberService.getMember(10L);
+
+        // then
+        verify(memberRepository).findByIdFetch(anyLong());
+        verify(orderRepository).findByOrderIdsFetch(anyList());
+        staticMemberDto.verify(() -> MemberDto.mapMemberDto(member, orderList));
+    }
 
     @Test
     @DisplayName("회원가입")
@@ -74,7 +106,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("모든 회원 조회 (일단 멤버만)")
+    @DisplayName("모든 회원 조회")
     void getAllMembers() throws Exception {
 
         // given
@@ -90,23 +122,5 @@ class MemberServiceTest {
 
         // then
         verify(memberRepository).findAll();
-    }
-
-    @Test
-    @DisplayName("회원 한명 조회시, 회원의 주문까지 같이 조회하기")
-    void getMember() throws Exception {
-
-        // given
-        Member member = mock(Member.class);
-        MemberDto memberDto = mock(MemberDto.class);
-        when(memberRepository.findById(anyLong())).thenReturn(Optional.of(member));
-        when(memberMapper.memberToMemberDto(member)).thenReturn(memberDto);
-
-        // when
-        memberService.getMember(100L);
-
-        // then
-        verify(memberRepository).findById(anyLong());
-        verify(memberMapper).memberToMemberDto(member);
     }
 }

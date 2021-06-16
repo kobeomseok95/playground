@@ -8,7 +8,6 @@ import com.example.jpashop.domain.item.Item;
 import com.example.jpashop.dto.OrderDto;
 import com.example.jpashop.repository.ItemRepository;
 import com.example.jpashop.repository.MemberRepository;
-import com.example.jpashop.repository.OrderItemRepository;
 import com.example.jpashop.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,13 +26,10 @@ public class OrderServiceImpl implements OrderService{
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
-    private final OrderItemRepository orderItemRepository;
 
     @Override
     public void createOrder(OrderDto orderDto) {
 
-        // TODO : 벌크 연산 해결 참고하기, 2개의 아이템 주문 기준 총 9번의 쿼리 발생
-        // TODO : expect : query 6, 실패! 1번 줄었다..
         Member member = memberRepository.findById(Long.parseLong(orderDto.getMemberId())).orElseThrow();
         Delivery delivery = Delivery.createDelivery(orderDto.getAddressDto());
 
