@@ -2,18 +2,16 @@ package com.example.jpashop.service;
 
 import com.example.jpashop.domain.Member;
 import com.example.jpashop.domain.Order;
-import com.example.jpashop.domain.OrderItem;
 import com.example.jpashop.dto.MemberDto;
 import com.example.jpashop.repository.MemberRepository;
-import com.example.jpashop.repository.OrderItemRepository;
 import com.example.jpashop.repository.OrderRepository;
 import com.example.jpashop.util.MemberMapper;
+import com.example.jpashop.util.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 
@@ -25,23 +23,23 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
     private final MemberMapper memberMapper;
+    private final OrderMapper orderMapper;
 
     @Override
     public List<MemberDto> getMembers() {
         return memberRepository.findAll()
                 .stream()
-                .map(memberMapper::memberToMemberDto)
+                .map(memberMapper::map)
                 .collect(toList());
     }
 
     @Override
     public MemberDto getMember(Long id) {
 
-        Member member = memberRepository.findByIdFetch(id).orElseThrow();
-        List<Order> orders = orderRepository.findByOrderIdsFetch(member.getOrders()
-                .stream().map(Order::getId).collect(toList()));
-
-        return MemberDto.mapMemberDto(member, orders);
+        List<Order> orderList = orderRepository.findByMemberIdFetch(id);
+        return orderList.isEmpty()
+                ? memberMapper.map(memberRepository.findById(id).orElseThrow())
+                : orderMapper.map(orderList);
     }
 
     @Override
@@ -50,7 +48,7 @@ public class MemberServiceImpl implements MemberService {
         validDuplicateMemberName(request.getName());
         Member member = memberMapper.memberDtoToMember(request);
         memberRepository.save(member);
-        return memberMapper.memberToMemberDto(member);
+        return memberMapper.map(member);
     }
 
     @Override

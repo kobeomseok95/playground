@@ -22,7 +22,6 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getMembers());
     }
 
-    // TODO : 멤버 조회 시 주문 까지 같이 가져오기
     @GetMapping("/{memberId}")
     public ResponseEntity<MemberDto> getMembers(@PathVariable("memberId") Long id) {
 

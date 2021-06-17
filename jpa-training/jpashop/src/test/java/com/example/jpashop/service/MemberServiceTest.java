@@ -2,12 +2,11 @@ package com.example.jpashop.service;
 
 import com.example.jpashop.domain.Member;
 import com.example.jpashop.domain.Order;
-import com.example.jpashop.domain.OrderItem;
 import com.example.jpashop.dto.MemberDto;
 import com.example.jpashop.repository.MemberRepository;
-import com.example.jpashop.repository.OrderItemRepository;
 import com.example.jpashop.repository.OrderRepository;
 import com.example.jpashop.util.MemberMapper;
+import com.example.jpashop.util.OrderMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +33,8 @@ class MemberServiceTest {
     @Mock
     MemberMapper memberMapper;
     @Mock
+    OrderMapper orderMapper;
+    @Mock
     OrderRepository orderRepository;
 
     @Spy
@@ -41,32 +42,52 @@ class MemberServiceTest {
     MemberServiceImpl memberService;
 
     @Test
-    @DisplayName("회원 조회시, 주문 정보 모두 가져오기")
-    public void getMember() throws Exception {
+    @DisplayName("회원 조회시, 주문 정보 모두 가져오기, 주문이 있을 경우")
+    void getMember() throws Exception {
 
         // given
-        Member member = mock(Member.class);
-        when(memberRepository.findByIdFetch(anyLong())).thenReturn(Optional.of(member));
-
         List<Order> orderList = mock(List.class);
-        when(orderRepository.findByOrderIdsFetch(anyList())).thenReturn(orderList);
+        when(orderRepository.findByMemberIdFetch(anyLong())).thenReturn(orderList);
+        when(orderList.isEmpty()).thenReturn(false);
 
         MemberDto memberDto = mock(MemberDto.class);
-        MockedStatic<MemberDto> staticMemberDto = mockStatic(MemberDto.class);
-        staticMemberDto.when(() -> MemberDto.mapMemberDto(member, orderList))
-                .thenReturn(memberDto);
+        when(orderMapper.map(orderList)).thenReturn(memberDto);
 
         // when
         memberService.getMember(10L);
 
         // then
-        verify(memberRepository).findByIdFetch(anyLong());
-        verify(orderRepository).findByOrderIdsFetch(anyList());
-        staticMemberDto.verify(() -> MemberDto.mapMemberDto(member, orderList));
+        verify(orderRepository).findByMemberIdFetch(anyLong());
+        verify(orderMapper).map(orderList);
+    }
+
+    @Test
+    @DisplayName("회원 조회시, 주문 정보 모두 가져오기, 주문이 없을 경우")
+    void getMemberV2() throws Exception {
+
+        // given
+        List<Order> orders = mock(List.class);
+        when(orderRepository.findByMemberIdFetch(anyLong())).thenReturn(orders);
+        when(orders.isEmpty()).thenReturn(true);
+
+        Member member = mock(Member.class);
+        when(memberRepository.findById(anyLong())).thenReturn(Optional.of(member));
+
+        MemberDto memberDto = mock(MemberDto.class);
+        when(memberMapper.map(member)).thenReturn(memberDto);
+
+        // when
+        memberService.getMember(10L);
+
+        // then
+        verify(orderRepository).findByMemberIdFetch(anyLong());
+        verify(memberRepository).findById(anyLong());
+        verify(memberMapper).map(member);
     }
 
     @Test
     @DisplayName("회원가입")
+
     void join() throws Exception {
 
         // given
@@ -76,7 +97,7 @@ class MemberServiceTest {
 
         when(memberMapper.memberDtoToMember(request)).thenReturn(member);
         when(memberRepository.save(member)).thenReturn(member);
-        when(memberMapper.memberToMemberDto(member)).thenReturn(response);
+        when(memberMapper.map(member)).thenReturn(response);
 
         // when
         memberService.join(request);
@@ -85,7 +106,7 @@ class MemberServiceTest {
         verify(memberService).validDuplicateMemberName(any());
         verify(memberMapper).memberDtoToMember(request);
         verify(memberRepository).save(member);
-        verify(memberMapper).memberToMemberDto(member);
+        verify(memberMapper).map(member);
     }
 
     @Test
@@ -113,9 +134,9 @@ class MemberServiceTest {
         List<MemberDto> memberDtos = mock(List.class);
 
         when(memberRepository.findAll().stream()
-                .map(memberMapper::memberToMemberDto)
+                .map(memberMapper::map)
                 .collect(Collectors.toList()))
-        .thenReturn(memberDtos);
+                .thenReturn(memberDtos);
 
         // when
         memberService.getMembers();

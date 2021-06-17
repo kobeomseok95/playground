@@ -25,5 +25,5 @@ public interface MemberMapper {
             @Mapping(source = "address.street", target = "street"),
             @Mapping(source = "address.zipcode", target = "zipcode")
     })
-    MemberDto memberToMemberDto(Member member);
+    MemberDto map(Member member);
 }
