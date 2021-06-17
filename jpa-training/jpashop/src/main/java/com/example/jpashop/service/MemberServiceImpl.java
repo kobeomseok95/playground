@@ -21,8 +21,8 @@ import static java.util.stream.Collectors.*;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
-    private final OrderRepository orderRepository;
     private final MemberMapper memberMapper;
+    private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
 
     @Override

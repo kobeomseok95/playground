@@ -19,7 +19,6 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final ItemRepository itemRepository;
     private final CategoryMapper categoryMapper;
     private final CategoryUtil categoryUtil;
 

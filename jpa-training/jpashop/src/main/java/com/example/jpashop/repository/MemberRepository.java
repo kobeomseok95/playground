@@ -10,12 +10,4 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByName(String name);
-
-//     MultipleBagFetchException 발생
-    @Query("select distinct m from Member m " +
-            "join fetch m.orders o " +
-            "join fetch o.delivery d " +
-            "where m.id = :id " +
-            "order by o.createdAt desc")
-    Optional<Member> findByIdFetch(@Param("id") Long id);
 }
