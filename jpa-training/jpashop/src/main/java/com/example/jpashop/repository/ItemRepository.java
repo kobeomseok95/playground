@@ -21,12 +21,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findByIdIn(Collection<Long> itemIds);
 
-    @Modifying(clearAutomatically = true)   // JPQL이기 때문에 clear만 해줘도 된다.
-    @Query("update Item i set i.stockQuantity = i.stockQuantity where i.id in :itemIds")
-    void updateItemStockQuantity(@Param("itemIds") List<Long> itemIds);
+//    @Modifying(clearAutomatically = true)   // JPQL이기 때문에 clear만 해줘도 된다.
+//    @Query("update Item i set i.stockQuantity = i.stockQuantity where i.id in :itemIds")
+//    void updateItemStockQuantity(@Param("itemIds") List<Long> itemIds);
 
     @Override
     Page<Item> findAll(Pageable pageable);
-
-//    Slice<Item> findAll(Pageable pageable);
 }
