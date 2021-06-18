@@ -14,10 +14,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long>, ItemQueryRepository {
 
-    @Query("select i from Item i join fetch CategoryItem ci where i.id = :itemId")
-    Optional<Item> findByIdFetch(@Param("itemId") Long id);
+//    @Query("select i from Item i join fetch CategoryItem ci where i.id = :itemId")
+//    Optional<Item> findByIdFetch(@Param("itemId") Long id);
 
     List<Item> findByIdIn(Collection<Long> itemIds);
 
