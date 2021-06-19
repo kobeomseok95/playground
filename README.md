@@ -20,3 +20,5 @@
   - MSA 다시 학습하기
 - 05.26(금)
   - JPA Cascade로 영속성전이, 값타입 복습, 테이블 매핑 다시해보기
+- 06.19(토)
+  - Docker로 Elastic Search 실행 및 간단한 CRUD 해보기
