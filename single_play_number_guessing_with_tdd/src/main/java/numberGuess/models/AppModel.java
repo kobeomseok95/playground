@@ -11,14 +11,18 @@ public class AppModel {
     private static final String SINGLE_PLAYER_GAME = "Single player game" + NEW_LINE + "I'm thinking of a number between 1 and 100."
             + NEW_LINE + "Enter your guess: ";
     private static final String GUESS_IS_LOW_NUMBER = "Your guess is too low." + NEW_LINE + "Enter your guess: ";
-    private final PositiveIntegerGenerator generator;
+    private static final String GUESS_IS_HIGH_NUMBER = "Your guess is too high." + NEW_LINE + "Enter your guess: ";
+    private static final String CORRECT_MESSAGE = "Correct! ";
 
+    private final PositiveIntegerGenerator generator;
     private boolean isCompleted;
+    private boolean isSinglePlayMode;
     private String output;
 
     public AppModel(PositiveIntegerGenerator generator) {
         this.generator = generator;
         this.isCompleted = false;
+        this.isSinglePlayMode = false;
         this.output = MODE_SELECT_MESSAGE;
     }
 
@@ -31,15 +35,32 @@ public class AppModel {
     }
 
     public void processInput(String input) {
+        if (!isSinglePlayMode) {
+            selectGameMode(input);
+        } else {
+            guessingAnswer(input);
+        }
+    }
+
+    private void guessingAnswer(String input) {
+        int guess = Integer.parseInt(input);
+        int answer = generator.generateLessThanOrEqualToHundread();
+
+        if (answer > guess) {
+            output = GUESS_IS_LOW_NUMBER;
+        } else if (answer < guess) {
+            output = GUESS_IS_HIGH_NUMBER;
+        } else {
+            output = CORRECT_MESSAGE;
+        }
+    }
+
+    private void selectGameMode(String input) {
         if (input.equals("1")) {
             output = SINGLE_PLAYER_GAME;
-        } else if(input.equals("3")) {
+            isSinglePlayMode = true;
+        } else if (input.equals("3")) {
             isCompleted = true;
-        }
-
-        // TODO : 최소한의 단위테스트만 통과했다.
-        if (input.equals("40") || input.equals("29") || input.equals("9")) {
-            output = GUESS_IS_LOW_NUMBER;
         }
     }
 }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -90,5 +91,42 @@ class AppModelTest {
 
         // then
         assertTrue(actual.equals("Your guess is too low." + NEW_LINE + "Enter your guess: "));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"50, 60", "80, 81"})
+    @DisplayName("정답보다 높은 경우 메세지 출력")
+    void sut_correctly_prints_too_high_message_in_single_player_game(int answer, int guess) {
+
+        // given
+        AppModel model = new AppModel(new PositiveIntegerGeneratorStub(answer));
+        model.processInput("1");
+        model.flushOutput();
+
+        // when
+        model.processInput(Integer.toString(guess));
+        String actual = model.flushOutput();
+
+        // then
+        assertTrue(actual.equals("Your guess is too high." + NEW_LINE + "Enter your guess: "));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 3, 10, 100})
+    @DisplayName("정답을 맞췄을 경우 맞았다는 메세지 출력")
+    void sut_correctly_prints_correct_message_in_single_player_game(int answer) {
+
+        // given
+        AppModel model = new AppModel(new PositiveIntegerGeneratorStub(answer));
+        model.processInput("1");
+        model.flushOutput();
+        int guess = answer;
+
+        // when
+        model.processInput(Integer.toString(guess));
+        String actual = model.flushOutput();
+
+        // then
+        assertTrue(actual.startsWith("Correct! "));
     }
 }
