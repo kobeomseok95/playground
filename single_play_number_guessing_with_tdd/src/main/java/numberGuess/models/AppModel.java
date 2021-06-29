@@ -34,6 +34,7 @@ public class AppModel {
         return output;
     }
 
+    // TODO : 리팩터링 완료
     public void processInput(String input) {
         if (!isSinglePlayMode) {
             selectGameMode(input);
