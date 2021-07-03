@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppModelTest {
@@ -108,7 +109,7 @@ class AppModelTest {
         String actual = model.flushOutput();
 
         // then
-        assertTrue(actual.equals("Your guess is too high." + NEW_LINE + "Enter your guess: "));
+        assertThat(actual).isEqualTo("Your guess is too high." + NEW_LINE + "Enter your guess: ");
     }
 
     @ParameterizedTest
@@ -184,8 +185,8 @@ class AppModelTest {
         String actual = model.flushOutput();
 
         // then
-        assertTrue(actual.endsWith("1: Single player game" + NEW_LINE + "2: Multiplayer game" + NEW_LINE + "3: Exit"
-                + NEW_LINE + "Enter selection: "));
+        assertThat(actual).endsWith("1: Single player game" + NEW_LINE + "2: Multiplayer game" + NEW_LINE + "3: Exit"
+                + NEW_LINE + "Enter selection: ");
     }
 
     @Test
