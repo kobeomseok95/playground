@@ -187,4 +187,20 @@ class AppModelTest {
         assertTrue(actual.endsWith("1: Single player game" + NEW_LINE + "2: Multiplayer game" + NEW_LINE + "3: Exit"
                 + NEW_LINE + "Enter selection: "));
     }
+
+    @Test
+    @DisplayName("한 게임 끝나고 게임 종료하기")
+    void sut_returns_to_mode_selection_if_single_player_game_finished() {
+
+        // given
+        AppModel model = new AppModel(new PositiveIntegerGeneratorStub(50));
+        model.processInput("1");
+        model.processInput("50");
+
+        // when
+        model.processInput("3");
+
+        // then
+        assertTrue(model.isCompleted());
+    }
 }

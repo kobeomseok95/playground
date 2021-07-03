@@ -61,6 +61,7 @@ public class AppModel {
         } else {
             output = CORRECT_MESSAGE + NEW_LINE + (fails + 1) + (fails == 0 ? " guess." : " guesses.") + NEW_LINE;
             output += MODE_SELECT_MESSAGE;
+            isSinglePlayMode = false;
         }
     }
 
