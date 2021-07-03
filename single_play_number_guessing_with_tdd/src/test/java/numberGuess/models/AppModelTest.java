@@ -152,37 +152,20 @@ class AppModelTest {
         assertTrue(actual.contains((fails + 1) + " guesses." + NEW_LINE));
     }
 
-//    @Test
-//    @DisplayName("한 번에 맞췄을 경우, ")
+    @Test
+    @DisplayName("한 번에 맞췄을 경우, guess 출력")
+    void sut_correctly_prints_one_guess_if_single_player_game_finished() {
+
+        // given
+        AppModel model = new AppModel(new PositiveIntegerGeneratorStub(50));
+        model.processInput("1");
+        model.flushOutput();
+        model.processInput("50");
+
+        // when
+        String actual = model.flushOutput();
+
+        // then
+        assertTrue(actual.contains("1 guess."));
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
