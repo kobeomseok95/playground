@@ -129,4 +129,60 @@ class AppModelTest {
         // then
         assertTrue(actual.startsWith("Correct! "));
     }
+
+    @DisplayName("게임이 끝날 때, 시도한 횟수 출력")
+    @ParameterizedTest
+    @ValueSource(ints = { 1, 10, 100 })
+    void sut_correctly_prints_guess_count_if_single_player_game_finished(int fails) {
+
+        // given
+        AppModel model = new AppModel(new PositiveIntegerGeneratorStub(50));
+        model.processInput("1");
+        for (int i = 0; i < fails; i++) {
+            model.processInput("30");
+        }
+        model.flushOutput();
+        model.processInput("50");
+
+        // when
+        String actual = model.flushOutput();
+
+        // then
+        System.out.println("actual = " + actual);
+        assertTrue(actual.contains((fails + 1) + " guesses." + NEW_LINE));
+    }
+
+//    @Test
+//    @DisplayName("한 번에 맞췄을 경우, ")
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

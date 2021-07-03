@@ -18,12 +18,18 @@ public class AppModel {
     private boolean isCompleted;
     private boolean isSinglePlayMode;
     private String output;
+    private int fails;
+
+    interface Processor {
+        Processor run(String input);
+    }
 
     public AppModel(PositiveIntegerGenerator generator) {
         this.generator = generator;
         this.isCompleted = false;
         this.isSinglePlayMode = false;
         this.output = MODE_SELECT_MESSAGE;
+        this.fails = 0;
     }
 
     public boolean isCompleted() {
@@ -47,11 +53,12 @@ public class AppModel {
         int answer = generator.generateLessThanOrEqualToHundread();
 
         if (answer > guess) {
+            ++fails;
             output = GUESS_IS_LOW_NUMBER;
         } else if (answer < guess) {
             output = GUESS_IS_HIGH_NUMBER;
         } else {
-            output = CORRECT_MESSAGE;
+            output = CORRECT_MESSAGE + NEW_LINE + (fails + 1) + " guesses." + NEW_LINE;
         }
     }
 
