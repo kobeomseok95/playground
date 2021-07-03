@@ -59,8 +59,8 @@ public class AppModel {
             ++fails;
             output = GUESS_IS_HIGH_NUMBER;
         } else {
-            output = CORRECT_MESSAGE + NEW_LINE + (fails + 1) +
-                    (fails == 0 ? " guess." : " guesses.") + NEW_LINE;
+            output = CORRECT_MESSAGE + NEW_LINE + (fails + 1) + (fails == 0 ? " guess." : " guesses.") + NEW_LINE;
+            output += MODE_SELECT_MESSAGE;
         }
     }
 

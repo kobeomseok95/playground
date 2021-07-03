@@ -168,4 +168,23 @@ class AppModelTest {
         // then
         assertTrue(actual.contains("1 guess."));
     }
+
+    @Test
+    @DisplayName("게임이 종료되었을 경우, 게임을 다시 고르는 메세지를 출력해야 한다.")
+    void sut_prints_select_mode_message_if_single_player_game_finished() {
+
+        // given
+        AppModel model = new AppModel(new PositiveIntegerGeneratorStub(50));
+        model.processInput("1");
+        model.flushOutput();
+
+
+        // when
+        model.processInput("50");
+        String actual = model.flushOutput();
+
+        // then
+        assertTrue(actual.endsWith("1: Single player game" + NEW_LINE + "2: Multiplayer game" + NEW_LINE + "3: Exit"
+                + NEW_LINE + "Enter selection: "));
+    }
 }
