@@ -3,6 +3,7 @@ package com.example.awsec2s3practice.controllers;
 import com.example.awsec2s3practice.services.interfaces.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/boards")
@@ -17,7 +18,7 @@ public class BoardController {
     }
 
     @PostMapping("/")
-    public void createBoard() {
+    public void createBoard(@RequestPart MultipartFile files) {
 
     }
 
