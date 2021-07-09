@@ -15,6 +15,4 @@ public class BoardDto {
     private String title;
 
     private String text;
-
-    private MultipartFile files;
 }
