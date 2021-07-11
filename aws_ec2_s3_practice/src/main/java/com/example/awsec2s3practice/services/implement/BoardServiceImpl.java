@@ -7,6 +7,7 @@ import com.example.awsec2s3practice.repositories.BoardRepository;
 import com.example.awsec2s3practice.services.interfaces.BoardService;
 import com.example.awsec2s3practice.services.interfaces.S3Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,8 +16,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+// TODO : Connection 에러 뜨는 거 해결하기
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -49,14 +52,8 @@ public class BoardServiceImpl implements BoardService {
 
     private Long saveBoard(BoardDto boardDto) {
 
-        Board board = Board.builder()
-                .title(boardDto.getTitle())
-                .text(boardDto.getText())
-                .imageURL("")
-                .build();
-
+        Board board = Board.of(boardDto);
         Board savedBoard = boardRepository.save(board);
-
         return savedBoard.getId();
     }
 
@@ -76,7 +73,6 @@ public class BoardServiceImpl implements BoardService {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(file.getContentType());
 
-        // TODO : WARN 안뜨게 개선하기
         try (InputStream inputStream = file.getInputStream()){
             s3Service.uploadFile(inputStream, objectMetadata, fileName);
         } catch(IOException e) {
@@ -86,15 +82,14 @@ public class BoardServiceImpl implements BoardService {
 
     private Long saveBoard(BoardDto boardDto, List<String> fileURLs) {
 
-        Board board = Board.builder()
-                .imageURL(String.join(",", fileURLs))
-                .title(boardDto.getTitle())
-                .text(boardDto.getText())
-                .build();
-
+        String fileURL = insertSeparatorToFileURLs(fileURLs);
+        Board board = Board.of(boardDto, fileURL);
         Board savedBoard = boardRepository.save(board);
-
         return savedBoard.getId();
+    }
+
+    private String insertSeparatorToFileURLs(List<String> fileURLs) {
+        return String.join(",", fileURLs);
     }
 
     private String getFilename(MultipartFile file) {

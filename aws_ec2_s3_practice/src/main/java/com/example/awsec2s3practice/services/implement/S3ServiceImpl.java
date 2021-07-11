@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
 
@@ -22,7 +21,6 @@ public class S3ServiceImpl implements S3Service {
     private final AmazonS3Client amazonS3Client;
     private final S3Component s3Component;
 
-    // TODO : WARN 메세지 분석 후 리팩토링
     @Override
     public void uploadFile(InputStream inputStream, ObjectMetadata objectMetadata, String fileName) {
         amazonS3Client.putObject(

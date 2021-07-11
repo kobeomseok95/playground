@@ -1,5 +1,6 @@
 package com.example.awsec2s3practice.entities;
 
+import com.example.awsec2s3practice.dtos.BoardDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,4 +27,22 @@ public class Board {
     private String text;
 
     private String imageURL;
+
+    public static Board of(BoardDto boardDto) {
+
+        return  Board.builder()
+                .title(boardDto.getTitle())
+                .text(boardDto.getText())
+                .imageURL("")
+                .build();
+    }
+
+    public static Board of(BoardDto boardDto, String fileURL) {
+
+        return Board.builder()
+                .imageURL(fileURL)
+                .title(boardDto.getTitle())
+                .text(boardDto.getText())
+                .build();
+    }
 }
