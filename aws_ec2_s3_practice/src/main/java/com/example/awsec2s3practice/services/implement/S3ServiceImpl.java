@@ -36,8 +36,7 @@ public class S3ServiceImpl implements S3Service {
     @Override
     public void deleteFile(List<String> filenames) {
         filenames.forEach(filename -> {
-            DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(s3Component.getBucket(), filename);
-            amazonS3Client.deleteObject(deleteObjectRequest);
+            amazonS3Client.deleteObject(new DeleteObjectRequest(s3Component.getBucket(), filename));
         });
     }
 }
