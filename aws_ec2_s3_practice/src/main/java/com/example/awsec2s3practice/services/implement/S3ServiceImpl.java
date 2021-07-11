@@ -1,9 +1,7 @@
 package com.example.awsec2s3practice.services.implement;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.*;
 import com.example.awsec2s3practice.services.components.S3Component;
 import com.example.awsec2s3practice.services.interfaces.S3Service;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +31,13 @@ public class S3ServiceImpl implements S3Service {
         return filenames.stream()
                 .map(filename -> String.valueOf(amazonS3Client.getUrl(s3Component.getBucket(), filename)))
                 .collect(toList());
+    }
+
+    @Override
+    public void deleteFile(List<String> filenames) {
+        filenames.forEach(filename -> {
+            DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(s3Component.getBucket(), filename);
+            amazonS3Client.deleteObject(deleteObjectRequest);
+        });
     }
 }

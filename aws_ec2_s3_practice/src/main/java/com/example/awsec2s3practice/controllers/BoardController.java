@@ -1,6 +1,7 @@
 package com.example.awsec2s3practice.controllers;
 
 import com.example.awsec2s3practice.dtos.BoardDto;
+import com.example.awsec2s3practice.dtos.BoardResponseDto;
 import com.example.awsec2s3practice.services.interfaces.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +21,9 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/{boardID}")
-    public void getBoard(@PathVariable("boardID") String boardId) {
+    public BoardResponseDto getBoard(@PathVariable("boardID") Long boardId) {
 
+        return boardService.getBoard(boardId);
     }
 
     @PostMapping(value = "/", consumes = {
@@ -40,7 +42,8 @@ public class BoardController {
     }
 
     @DeleteMapping("/{boardID}")
-    public void deleteBoard(@PathVariable("boardID") String boardId) {
+    public void deleteBoard(@PathVariable("boardID") Long boardId) {
 
+        boardService.deleteBoard(boardId);
     }
 }

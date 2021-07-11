@@ -28,19 +28,23 @@ public class Board {
 
     private String imageURL;
 
-    public static Board of(BoardDto boardDto) {
+    private String fileName;
+
+    public static Board from(BoardDto boardDto) {
 
         return  Board.builder()
                 .title(boardDto.getTitle())
                 .text(boardDto.getText())
                 .imageURL("")
+                .fileName("")
                 .build();
     }
 
-    public static Board of(BoardDto boardDto, String fileURL) {
+    public static Board of(BoardDto boardDto, String fileNames, String fileURL) {
 
         return Board.builder()
                 .imageURL(fileURL)
+                .fileName(fileNames)
                 .title(boardDto.getTitle())
                 .text(boardDto.getText())
                 .build();

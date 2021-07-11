@@ -11,4 +11,6 @@ public interface S3Service {
     void uploadFile(InputStream inputStream, ObjectMetadata objectMetadata, String fileName);
 
     List<String> getFileURL(List<String> filenames);
+
+    void deleteFile(List<String> filenames);
 }

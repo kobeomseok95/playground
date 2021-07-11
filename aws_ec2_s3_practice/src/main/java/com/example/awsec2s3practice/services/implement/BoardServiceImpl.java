@@ -2,24 +2,23 @@ package com.example.awsec2s3practice.services.implement;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.awsec2s3practice.dtos.BoardDto;
+import com.example.awsec2s3practice.dtos.BoardResponseDto;
 import com.example.awsec2s3practice.entities.Board;
 import com.example.awsec2s3practice.repositories.BoardRepository;
 import com.example.awsec2s3practice.services.interfaces.BoardService;
 import com.example.awsec2s3practice.services.interfaces.S3Service;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 // TODO : Connection 에러 뜨는 거 해결하기
+// No content length specified for stream data.
+// Stream contents will be buffered in memory and could result in out of memory errors.
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -35,7 +34,7 @@ public class BoardServiceImpl implements BoardService {
             return saveBoard(boardDto);
 
         List<String> fileNames = getFilenames(files);
-        return saveBoard(boardDto, s3Service.getFileURL(fileNames));
+        return saveBoard(boardDto, fileNames, s3Service.getFileURL(fileNames));
     }
 
     private boolean validateFiles(List<MultipartFile> files) {
@@ -43,16 +42,14 @@ public class BoardServiceImpl implements BoardService {
             MultipartFile file = files.get(0);
             String checkFilename = file.getOriginalFilename();
 
-            if (checkFilename.isBlank() || checkFilename.isEmpty()) {
-                return true;
-            }
+            return checkFilename.isBlank() || checkFilename.isEmpty();
         }
         return false;
     }
 
     private Long saveBoard(BoardDto boardDto) {
 
-        Board board = Board.of(boardDto);
+        Board board = Board.from(boardDto);
         Board savedBoard = boardRepository.save(board);
         return savedBoard.getId();
     }
@@ -62,8 +59,9 @@ public class BoardServiceImpl implements BoardService {
         List<String> fileNames = new ArrayList<>();
         for (MultipartFile file : files) {
 
-            fileNames.add(getFilename(file));
-            uploadFile(file, getFilename(file));
+            String filename = getFilename(file);
+            fileNames.add(filename);
+            uploadFile(file, filename);
         }
 
         return fileNames;
@@ -80,16 +78,18 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
-    private Long saveBoard(BoardDto boardDto, List<String> fileURLs) {
+    private Long saveBoard(BoardDto boardDto, List<String> fileNames, List<String> fileURLs) {
 
         String fileURL = insertSeparatorToFileURLs(fileURLs);
-        Board board = Board.of(boardDto, fileURL);
+        String fileName = insertSeparatorToFileURLs(fileNames);
+
+        Board board = Board.of(boardDto, fileName, fileURL);
         Board savedBoard = boardRepository.save(board);
         return savedBoard.getId();
     }
 
-    private String insertSeparatorToFileURLs(List<String> fileURLs) {
-        return String.join(",", fileURLs);
+    private String insertSeparatorToFileURLs(List<String> files) {
+        return String.join(",", files);
     }
 
     private String getFilename(MultipartFile file) {
@@ -106,17 +106,48 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardDto getBoard(Long id) {
-        return null;
+    public BoardResponseDto getBoard(Long id) {
+
+        Board board = boardRepository.findById(id).orElseThrow();
+        return map(board);
+    }
+
+    private BoardResponseDto map(Board board) {
+        return BoardResponseDto.builder()
+                .id(String.valueOf(board.getId()))
+                .text(board.getText())
+                .title(board.getTitle())
+                .imageURL(board.getImageURL())
+                .build();
     }
 
     @Override
-    public Long updateBoard(Long id) {
-        return null;
+    public void updateBoard(Long id) {
+
     }
 
     @Override
-    public Long deleteBoard(Long id) {
-        return null;
+    public void deleteBoard(Long id) {
+
+        Board board = boardRepository.findById(id).orElseThrow();
+        List<String> fileNames = separateFilenames(board.getFileName());
+
+        if (!validateFilenames(fileNames)) {
+            s3Service.deleteFile(fileNames);
+        }
+        boardRepository.deleteById(id);
+    }
+
+    private boolean validateFilenames(List<String> fileNames) {
+        if(fileNames.size() == 1) {
+
+            String name = fileNames.get(0);
+            return name == null || name.equals("");
+        }
+        return false;
+    }
+
+    private List<String> separateFilenames(String fileName) {
+        return Arrays.asList(fileName.split(","));
     }
 }
