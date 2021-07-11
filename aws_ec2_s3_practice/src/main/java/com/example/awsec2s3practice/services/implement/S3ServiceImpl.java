@@ -10,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 @Component
 @RequiredArgsConstructor
@@ -27,7 +31,9 @@ public class S3ServiceImpl implements S3Service {
     }
 
     @Override
-    public String getFileURL(String fileName) {
-        return String.valueOf(amazonS3Client.getUrl(s3Component.getBucket(), fileName));
+    public List<String> getFileURL(List<String> filenames) {
+        return filenames.stream()
+                .map(filename -> String.valueOf(amazonS3Client.getUrl(s3Component.getBucket(), filename)))
+                .collect(toList());
     }
 }

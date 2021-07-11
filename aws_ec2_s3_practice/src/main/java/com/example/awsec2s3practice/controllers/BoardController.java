@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/boards")
@@ -27,10 +28,10 @@ public class BoardController {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE
     })
-    public String createBoard(@RequestPart(name = "dto") BoardDto boardDto,
-                              @RequestPart(name = "file", required = false) MultipartFile file) {
+    public String createBoard(@RequestPart(name = "dto", required = false) BoardDto boardDto,
+                              @RequestPart(name = "file", required = false) List<MultipartFile> files) {
 
-        return boardService.createBoard(boardDto, file).toString();
+        return boardService.createBoard(boardDto, files).toString();
     }
 
     @PatchMapping("/{boardID}")

@@ -1,7 +1,6 @@
 package com.example.awsec2s3practice.services.implement;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.util.IOUtils;
 import com.example.awsec2s3practice.dtos.BoardDto;
 import com.example.awsec2s3practice.entities.Board;
 import com.example.awsec2s3practice.repositories.BoardRepository;
@@ -14,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,11 +26,50 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
 
     @Override
-    public Long createBoard(BoardDto boardDto, MultipartFile file) {
+    public Long createBoard(BoardDto boardDto, List<MultipartFile> files) {
 
-        String fileName = getFilename(file);
-        uploadFile(file, getFilename(file));
-        return saveBoard(boardDto, s3Service.getFileURL(fileName));
+        if (validateFiles(files))
+            return saveBoard(boardDto);
+
+        List<String> fileNames = getFilenames(files);
+        return saveBoard(boardDto, s3Service.getFileURL(fileNames));
+    }
+
+    private boolean validateFiles(List<MultipartFile> files) {
+        if (files.size() == 1) {
+            MultipartFile file = files.get(0);
+            String checkFilename = file.getOriginalFilename();
+
+            if (checkFilename.isBlank() || checkFilename.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Long saveBoard(BoardDto boardDto) {
+
+        Board board = Board.builder()
+                .title(boardDto.getTitle())
+                .text(boardDto.getText())
+                .imageURL("")
+                .build();
+
+        Board savedBoard = boardRepository.save(board);
+
+        return savedBoard.getId();
+    }
+
+    private List<String> getFilenames(List<MultipartFile> files) {
+
+        List<String> fileNames = new ArrayList<>();
+        for (MultipartFile file : files) {
+
+            fileNames.add(getFilename(file));
+            uploadFile(file, getFilename(file));
+        }
+
+        return fileNames;
     }
 
     private void uploadFile(MultipartFile file, String fileName) {
@@ -44,10 +84,10 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
-    private Long saveBoard(BoardDto boardDto, String fileURL) {
+    private Long saveBoard(BoardDto boardDto, List<String> fileURLs) {
 
         Board board = Board.builder()
-                .imageURL(fileURL)
+                .imageURL(String.join(",", fileURLs))
                 .title(boardDto.getTitle())
                 .text(boardDto.getText())
                 .build();
