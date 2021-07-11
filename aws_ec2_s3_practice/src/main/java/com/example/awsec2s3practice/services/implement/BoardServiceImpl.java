@@ -26,28 +26,34 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Long createBoard(BoardDto boardDto, MultipartFile file) {
-        String fileName = getFilename(file);
 
+        String fileName = getFilename(file);
+        uploadFile(file, getFilename(file));
+        return saveBoard(boardDto, s3Service.getFileURL(fileName));
+    }
+
+    private void uploadFile(MultipartFile file, String fileName) {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(file.getContentType());
 
         // TODO : WARN 안뜨게 개선하기
         try (InputStream inputStream = file.getInputStream()){
-            byte[] bytes = IOUtils.toByteArray(inputStream);
-            objectMetadata.setContentLength(bytes.length);
-
             s3Service.uploadFile(inputStream, objectMetadata, fileName);
         } catch(IOException e) {
-            throw new IllegalArgumentException(String.format("파일 변환 중 에러가 발생했습니다. (%s)", file.getOriginalFilename()));
+            throw new IllegalArgumentException(String.format("파일 업로드 중 에러가 발생했습니다. (%s)", file.getOriginalFilename()));
         }
-        String fileURL = s3Service.getFileURL(fileName);
+    }
+
+    private Long saveBoard(BoardDto boardDto, String fileURL) {
 
         Board board = Board.builder()
                 .imageURL(fileURL)
                 .title(boardDto.getTitle())
                 .text(boardDto.getText())
                 .build();
+
         Board savedBoard = boardRepository.save(board);
+
         return savedBoard.getId();
     }
 
