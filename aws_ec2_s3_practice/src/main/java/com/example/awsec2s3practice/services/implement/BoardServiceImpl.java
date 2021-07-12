@@ -80,15 +80,15 @@ public class BoardServiceImpl implements BoardService {
 
     private Long saveBoard(BoardDto boardDto, List<String> fileNames, List<String> fileURLs) {
 
-        String fileURL = insertSeparatorToFileURLs(fileURLs);
-        String fileName = insertSeparatorToFileURLs(fileNames);
+        String fileURL = insertSeparator(fileURLs);
+        String fileName = insertSeparator(fileNames);
 
         Board board = Board.of(boardDto, fileName, fileURL);
         Board savedBoard = boardRepository.save(board);
         return savedBoard.getId();
     }
 
-    private String insertSeparatorToFileURLs(List<String> files) {
+    private String insertSeparator(List<String> files) {
         return String.join(",", files);
     }
 
@@ -122,20 +122,43 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void updateBoard(Long id) {
+    public void updateBoard(Long id, BoardDto boardDto, List<MultipartFile> files) {
 
+        Board board = boardRepository.findById(id).orElseThrow();
+        deleteFilenamesInBoard(board);
+
+        if (!validateFiles(files))
+            updateBoard(boardDto, files, board);
+        else
+            board.updateBoard(boardDto);
+    }
+
+    private void updateBoard(BoardDto boardDto, List<MultipartFile> files, Board board) {
+
+        List<String> filenames = getFilenames(files);
+        String newFilenames = insertSeparator(filenames);
+        List<String> fileURLs = s3Service.getFileURL(filenames);
+        String newFileURLs = insertSeparator(fileURLs);
+        board.updateBoard(boardDto, newFilenames, newFileURLs);
+    }
+
+    private void deleteFilenamesInBoard(Board board) {
+        List<String> fileNames = separateFilenames(board.getFileName());
+        deleteFilenames(fileNames);
     }
 
     @Override
     public void deleteBoard(Long id) {
 
         Board board = boardRepository.findById(id).orElseThrow();
-        List<String> fileNames = separateFilenames(board.getFileName());
+        deleteFilenamesInBoard(board);
+        boardRepository.deleteById(id);
+    }
 
+    private void deleteFilenames(List<String> fileNames) {
         if (!validateFilenames(fileNames)) {
             s3Service.deleteFile(fileNames);
         }
-        boardRepository.deleteById(id);
     }
 
     private boolean validateFilenames(List<String> fileNames) {

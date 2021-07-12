@@ -47,4 +47,20 @@ public class Board {
                 .text(boardDto.getText())
                 .build();
     }
+
+    public void updateBoard(BoardDto boardDto, String newFilenames, String newFileURLs) {
+
+        title = boardDto.getTitle();
+        text = boardDto.getText();
+        imageURL = newFileURLs;
+        fileName = newFilenames;
+    }
+
+    public void updateBoard(BoardDto boardDto) {
+
+        title = boardDto.getTitle();
+        text = boardDto.getText();
+        imageURL = "";
+        fileName = "";
+    }
 }

@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.util.List;
 
 @RestController
@@ -30,15 +29,21 @@ public class BoardController {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE
     })
-    public String createBoard(@RequestPart(name = "dto", required = false) BoardDto boardDto,
+    public String createBoard(@RequestPart(name = "dto") BoardDto boardDto,
                               @RequestPart(name = "file", required = false) List<MultipartFile> files) {
 
         return boardService.createBoard(boardDto, files).toString();
     }
 
-    @PatchMapping("/{boardID}")
-    public void updateBoard(@PathVariable("boardID") String boardId) {
+    @PutMapping(value = "/{boardID}", consumes = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.MULTIPART_FORM_DATA_VALUE
+    })
+    public void updateBoard(@PathVariable("boardID") Long boardId,
+                            @RequestPart(name = "dto") BoardDto boardDto,
+                            @RequestPart(name = "file", required = false) List<MultipartFile> files) {
 
+        boardService.updateBoard(boardId, boardDto, files);
     }
 
     @DeleteMapping("/{boardID}")

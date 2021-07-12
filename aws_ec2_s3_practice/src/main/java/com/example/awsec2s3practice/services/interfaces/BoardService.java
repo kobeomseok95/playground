@@ -12,7 +12,7 @@ public interface BoardService {
 
     BoardResponseDto getBoard(Long id);
 
-    void updateBoard(Long id);
+    void updateBoard(Long id, BoardDto boardDto, List<MultipartFile> file);
 
     void deleteBoard(Long id);
 }
