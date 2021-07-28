@@ -32,6 +32,7 @@ public class BoardController {
     public String createBoard(@RequestPart(name = "dto") BoardDto boardDto,
                               @RequestPart(name = "file", required = false) List<MultipartFile> files) {
 
+//        log.info(files.getName());
         return boardService.createBoard(boardDto, files).toString();
     }
 

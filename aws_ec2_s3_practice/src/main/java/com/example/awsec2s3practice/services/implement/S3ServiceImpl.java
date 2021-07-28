@@ -22,7 +22,7 @@ public class S3ServiceImpl implements S3Service {
     @Override
     public void uploadFile(InputStream inputStream, ObjectMetadata objectMetadata, String fileName) {
         amazonS3Client.putObject(
-                new PutObjectRequest(s3Component.getBucket(), fileName, inputStream, objectMetadata)
+                new PutObjectRequest(s3Component.getBucket() + "/image/20210720", fileName, inputStream, objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
     }
 

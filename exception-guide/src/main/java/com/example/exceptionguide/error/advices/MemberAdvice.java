@@ -19,6 +19,7 @@ public class MemberAdvice {
 
         log.error("MemberNotFoundException!!! {}", e.getMessage());
         ErrorResponse response = ErrorResponse.of(ErrorCode.NOT_FOUND);
+
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
