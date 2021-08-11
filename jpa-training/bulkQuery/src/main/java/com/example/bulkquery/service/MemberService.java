@@ -36,10 +36,12 @@ public class MemberService {
 
     public void addFavoriteArticle(Long memberId, Long articleId) {
         Article favoriteArticle = articleRepository.findById(articleId).orElseThrow();
-        Member member = memberRepository.findById(memberId).orElseThrow();
-        member.getFavoriteArticleList().add(FavoriteArticle.builder()
+        Member member = memberRepository.findByIdFetch(memberId).orElseThrow();
+        member.getFavoriteArticleList().add(
+                FavoriteArticle.builder()
                 .member(member).article(favoriteArticle)
-                .build());
+                .build()
+        );
     }
 
     public String getMemberInfo(Long memberId) {

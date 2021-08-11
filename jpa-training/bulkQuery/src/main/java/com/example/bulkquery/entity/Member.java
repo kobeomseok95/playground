@@ -18,7 +18,7 @@ public class Member {
     private String username;
 
     @Builder.Default
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<FavoriteArticle> favoriteArticleList = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY/*, mappedBy = "member"*/)

@@ -14,6 +14,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("delete from Member m where m.id = :memberId")
     void deleteByMemberId(@Param("memberId") Long memberId);
 
-    @Query("select m from Member m join fetch m.favoriteArticleList where m.id = :memberId")
+    @Query("select distinct m from Member m left join fetch m.favoriteArticleList fal where m.id = :memberId")
     Optional<Member> findByIdFetch(@Param("memberId") Long memberId);
 }
