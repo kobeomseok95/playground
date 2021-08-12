@@ -1,5 +1,6 @@
 package com.example.aop.user;
 
+import com.example.aop.aspect.GetUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,6 @@
 package com.example.aop;
 
+import com.example.aop.aspect.GetUser;
 import com.example.aop.board.Board;
 import com.example.aop.board.BoardRepository;
 import com.example.aop.board.BoardService;
@@ -11,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -51,6 +53,14 @@ public class AopApplication implements CommandLineRunner {
     @GetMapping("/users")
     public List<User> getUsers() {
         return userService.getUsers();
+    }
+
+    @GetMapping("/users/{userId}")
+    public User getUser(@PathVariable Long userId, @GetUser User user) {
+        System.out.println("===================user.getId() = " + user.getId());
+        System.out.println("===================user.getEmail() = " + user.getEmail());
+        System.out.println("===================user.getName() = " + user.getName());
+        return user;
     }
 
     public static void main(String[] args) {
