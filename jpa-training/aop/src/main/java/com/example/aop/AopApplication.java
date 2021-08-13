@@ -4,6 +4,7 @@ import com.example.aop.aspect.GetUser;
 import com.example.aop.board.Board;
 import com.example.aop.board.BoardRepository;
 import com.example.aop.board.BoardService;
+import com.example.aop.user.Info;
 import com.example.aop.user.User;
 import com.example.aop.user.UserRepository;
 import com.example.aop.user.UserService;
@@ -11,11 +12,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 @RestController
@@ -55,12 +58,15 @@ public class AopApplication implements CommandLineRunner {
         return userService.getUsers();
     }
 
+    /**
+     * 만약 유저가 있을 경우는 유저에 대한 정보 가져오기
+     * 그렇지 않다면 그냥 로그인 하지 않은 회원 처리해주기
+     * @param userId
+     */
     @GetMapping("/users/{userId}")
-    public User getUser(@PathVariable Long userId, @GetUser User user) {
-        System.out.println("===================user.getId() = " + user.getId());
-        System.out.println("===================user.getEmail() = " + user.getEmail());
-        System.out.println("===================user.getName() = " + user.getName());
-        return user;
+    public ResponseEntity<Info> getUser(@PathVariable Long userId, @GetUser Optional<User> user) {
+
+        return ResponseEntity.ok(userService.getUser(userId, user));
     }
 
     public static void main(String[] args) {

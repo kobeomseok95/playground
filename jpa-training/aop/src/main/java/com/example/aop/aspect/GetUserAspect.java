@@ -24,7 +24,7 @@ public class GetUserAspect {
     public Object getUser(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Object[] args = proceedingJoinPoint.getArgs();
         Long userId = (Long) args[0];
-        args[1] = userRepository.findById(userId).orElseThrow(() -> new Exception("에러 발생!"));
+        args[1] = userRepository.findById(userId);
         return proceedingJoinPoint.proceed(args);
     }
 }
