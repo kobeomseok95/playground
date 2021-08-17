@@ -4,10 +4,7 @@ import com.example.aop.aspect.GetUser;
 import com.example.aop.board.Board;
 import com.example.aop.board.BoardRepository;
 import com.example.aop.board.BoardService;
-import com.example.aop.user.Info;
-import com.example.aop.user.User;
-import com.example.aop.user.UserRepository;
-import com.example.aop.user.UserService;
+import com.example.aop.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @SpringBootApplication
 @RestController
@@ -67,6 +65,21 @@ public class AopApplication implements CommandLineRunner {
     public ResponseEntity<Info> getUser(@PathVariable Long userId, @GetUser Optional<User> user) {
 
         return ResponseEntity.ok(userService.getUser(userId, user));
+    }
+
+    @GetMapping("/users/set")
+    public ResponseEntity<InfoSet> getUserSet() {
+        return ResponseEntity.ok(getInfoSet());
+    }
+
+    private InfoSet getInfoSet() {
+        return InfoSet.builder()
+                .userDto(Set.of(
+                        InfoSet.UserDto.builder().userId(1L).username("kiwan").build(),
+                        InfoSet.UserDto.builder().userId(2L).username("junsung").build(),
+                        InfoSet.UserDto.builder().userId(3L).username("beomseok").build()
+                ))
+                .build();
     }
 
     public static void main(String[] args) {
