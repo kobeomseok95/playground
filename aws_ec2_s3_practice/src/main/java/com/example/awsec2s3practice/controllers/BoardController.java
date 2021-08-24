@@ -1,6 +1,7 @@
 package com.example.awsec2s3practice.controllers;
 
 import com.example.awsec2s3practice.dtos.BoardDto;
+import com.example.awsec2s3practice.dtos.BoardOrderDto;
 import com.example.awsec2s3practice.dtos.BoardResponseDto;
 import com.example.awsec2s3practice.services.interfaces.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,15 @@ public class BoardController {
         return boardService.getBoard(boardId);
     }
 
+    @PostMapping(value = "/order", consumes = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.MULTIPART_FORM_DATA_VALUE
+    })
+    public String createMultiOrderBoard(@RequestPart(name = "boardOrderDto") List<BoardOrderDto> boardOrderDto) {
+
+        return "test";
+    }
+
     @PostMapping(value = "/", consumes = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE
@@ -33,7 +43,8 @@ public class BoardController {
                               @RequestPart(name = "file", required = false) List<MultipartFile> files) {
 
 //        log.info(files.getName());
-        return boardService.createBoard(boardDto, files).toString();
+//        return boardService.createBoard(boardDto, files).toString();
+        return "test";
     }
 
     @PutMapping(value = "/{boardID}", consumes = {
