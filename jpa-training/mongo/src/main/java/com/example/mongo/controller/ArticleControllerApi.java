@@ -2,12 +2,16 @@ package com.example.mongo.controller;
 
 import com.example.mongo.dto.ArticleDto;
 import com.example.mongo.dto.DateRequest;
+import com.example.mongo.dto.SetRequest;
 import com.example.mongo.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,5 +58,12 @@ public class ArticleControllerApi {
     public String dateGet(DateRequest dateRequest) {
 
         return "checkDate";
+    }
+
+    @PostMapping("/map")
+    public ResponseEntity<SetRequest> getLinkedHashMap(@RequestBody SetRequest request) {
+
+        request.sort();
+        return ResponseEntity.ok(request);
     }
 }
