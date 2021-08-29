@@ -1,7 +1,7 @@
-package com.example.querydslExample.api;
+package com.example.querytraining.api;
 
-import com.example.querydslExample.dto.PostDto;
-import com.example.querydslExample.service.PostService;
+import com.example.querytraining.dto.PostDto;
+import com.example.querytraining.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

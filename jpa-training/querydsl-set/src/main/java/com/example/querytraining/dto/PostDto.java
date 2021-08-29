@@ -1,4 +1,4 @@
-package com.example.querydslExample.dto;
+package com.example.querytraining.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
@@ -6,7 +6,8 @@ import lombok.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @Builder
 public class PostDto {
 
@@ -22,12 +23,12 @@ public class PostDto {
     @Getter @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED) @Builder
     public static class CommentDto {
-        private Long commentId;
+        private int order;
         private String text;
 
         @QueryProjection
-        public CommentDto(Long commentId, String text) {
-            this.commentId = commentId;
+        public CommentDto(int order, String text) {
+            this.order = order;
             this.text = text;
         }
     }

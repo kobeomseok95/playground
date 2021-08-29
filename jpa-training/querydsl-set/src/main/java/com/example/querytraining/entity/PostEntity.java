@@ -1,4 +1,4 @@
-package com.example.querydslExample.entity;
+package com.example.querytraining.entity;
 
 import lombok.*;
 
@@ -6,20 +6,20 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.GenerationType.*;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class Post {
+public class PostEntity {
 
     @Id @GeneratedValue(strategy = IDENTITY) @Column(name = "POST_ID")
     private Long id;
     private String title;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "postEntity")
     @Builder.Default
-    private List<Comment> commentList = new ArrayList<>();
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
 }
