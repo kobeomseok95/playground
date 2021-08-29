@@ -4,6 +4,7 @@ import com.example.aop.aspect.GetUser;
 import com.example.aop.board.Board;
 import com.example.aop.board.BoardRepository;
 import com.example.aop.board.BoardService;
+import com.example.aop.check.CheckService;
 import com.example.aop.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -27,6 +28,7 @@ public class AopApplication implements CommandLineRunner {
     private final BoardRepository boardRepository;
     private final UserService userService;
     private final UserRepository userRepository;
+    private final CheckService checkService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -65,6 +67,18 @@ public class AopApplication implements CommandLineRunner {
     public ResponseEntity<Info> getUser(@PathVariable Long userId, @GetUser Optional<User> user) {
 
         return ResponseEntity.ok(userService.getUser(userId, user));
+    }
+
+    @GetMapping("/even/{number}")
+    public String classAopTestOne(@PathVariable int number) {
+        checkService.checkEven(number);
+        return "one";
+    }
+
+    @GetMapping("/odd/{number}")
+    public String classAopTestTwo(@PathVariable int number) {
+        checkService.checkOdd(number);
+        return "two";
     }
 
     @GetMapping("/users/set")
