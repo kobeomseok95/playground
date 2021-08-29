@@ -1,6 +1,7 @@
 package com.example.mongo.dto;
 
 import lombok.*;
+import org.springframework.data.web.SortDefault;
 
 import java.util.Comparator;
 import java.util.LinkedHashSet;
@@ -14,7 +15,7 @@ import static java.util.stream.Collectors.*;
 public class SetRequest {
 
     @Builder.Default
-    private LinkedHashSet<Info> idSet = new LinkedHashSet<>();
+    private Set<Info> idSet = new LinkedHashSet<>();
 
     public void sort() {
         idSet = idSet.stream()

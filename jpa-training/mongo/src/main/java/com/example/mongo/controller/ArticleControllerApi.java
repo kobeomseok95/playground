@@ -5,6 +5,7 @@ import com.example.mongo.dto.DateRequest;
 import com.example.mongo.dto.SetRequest;
 import com.example.mongo.service.ArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,8 +61,8 @@ public class ArticleControllerApi {
         return "checkDate";
     }
 
-    @PostMapping("/map")
-    public ResponseEntity<SetRequest> getLinkedHashMap(@RequestBody SetRequest request) {
+    @PostMapping("/set")
+    public ResponseEntity<SetRequest> getLinkedHashMap(@RequestBody @SortDefault SetRequest request) {
 
         request.sort();
         return ResponseEntity.ok(request);
