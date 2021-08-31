@@ -22,6 +22,10 @@ spring:
   h2:
     console:
       enabled: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 30MB
 
   logging.level:
     #  org.hibernate.SQL: debug
