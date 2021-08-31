@@ -1,13 +1,17 @@
 package com.example.redisexample.service;
 
-import com.example.redisexample.vo.Board;
+import com.example.redisexample.vo.BoardForm;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface BoardService {
 
-    String save(Board board, List<MultipartFile> contentFiles, MultipartFile profile);
+    String save(BoardForm boardForm,
+                MultipartFile infoFile,
+                List<MultipartFile> contentFiles,
+                List<MultipartFile> commentFiles);
 
-    Board getBoard(String boardId);
+    BoardForm getBoard(String boardId);
 }
