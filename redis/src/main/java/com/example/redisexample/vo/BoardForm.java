@@ -1,5 +1,6 @@
 package com.example.redisexample.vo;
 
+import com.example.redisexample.dto.InfoDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import net.bytebuddy.matcher.FilterableList;
@@ -44,6 +45,12 @@ public class BoardForm {
         for (int i = 0; i < commentFiles.size(); i++) {
             this.getCommentList().get(i).setProfileUrl(commentFiles.get(i).getOriginalFilename() + UUID.randomUUID());
         }
+    }
+
+    public void setInfo(InfoDto infoDto, String fileName) {
+        this.getInfo().setName(infoDto.getName());
+        this.getInfo().setNickname(infoDto.getNickname());
+        this.getInfo().setProfileUrl(fileName);
     }
 
     @Getter @Setter @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder

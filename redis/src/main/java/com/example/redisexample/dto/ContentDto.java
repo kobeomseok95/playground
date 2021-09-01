@@ -8,8 +8,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SuperBuilder
-public class InfoDto extends Create{
+public class ContentDto extends Create{
 
-    private String name;
-    private String nickname;
+    private String title;
+    private String text;
 }

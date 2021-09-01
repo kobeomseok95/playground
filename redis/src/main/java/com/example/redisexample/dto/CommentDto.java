@@ -1,5 +1,4 @@
 package com.example.redisexample.dto;
-
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -8,8 +7,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SuperBuilder
-public class InfoDto extends Create{
+public class CommentDto extends Create{
 
-    private String name;
-    private String nickname;
+    private int no;
+    private String comment;
 }

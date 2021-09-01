@@ -21,10 +21,11 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public String info(InfoDto infoDto) {
-        PersonRedis personRedis = PersonRedis.builder()
-                .name(infoDto.getName()).address(infoDto.getAddress()).build();
-        PersonRedis save = personRedisRepository.save(personRedis);
-        return save.getId();
+//        PersonRedis personRedis = PersonRedis.builder()
+//                .name(infoDto.getName()).address(infoDto.getAddress()).build();
+//        PersonRedis save = personRedisRepository.save(personRedis);
+//        return save.getId();
+        return "";
     }
 
     @Override
