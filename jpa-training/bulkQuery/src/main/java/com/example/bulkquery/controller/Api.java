@@ -1,6 +1,7 @@
 package com.example.bulkquery.controller;
 
 import com.example.bulkquery.MemberInfo;
+import com.example.bulkquery.dtos.DateDto;
 import com.example.bulkquery.dtos.RequestMultipleFavoriteArticle;
 import com.example.bulkquery.entity.Article;
 import com.example.bulkquery.entity.FavoriteArticle;
@@ -9,8 +10,10 @@ import com.example.bulkquery.repository.ArticleRepository;
 import com.example.bulkquery.repository.MemberRepository;
 import com.example.bulkquery.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -66,5 +69,15 @@ public class Api {
     @GetMapping("/members/{memberId}")
     public ResponseEntity<String> getMemberInfo(@PathVariable Long memberId) {
         return ResponseEntity.ok().body(memberService.getMemberInfo(memberId));
+    }
+
+    @PostMapping(value = "/date", consumes = {
+            MediaType.APPLICATION_JSON_VALUE,
+            MediaType.MULTIPART_FORM_DATA_VALUE
+    })
+    public String getDate(@RequestPart(value = "date") DateDto dateDto,
+                          @RequestPart(value = "files", required = false) MultipartFile file) {
+
+        return "Date 확인";
     }
 }

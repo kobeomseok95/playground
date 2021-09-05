@@ -13,7 +13,7 @@ public interface BoardService {
 
     BoardForm getBoard(String boardId);
 
-    String saveInfo(InfoDto infoDto, MultipartFile infoFile);
+    String saveInfo(InfoDto infoDto, List<MultipartFile> infoFile);
 
     String saveContent(ContentDto contentDto, List<MultipartFile> contentFiles);
 

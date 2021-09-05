@@ -2,7 +2,6 @@ package com.example.redisexample.service;
 
 import com.example.redisexample.dto.CommentDto;
 import com.example.redisexample.dto.ContentDto;
-import com.example.redisexample.dto.Create;
 import com.example.redisexample.dto.InfoDto;
 import com.example.redisexample.repository.BoardRedisRepository;
 import com.example.redisexample.vo.BoardForm;
@@ -12,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,15 +28,24 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public String saveInfo(InfoDto infoDto, MultipartFile infoFile) {
-        return boardRedisRepository.findById(USERNAME)
-                .map(form -> putBoard(form, infoDto, infoFile))
-                .orElseGet(() -> saveBoard(infoDto, infoFile));
+    public String saveInfo(InfoDto infoDto, List<MultipartFile> infoFile) {
+        BoardForm board = boardRedisRepository.save(BoardForm.builder().id(USERNAME)
+                .info(BoardForm.Info.builder()
+                        .name(infoDto.getName())
+                        .nickname(infoDto.getNickname())
+                        .profileUrl("테스트")
+                        .build())
+                .build());
+        return board.getId();
+
+//        return boardRedisRepository.findById(USERNAME)
+//                .map(form -> putBoard(form, infoDto, infoFile))
+//                .orElseGet(() -> saveBoard(infoDto, infoFile));
     }
 
-    private String putBoard(BoardForm boardForm, InfoDto infoDto, MultipartFile infoFile) {
+    private String putBoard(BoardForm boardForm, InfoDto infoDto, List<MultipartFile> infoFile) {
         deleteFile(boardForm.getInfo().getProfileUrl());
-        boardForm.setInfo(infoDto, saveFile(infoFile));
+        boardForm.setInfo(infoDto, saveFiles(infoFile));
         boardRedisRepository.save(boardForm);
         return "put Board";
     }
@@ -46,29 +54,41 @@ public class BoardServiceImpl implements BoardService {
         System.out.println("================= "+ profileUrl + " 지우기 완료!");
     }
 
-    private String saveBoard(InfoDto infoDto, MultipartFile infoFile) {
+    private String saveBoard(InfoDto infoDto, List<MultipartFile> infoFile) {
         BoardForm boardForm = BoardForm.builder()
                 .id(USERNAME)
                 .info(BoardForm.Info.builder()
                         .name(infoDto.getName())
                         .nickname(infoDto.getNickname())
-                        .profileUrl(saveFile(infoFile))
+                        .profileUrl(saveFiles(infoFile))
                         .build())
                 .build();
         boardRedisRepository.save(boardForm);
         return "save Board";
     }
 
-    private String saveFile(MultipartFile infoFile) {
-        String rename = infoFile.getOriginalFilename() + UUID.randomUUID();
+    private String saveFiles(List<MultipartFile> infoFile) {
+        String rename = infoFile.get(0).getOriginalFilename() + UUID.randomUUID();
         System.out.println("================= "+ rename + " 생성 완료!");
         return rename;
     }
 
     @Override
     public String saveContent(ContentDto contentDto, List<MultipartFile> contentFiles) {
+        BoardForm boardForm = boardRedisRepository.findById(USERNAME).orElseThrow();
+        putContent(boardForm, contentDto, contentFiles);
+        boardRedisRepository.save(boardForm);
+        return "save Content";
+    }
 
-        return "saveContent";
+    private void putContent(BoardForm boardForm, ContentDto contentDto, List<MultipartFile> contentFiles) {
+        deleteFiles(boardForm.getContentList().stream().map(BoardForm.Content::getProfileUrl).collect(Collectors.toList()));
+        saveFiles(contentFiles);
+        boardForm.setContent(List.of(contentDto));
+    }
+
+    private void deleteFiles(List<String> fileNames) {
+        fileNames.forEach(fileName -> System.out.println(fileName + " 삭제 완료!"));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.redisexample.vo;
 
+import com.example.redisexample.dto.ContentDto;
 import com.example.redisexample.dto.InfoDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -51,6 +52,18 @@ public class BoardForm {
         this.getInfo().setName(infoDto.getName());
         this.getInfo().setNickname(infoDto.getNickname());
         this.getInfo().setProfileUrl(fileName);
+    }
+
+    public void setContent(List<ContentDto> contentDto) {
+        this.getContentList().clear();
+        List<Content> contents = contentDto.stream()
+                .map(content -> Content.builder()
+                        .profileUrl("테스트")
+                        .text(contentDto.get(0).getText())
+                        .title(contentDto.get(0).getTitle())
+                        .build())
+                .collect(toList());
+        this.getContentList().addAll(contents);
     }
 
     @Getter @Setter @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
