@@ -3,20 +3,19 @@ package com.example.manyimplements.manyimplements;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OneTwoImpl implements One, Two {
-
+public class ThreeImpl implements Three{
     @Override
-    public GetType getType() {
-        return GetType.ONETWO;
+    public String getOne() {
+        return "THREE - ONE";
     }
 
     @Override
-    public String getOne() {
-        return "ONETWO - ONE";
+    public String getThree() {
+        return "THREE";
     }
 
     @Override
     public String getTwo() {
-        return "ONETWO - TWO";
+        return "THREE - TWO";
     }
 }

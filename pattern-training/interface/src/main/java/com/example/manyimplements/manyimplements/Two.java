@@ -1,6 +1,6 @@
 package com.example.manyimplements.manyimplements;
 
-public interface Two {
+public interface Two extends One{
 
     String getTwo();
 }
