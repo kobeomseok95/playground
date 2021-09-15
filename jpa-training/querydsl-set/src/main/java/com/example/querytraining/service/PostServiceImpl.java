@@ -17,4 +17,9 @@ public class PostServiceImpl implements PostService{
     public PostDto getPost(Long postId) {
         return postRepository.findPostDto(postId);
     }
+
+    @Override
+    public void delete() {
+        postRepository.delete();
+    }
 }

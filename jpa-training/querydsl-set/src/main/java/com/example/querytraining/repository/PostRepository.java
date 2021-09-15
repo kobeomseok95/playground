@@ -5,4 +5,7 @@ import com.example.querytraining.dto.PostDto;
 public interface PostRepository {
 
     PostDto findPostDto(Long postId);
+
+    void delete();
+
 }

@@ -2,6 +2,7 @@ package com.example.houseutils.policy;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.lang.Nullable;
 
 /**
  * @Author beomseok
@@ -13,6 +14,7 @@ import lombok.Getter;
 public class BrokerageRule {
 
     private Double brokeragePercent;
+    @Nullable
     private Long limitAmount;
 
     public Long calculateMaxBrokerage(Long price) {

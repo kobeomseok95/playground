@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
-public class Article {
+public class Article extends Item{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "ARTICLE_ID")
     private Long id;

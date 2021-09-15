@@ -32,4 +32,12 @@ public class PostQueryRepositoryImpl implements PostRepository{
                         ))
                 ))).get(postId);
     }
+
+    @Override
+    public void delete() {
+        long execute = query.delete(commentEntity)
+                .where(commentEntity.postEntity.id.eq(20L))
+                .execute();
+        System.out.println("==============================" + execute);
+    }
 }
