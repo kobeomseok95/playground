@@ -13,19 +13,25 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "board")
 public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "board_id")
     private Long id;
 
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "text")
     private String text;
 
     @Lob
+    @Column(name = "imageurl")
     private String imageURL;
 
+    @Column(name = "file_name")
     private String fileName;
 
     public static Board from(BoardDto boardDto) {
