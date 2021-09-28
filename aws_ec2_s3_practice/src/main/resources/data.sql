@@ -1,1 +1,0 @@
-insert into board (board_id, text, title) values(1, 'test', 'test');

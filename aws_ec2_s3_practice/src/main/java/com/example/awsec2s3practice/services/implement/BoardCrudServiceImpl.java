@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class BoardCrudServiceImpl {
 
     private final BoardRepository boardRepository;
