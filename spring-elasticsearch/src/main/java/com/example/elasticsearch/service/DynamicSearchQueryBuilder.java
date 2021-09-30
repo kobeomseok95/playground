@@ -2,9 +2,7 @@ package com.example.elasticsearch.service;
 
 import com.example.elasticsearch.dto.SearchQuery;
 import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
 
 public class DynamicSearchQueryBuilder {
 
@@ -18,7 +16,7 @@ public class DynamicSearchQueryBuilder {
 
     private static void keywordBuilder(BoolQueryBuilder boolQuery, SearchQuery search) {
         if (search.getKeyword() != null) {
-            boolQuery.should(QueryBuilders.multiMatchQuery(search.getKeyword(), "title", "description", "finishedProductText"));
+            boolQuery.must(QueryBuilders.multiMatchQuery(search.getKeyword(), "title", "description", "finishedProductText"));
         }
     }
 

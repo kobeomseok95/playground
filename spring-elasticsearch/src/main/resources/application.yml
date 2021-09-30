@@ -1,3 +1,3 @@
 elasticsearch:
-  host: 127.0.0.1
+  host: 3.37.127.238
   port: 9200

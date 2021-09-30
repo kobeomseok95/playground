@@ -16,9 +16,4 @@ public class PersonController {
     public String save(@RequestBody Person person) {
         return esService.index(person);
     }
-
-    @GetMapping("/{id}")
-    public Person findById(@PathVariable String id) {
-        return esService.find(id);
-    }
 }

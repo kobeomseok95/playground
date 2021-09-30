@@ -8,20 +8,18 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.elasticsearch.annotations.Setting;
+import org.springframework.data.elasticsearch.annotations.*;
 
 import java.time.Instant;
 
 import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.data.elasticsearch.annotations.DateFormat.basic_date_time;
 
-@Document(indexName = "lecture")
-@Setting(shards = 2, replicas = 1)
 @Getter
 @NoArgsConstructor(access = PRIVATE) @AllArgsConstructor(access = PRIVATE) @Builder
+@Document(indexName = "lecture")
+@Setting(settingPath = "/elasticsearch/lecture-settings.json")
+@Mapping(mappingPath = "/elasticsearch/lecture-mappings.json")
 public class Lecture {
 
     /**
@@ -40,13 +38,13 @@ public class Lecture {
     @Field(type = FieldType.Text)
     private String imageUrl;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, analyzer = "word_analyzer")
     private String title;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, analyzer = "word_analyzer")
     private String description;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, analyzer = "word_analyzer")
     private String finishedProductText;
 
     @Field(type = FieldType.Long)

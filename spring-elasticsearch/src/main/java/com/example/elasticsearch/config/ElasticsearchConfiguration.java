@@ -23,6 +23,4 @@ public class ElasticsearchConfiguration extends AbstractElasticsearchConfigurati
 
         return RestClients.create(clientConfig).rest();
     }
-
-
 }
