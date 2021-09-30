@@ -55,7 +55,6 @@ public class ImportJobConfiguration {
     @Bean
     public LineTokenizer customerUpdatesLineTokenizer() throws Exception {
         DelimitedLineTokenizer recordType1 = new DelimitedLineTokenizer();
-        ...
     }
 
 

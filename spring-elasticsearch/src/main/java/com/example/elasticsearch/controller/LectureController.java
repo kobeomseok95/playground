@@ -1,6 +1,6 @@
 package com.example.elasticsearch.controller;
 
-import com.example.elasticsearch.domain.Lecture;
+import com.example.elasticsearch.domain.LectureDocument;
 import com.example.elasticsearch.dto.SearchQuery;
 import com.example.elasticsearch.service.ElasticsearchService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,22 +26,22 @@ public class LectureController {
     }
 
     @PostMapping("/bulk")
-    public List<IndexedObjectInformation> bulkInsert(@RequestBody List<Lecture> lectureList) {
-        return elasticsearchService.bulkInsert(lectureList);
+    public List<IndexedObjectInformation> bulkInsert(@RequestBody List<LectureDocument> lectureDocumentList) {
+        return elasticsearchService.bulkInsert(lectureDocumentList);
     }
 
     @PutMapping("/bulk")
-    public void bulkUpdate(@RequestBody List<Lecture> lectureList) throws JsonProcessingException {
-        elasticsearchService.bulkUpdate(lectureList);
+    public void bulkUpdate(@RequestBody List<LectureDocument> lectureDocumentList) throws JsonProcessingException {
+        elasticsearchService.bulkUpdate(lectureDocumentList);
     }
 
     @GetMapping("/search")
-    public SearchHits<Lecture> search(Pageable pageable, SearchQuery searchQuery) {
+    public SearchHits<LectureDocument> search(Pageable pageable, SearchQuery searchQuery) {
         return elasticsearchService.search(pageable, searchQuery);
     }
 
     @GetMapping("/{lectureId}")
-    public Lecture find(@PathVariable Long lectureId) {
+    public LectureDocument find(@PathVariable Long lectureId) {
         return elasticsearchService.findByLectureId(lectureId);
     }
 }

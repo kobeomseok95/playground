@@ -20,7 +20,7 @@ import static org.springframework.data.elasticsearch.annotations.DateFormat.basi
 @Document(indexName = "lecture")
 @Setting(settingPath = "/elasticsearch/lecture-settings.json")
 @Mapping(mappingPath = "/elasticsearch/lecture-mappings.json")
-public class Lecture {
+public class LectureDocument {
 
     /**
      *      TODO : 키워드는 title, description, finishedProductText 들을 기반으로!

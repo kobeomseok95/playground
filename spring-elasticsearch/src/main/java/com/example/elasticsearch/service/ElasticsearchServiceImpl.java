@@ -1,7 +1,6 @@
 package com.example.elasticsearch.service;
 
-import com.example.elasticsearch.domain.Lecture;
-import com.example.elasticsearch.domain.Person;
+import com.example.elasticsearch.domain.LectureDocument;
 import com.example.elasticsearch.dto.SearchQuery;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,24 +39,13 @@ public class ElasticsearchServiceImpl implements ElasticsearchService{
     private final ObjectMapper objectMapper;
 
     @Override
-    public String index(Person person) {
-        IndexCoordinates coordinates = IndexCoordinates.of("person");
-        IndexQuery indexQuery = new IndexQueryBuilder()
-                .withId(person.getId())
-                .withObject(person)
-                .build();
-
-        return operations.index(indexQuery, coordinates);
-    }
-
-    @Override
-    public List<IndexedObjectInformation> bulkInsert(List<Lecture> lectureList) {
+    public List<IndexedObjectInformation> bulkInsert(List<LectureDocument> lectureDocumentList) {
 
         IndexCoordinates coordinates = IndexCoordinates.of("lecture");
-        List<IndexQuery> bulkIndexQueries = lectureList.stream()
-                .map(lecture -> new IndexQueryBuilder()
-                        .withId(lecture.getId())
-                        .withObject(lecture)
+        List<IndexQuery> bulkIndexQueries = lectureDocumentList.stream()
+                .map(lectureDocument -> new IndexQueryBuilder()
+                        .withId(lectureDocument.getId())
+                        .withObject(lectureDocument)
                         .build())
                 .collect(toList());
 
@@ -65,17 +53,17 @@ public class ElasticsearchServiceImpl implements ElasticsearchService{
     }
 
     @Override
-    public void bulkUpdate(List<Lecture> lectureList) throws JsonProcessingException {
+    public void bulkUpdate(List<LectureDocument> lectureDocumentList) throws JsonProcessingException {
         IndexCoordinates index = IndexCoordinates.of("lecture");
-        List<Long> lectureIdList = lectureList.stream().map(Lecture::getLectureId).collect(toList());
+        List<Long> lectureIdList = lectureDocumentList.stream().map(LectureDocument::getLectureId).collect(toList());
 
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termsQuery("lectureId", lectureIdList))).build();
-        List<String> esIdList = operations.search(searchQuery, Lecture.class).stream().map(lectureSearchHit -> lectureSearchHit.getContent().getId()).collect(toList());
+        List<String> esIdList = operations.search(searchQuery, LectureDocument.class).stream().map(lectureSearchHit -> lectureSearchHit.getContent().getId()).collect(toList());
 
         List<UpdateQuery> updateQueryList = new ArrayList<>();
         for (int i = 0; i < esIdList.size(); i++) {
             updateQueryList.add(
-                    UpdateQuery.builder(esIdList.get(i)).withDocument(Document.create().fromJson(objectMapper.writeValueAsString(lectureList.get(i)))).build()
+                    UpdateQuery.builder(esIdList.get(i)).withDocument(Document.create().fromJson(objectMapper.writeValueAsString(lectureDocumentList.get(i)))).build()
             );
         }
         operations.bulkUpdate(updateQueryList, index);
@@ -145,23 +133,25 @@ public class ElasticsearchServiceImpl implements ElasticsearchService{
                 "    }\n" +
                 "  }\n" +
                 "}\n", JSON);
-        return client.indices().create(request, RequestOptions.DEFAULT);
+        CreateIndexResponse createIndexResponse = client.indices().create(request, RequestOptions.DEFAULT);
+        client.close();
+        return createIndexResponse;
     }
 
     @Override
-    public Lecture findByLectureId(Long lectureId) {
+    public LectureDocument findByLectureId(Long lectureId) {
         NativeSearchQuery findByLectureIdQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.matchQuery("lectureId", lectureId)).build();
-        SearchHits<Lecture> search = operations.search(findByLectureIdQuery, Lecture.class);
+        SearchHits<LectureDocument> search = operations.search(findByLectureIdQuery, LectureDocument.class);
         return search.getSearchHit(0).getContent();
     }
 
     @Override
-    public Lecture findById(String id) {
-        return operations.get(id, Lecture.class);
+    public LectureDocument findById(String id) {
+        return operations.get(id, LectureDocument.class);
     }
 
     @Override
-    public SearchHits<Lecture> search(Pageable pageable, SearchQuery searchQuery) {
+    public SearchHits<LectureDocument> search(Pageable pageable, SearchQuery searchQuery) {
 
         NativeSearchQuery query = new NativeSearchQueryBuilder()
                 .withQuery(DynamicSearchQueryBuilder.makeQuery(searchQuery))
@@ -169,8 +159,8 @@ public class ElasticsearchServiceImpl implements ElasticsearchService{
                 .withPageable(pageable)
                 .build();
 
-        SearchHits<Lecture> search = operations.search(query, Lecture.class);
-        List<SearchHit<Lecture>> searchHits = search.getSearchHits();
+        SearchHits<LectureDocument> search = operations.search(query, LectureDocument.class);
+        List<SearchHit<LectureDocument>> searchHits = search.getSearchHits();
         return search;
     }
 }
