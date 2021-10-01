@@ -1,7 +1,9 @@
 package com.example.elasticsearch.batch;
 
+import com.example.elasticsearch.batch.writer.ElasticsearchItemWriter;
 import com.example.elasticsearch.domain.LectureDocument;
 import com.example.elasticsearch.entity.LectureEntity;
+import com.example.elasticsearch.service.EntityToDocumentMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -16,6 +18,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 
 import javax.persistence.EntityManagerFactory;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.time.LocalDateTime.now;
 
 @Slf4j
 @Configuration
@@ -55,11 +63,18 @@ public class ElasticsearchJobConfig {
     @Bean
     @StepScope
     public JpaPagingItemReader<LectureEntity> databaseReader() throws Exception {
+        log.info("=================== Reader는 수정된 것만 실행시키기");
+
+        Map<String, Object> parameterMap = new HashMap<>();
+        parameterMap.put("loeDateTime", now());
+        parameterMap.put("goeDateTime", now().minusSeconds(20));
+
         return new JpaPagingItemReaderBuilder<LectureEntity>()
                 .pageSize(5)
                 .entityManagerFactory(entityManagerFactory)
-                .queryString("select l from LectureEntity l")
+                .queryString("select l from LectureEntity l where l.lastModifiedDate >= :goeDateTime and l.lastModifiedDate <= :loeDateTime")
                 .name(LECTURE_ENTITY_ITEM_READER)
+                .parameterValues(parameterMap)
                 .build();
     }
 
@@ -77,7 +92,6 @@ public class ElasticsearchJobConfig {
     @Bean
     @StepScope
     public ElasticsearchItemWriter indexWriter() {
-        log.info("===========================실행");
         return new ElasticsearchItemWriter(elasticsearchOperations);
     }
 }

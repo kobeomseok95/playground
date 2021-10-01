@@ -29,4 +29,8 @@ public class LectureEntity extends BaseEntity {
     private int priceTwo;
     private int priceThree;
     private int priceFour;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

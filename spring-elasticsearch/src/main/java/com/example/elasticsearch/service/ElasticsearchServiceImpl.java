@@ -2,6 +2,8 @@ package com.example.elasticsearch.service;
 
 import com.example.elasticsearch.domain.LectureDocument;
 import com.example.elasticsearch.dto.SearchQuery;
+import com.example.elasticsearch.entity.LectureEntity;
+import com.example.elasticsearch.entity.LectureEntityRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +39,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService{
     private final ElasticsearchOperations operations;
     private final RestHighLevelClient client;
     private final ObjectMapper objectMapper;
+    private final LectureEntityRepository lectureEntityRepository;
 
     @Override
     public List<IndexedObjectInformation> bulkInsert(List<LectureDocument> lectureDocumentList) {
@@ -136,6 +139,12 @@ public class ElasticsearchServiceImpl implements ElasticsearchService{
         CreateIndexResponse createIndexResponse = client.indices().create(request, RequestOptions.DEFAULT);
         client.close();
         return createIndexResponse;
+    }
+
+    @Override
+    public void modifyDb(Long id) {
+        LectureEntity find = lectureEntityRepository.findById(id).orElseThrow();
+        find.setTitle("수정수정");
     }
 
     @Override

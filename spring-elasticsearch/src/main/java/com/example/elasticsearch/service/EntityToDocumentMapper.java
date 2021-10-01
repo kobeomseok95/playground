@@ -1,4 +1,4 @@
-package com.example.elasticsearch.batch;
+package com.example.elasticsearch.service;
 
 import com.example.elasticsearch.domain.LectureDocument;
 import com.example.elasticsearch.entity.LectureEntity;

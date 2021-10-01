@@ -75,4 +75,8 @@ public class LectureDocument {
     @LastModifiedDate
     @Field(type = FieldType.Date, format = basic_date_time)
     private Instant lastModifiedDate;
+
+    public void setDocumentId(String id) {
+        this.id = id;
+    }
 }

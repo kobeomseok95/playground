@@ -2,6 +2,7 @@ package com.example.elasticsearch.controller;
 
 import com.example.elasticsearch.domain.LectureDocument;
 import com.example.elasticsearch.dto.SearchQuery;
+import com.example.elasticsearch.entity.LectureEntity;
 import com.example.elasticsearch.service.ElasticsearchService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,12 @@ public class LectureController {
     @PostMapping("/lecture")
     public CreateIndexResponse createIndex() throws IOException {
         return elasticsearchService.createIndex();
+    }
+
+    @PatchMapping("/lecture/{id}")
+    public String modify(@PathVariable Long id) throws IOException {
+        elasticsearchService.modifyDb(id);
+        return "수정 완료";
     }
 
     @PostMapping("/bulk")
