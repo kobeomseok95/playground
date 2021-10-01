@@ -1,6 +1,6 @@
-package com.example.elasticsearch.batch;
+package com.example.elasticsearch.batch.elasticsearch;
 
-import com.example.elasticsearch.batch.writer.ElasticsearchItemWriter;
+import com.example.elasticsearch.batch.elasticsearch.writer.ElasticsearchItemWriter;
 import com.example.elasticsearch.domain.LectureDocument;
 import com.example.elasticsearch.entity.LectureEntity;
 import com.example.elasticsearch.service.EntityToDocumentMapper;
@@ -18,8 +18,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 
 import javax.persistence.EntityManagerFactory;
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +51,7 @@ public class ElasticsearchJobConfig {
     @JobScope
     public Step elasticsearchSyncStep() throws Exception {
         return stepBuilderFactory.get(ELASTICSEARCH_SYNC_STEP)
-                .<LectureEntity, LectureDocument>chunk(10)
+                .<LectureEntity, LectureDocument>chunk(chunkSize)
                 .reader(databaseReader())
                 .processor(toDocumentProcessor())
                 .writer(indexWriter())
@@ -63,8 +61,6 @@ public class ElasticsearchJobConfig {
     @Bean
     @StepScope
     public JpaPagingItemReader<LectureEntity> databaseReader() throws Exception {
-        log.info("=================== Reader는 수정된 것만 실행시키기");
-
         Map<String, Object> parameterMap = new HashMap<>();
         parameterMap.put("loeDateTime", now());
         parameterMap.put("goeDateTime", now().minusSeconds(20));

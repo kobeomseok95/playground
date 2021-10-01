@@ -21,7 +21,7 @@ spring:
 
   batch:
     job:
-      enabled: false
+      enabled: falseㅈ
 
   h2:
     console:
