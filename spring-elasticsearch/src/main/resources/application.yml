@@ -1,5 +1,5 @@
 elasticsearch:
-  host: 3.37.127.238
+  host: 52.78.233.112
   port: 9200
 
 spring:
@@ -21,7 +21,7 @@ spring:
 
   batch:
     job:
-      enabled: falseㅈ
+      enabled: false
 
   h2:
     console:

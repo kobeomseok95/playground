@@ -13,6 +13,8 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.SortBuilders;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
@@ -23,11 +25,13 @@ import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.stream.Collectors.toList;
 import static org.elasticsearch.common.xcontent.XContentType.JSON;
 
@@ -40,6 +44,7 @@ public class ElasticsearchServiceImpl implements ElasticsearchService{
     private final RestHighLevelClient client;
     private final ObjectMapper objectMapper;
     private final LectureEntityRepository lectureEntityRepository;
+    private final ResourceLoader resourceLoader;
 
     @Override
     public List<IndexedObjectInformation> bulkInsert(List<LectureDocument> lectureDocumentList) {
@@ -74,68 +79,15 @@ public class ElasticsearchServiceImpl implements ElasticsearchService{
 
     @Override
     public CreateIndexResponse createIndex() throws IOException {
+        Resource settingsResource = resourceLoader.getResource("classpath:elasticsearch/lecture-settings.json");
+        String settings = new String(FileCopyUtils.copyToByteArray(settingsResource.getInputStream()), UTF_8);
+
+        Resource mappingsResource = resourceLoader.getResource("classpath:elasticsearch/lecture-mappings.json");
+        String mappings = new String(FileCopyUtils.copyToByteArray(mappingsResource.getInputStream()), UTF_8);
+
         CreateIndexRequest request = new CreateIndexRequest("lecture");
-        request.settings("{\n" +
-                "  \"analysis\": {\n" +
-                "    \"analyzer\": {\n" +
-                "      \"my_analyzer\": {\n" +
-                "        \"type\": \"custom\",\n" +
-                "        \"tokenizer\": \"nori_tokenizer_mixed_dict\",\n" +
-                "        \"filter\": \"my_posfilter\"\n" +
-                "      }\n" +
-                "    },\n" +
-                "    \"tokenizer\": {\n" +
-                "      \"nori_tokenizer_mixed_dict\": {\n" +
-                "        \"type\": \"nori_tokenizer\",\n" +
-                "        \"decompound_mode\": \"mixed\",\n" +
-                "        \"discard_punctuation\": \"false\"\n" +
-                "      }\n" +
-                "    },\n" +
-                "    \"filter\": {\n" +
-                "      \"my_posfilter\": {\n" +
-                "        \"type\": \"nori_part_of_speech\",\n" +
-                "        \"stoptags\": [\n" +
-                "          \"E\",\n" +
-                "          \"IC\",\n" +
-                "          \"J\",\n" +
-                "          \"MAG\",\n" +
-                "          \"MAJ\",\n" +
-                "          \"MM\",\n" +
-                "          \"SP\",\n" +
-                "          \"SSC\",\n" +
-                "          \"SSO\",\n" +
-                "          \"SC\",\n" +
-                "          \"SE\",\n" +
-                "          \"XPN\",\n" +
-                "          \"XSA\",\n" +
-                "          \"XSN\",\n" +
-                "          \"XSV\",\n" +
-                "          \"UNA\",\n" +
-                "          \"NA\",\n" +
-                "          \"VSV\"\n" +
-                "        ]\n" +
-                "      }\n" +
-                "    }\n" +
-                "  }\n" +
-                "}\n", JSON);
-        request.mapping("{\n" +
-                "  \"properties\": {\n" +
-                "    \"lectureId\" : {\"type\" : \"integer\"},\n" +
-                "    \"imageUrl\" : {\"type\" : \"text\"},\n" +
-                "    \"title\" : {\n" +
-                "      \"type\" : \"text\",\n" +
-                "      \"analyzer\": \"my_analyzer\"\n" +
-                "    },\n" +
-                "    \"description\" : {\n" +
-                "      \"type\" : \"text\",\n" +
-                "      \"analyzer\": \"my_analyzer\"\n" +
-                "    },\n" +
-                "    \"finishedProductText\" : {\n" +
-                "      \"type\" : \"text\",\n" +
-                "      \"analyzer\": \"my_analyzer\"\n" +
-                "    }\n" +
-                "  }\n" +
-                "}\n", JSON);
+        request.settings(settings, JSON);
+        request.mapping(mappings, JSON);
         CreateIndexResponse createIndexResponse = client.indices().create(request, RequestOptions.DEFAULT);
         client.close();
         return createIndexResponse;

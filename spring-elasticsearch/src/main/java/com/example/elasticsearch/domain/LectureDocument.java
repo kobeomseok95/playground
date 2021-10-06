@@ -18,8 +18,8 @@ import static org.springframework.data.elasticsearch.annotations.DateFormat.basi
 @Getter
 @NoArgsConstructor(access = PRIVATE) @AllArgsConstructor(access = PRIVATE) @Builder
 @Document(indexName = "lecture")
-@Setting(settingPath = "/elasticsearch/lecture-settings.json")
-@Mapping(mappingPath = "/elasticsearch/lecture-mappings.json")
+@Setting(settingPath = "classpath:elasticsearch/lecture-settings.json")
+@Mapping(mappingPath = "classpath:elasticsearch/lecture-mappings.json")
 public class LectureDocument {
 
     /**

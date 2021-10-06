@@ -5,6 +5,7 @@ import com.example.elasticsearch.dto.SearchQuery;
 import com.example.elasticsearch.entity.LectureEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.elasticsearch.client.indices.CreateIndexResponse;
+import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -24,7 +25,7 @@ public interface ElasticsearchService {
 
     void bulkUpdate(List<LectureDocument> lectureDocumentList) throws JsonProcessingException;
 
-    CreateIndexResponse createIndex() throws IOException;
+    CreateIndexResponse createIndex() throws IOException, ParseException;
 
     void modifyDb(Long id);
 }

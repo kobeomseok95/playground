@@ -7,6 +7,7 @@ import com.example.elasticsearch.service.ElasticsearchService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.elasticsearch.client.indices.CreateIndexResponse;
+import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -22,7 +23,7 @@ public class LectureController {
     private final ElasticsearchService elasticsearchService;
 
     @PostMapping("/lecture")
-    public CreateIndexResponse createIndex() throws IOException {
+    public CreateIndexResponse createIndex() throws IOException, ParseException {
         return elasticsearchService.createIndex();
     }
 

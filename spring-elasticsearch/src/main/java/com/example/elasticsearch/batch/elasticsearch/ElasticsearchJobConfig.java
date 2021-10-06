@@ -24,8 +24,8 @@ import java.util.Map;
 import static java.time.LocalDateTime.now;
 
 @Slf4j
-@Configuration
-@EnableBatchProcessing
+//@Configuration
+//@EnableBatchProcessing
 @RequiredArgsConstructor
 public class ElasticsearchJobConfig {
 
