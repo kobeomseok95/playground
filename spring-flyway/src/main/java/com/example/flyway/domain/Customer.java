@@ -11,9 +11,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Getter
-public class Member {
+public class Customer {
 
-    @Id @GeneratedValue(strategy = IDENTITY) @Column(name = "member_id")
+    @Id @GeneratedValue(strategy = IDENTITY) @Column(name = "customer_id")
     private Long id;
 
     @Column(nullable = false)
@@ -21,4 +21,8 @@ public class Member {
 
     @Column(length = 100)
     private String intro;
+
+    private String address;
+
+    private String addressCode;
 }

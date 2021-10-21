@@ -8,9 +8,10 @@ spring:
   jpa:
     open-in-view: false
     show-sql: true
+    generate-ddl: false
     hibernate:
       format_sql: true
-      ddl-auto: none
+      ddl-auto: validate
 
   flyway:
     enabled: true

@@ -15,8 +15,8 @@ public class Article {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @Column(length = 50, nullable = false)
     private String title;
@@ -26,4 +26,6 @@ public class Article {
 
     @Column(nullable = false)
     private int viewCount;
+
+    private String thumbnailUrl;
 }

@@ -1,0 +1,5 @@
+ALTER TABLE member
+    ADD address_code VARCHAR(255) NULL;
+
+ALTER TABLE member
+    MODIFY name VARCHAR (255) NOT NULL;
