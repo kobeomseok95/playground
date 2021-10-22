@@ -1,1 +1,0 @@
-alter table article add view_count bigint not null default 0;

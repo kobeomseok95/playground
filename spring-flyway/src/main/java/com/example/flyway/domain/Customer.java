@@ -16,13 +16,5 @@ public class Customer {
     @Id @GeneratedValue(strategy = IDENTITY) @Column(name = "customer_id")
     private Long id;
 
-    @Column(nullable = false)
     private String name;
-
-    @Column(length = 100)
-    private String intro;
-
-    private String address;
-
-    private String addressCode;
 }

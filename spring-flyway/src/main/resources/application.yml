@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/flyway_example?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/flyway?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password:
 
@@ -11,12 +11,12 @@ spring:
     generate-ddl: false
     hibernate:
       format_sql: true
-      ddl-auto: validate
+      ddl-auto: none
 
   flyway:
     enabled: true
-    baseline-on-migrate: true
-    baseline-version: 1
-    url: jdbc:mysql://localhost:3306/flyway_example?serverTimezone=UTC&characterEncoding=UTF-8
+    baseline-on-migrate: false
+    baseline-version: 4
+    url: jdbc:mysql://localhost:3306/flyway?serverTimezone=UTC&characterEncoding=UTF-8
     user: root
     password:
