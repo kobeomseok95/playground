@@ -1,20 +1,33 @@
 package com.example.bulkquery.entity;
 
-import lombok.*;
+import com.example.bulkquery.controller.dto.ArticleDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-@Entity @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
-public class Article extends Item{
+import static javax.persistence.GenerationType.IDENTITY;
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "ARTICLE_ID")
+@Entity
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Article {
+
+    @Id @GeneratedValue(strategy = IDENTITY) @Column(name = "ARTICLE_ID")
     private Long id;
+
     private String title;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "article", orphanRemoval = true)
-    private List<FavoriteArticle> favoriteMemberList = new ArrayList<>();
+    public static Article of(ArticleDto articleDto) {
+        return Article.builder()
+                .title(articleDto.getTitle())
+                .build();
+    }
 }
