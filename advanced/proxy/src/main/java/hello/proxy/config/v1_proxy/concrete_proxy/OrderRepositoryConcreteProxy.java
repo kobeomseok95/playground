@@ -19,7 +19,6 @@ public class OrderRepositoryConcreteProxy extends OrderRepositoryV2 {
         TraceStatus status = null;
         try {
             status = logTrace.begin("OrderRepository.request()");
-            //target 호출
             target.save(itemId);
             logTrace.end(status);
         } catch (Exception e) {

@@ -20,8 +20,9 @@ public class OrderControllerConcreteProxy extends OrderControllerV2 {
         TraceStatus status = null;
         try {
             status = logTrace.begin("OrderController.request()");
-            //target 호출
+
             String result = target.request(itemId);
+
             logTrace.end(status);
             return result;
         } catch (Exception e) {

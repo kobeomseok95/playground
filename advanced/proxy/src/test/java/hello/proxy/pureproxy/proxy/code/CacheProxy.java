@@ -13,7 +13,7 @@ public class CacheProxy implements Subject {
     }
 
     @Override
-    public String operation() {
+    public String operation() throws InterruptedException {
         log.info("프록시 호출");
         if (cacheValue == null) {
             cacheValue = target.operation();

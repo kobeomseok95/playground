@@ -1,41 +1,31 @@
 package com.demo.querydslexample.entity;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-import static javax.persistence.FetchType.*;
+import static javax.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity @Getter
+@NoArgsConstructor(access = PROTECTED) @AllArgsConstructor(access = PROTECTED)
+@Builder
 public class Member {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Id @GeneratedValue(strategy = IDENTITY) @Column(name = "MEMBER_ID")
     private Long id;
+
     private String username;
-    private int age;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
-
-    public Member(String username, int age, Team team) {
-        this.username = username;
-        this.age = age;
-        if( team != null ) {
-            changeTeam(team);
-        }
-    }
-
-    public void changeTeam(Team team) {
-        this.team = team;
-        team.getMembers().add(this);
+    public static Member of(String username) {
+        return Member.builder()
+                .username(username)
+                .build();
     }
 }

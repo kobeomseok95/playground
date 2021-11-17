@@ -8,7 +8,7 @@ public class ProxyPatternClient {
         this.subject = subject;
     }
 
-    public void execute() {
+    public void execute() throws InterruptedException {
         subject.operation();
     }
 }

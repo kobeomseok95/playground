@@ -12,7 +12,7 @@ public class DecoratorPatternClient {
     }
 
     public void execute() {
-        String result = component.operation();
-        log.info("result={}", result);
+        String data = component.operation();
+        log.info("result = {}", data);
     }
 }

@@ -10,6 +10,7 @@ public class OrderServiceConcreteProxy extends OrderServiceV2 {
     private final LogTrace logTrace;
 
     public OrderServiceConcreteProxy(OrderServiceV2 target, LogTrace logTrace) {
+        // 부모를 쓰지 않을 것이기 때문에 null로 넣기
         super(null);
         this.target = target;
         this.logTrace = logTrace;
@@ -17,12 +18,12 @@ public class OrderServiceConcreteProxy extends OrderServiceV2 {
 
     @Override
     public void orderItem(String itemId) {
-
         TraceStatus status = null;
         try {
             status = logTrace.begin("OrderService.orderItem()");
-            //target 호출
+
             target.orderItem(itemId);
+
             logTrace.end(status);
         } catch (Exception e) {
             logTrace.exception(status, e);

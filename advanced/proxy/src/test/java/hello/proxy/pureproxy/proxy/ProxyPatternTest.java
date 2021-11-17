@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class ProxyPatternTest {
 
     @Test
-    void noProxyTest() {
+    void noProxyTest() throws Exception {
         RealSubject realSubject = new RealSubject();
         ProxyPatternClient client = new ProxyPatternClient(realSubject);
         client.execute();
@@ -17,9 +17,8 @@ public class ProxyPatternTest {
     }
 
     @Test
-    void cacheProxyTest() {
-        RealSubject realSubject = new RealSubject();
-        CacheProxy cacheProxy = new CacheProxy(realSubject);
+    void cacheProxyTest() throws Exception {
+        CacheProxy cacheProxy = new CacheProxy(new RealSubject());
         ProxyPatternClient client = new ProxyPatternClient(cacheProxy);
         client.execute();
         client.execute();
