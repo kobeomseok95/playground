@@ -31,4 +31,6 @@ public class Api {
     public MemberInfo getMemberInfo(@PathVariable String email) {
         return memberService.getMemberInfo(email);
     }
+
+    // [TODO] refreshToken 구현하기
 }
