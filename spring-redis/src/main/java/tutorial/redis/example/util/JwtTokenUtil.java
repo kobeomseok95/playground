@@ -72,4 +72,10 @@ public class JwtTokenUtil {
         return username.equals(userDetails.getUsername())
                 && !isTokenExpired(token);
     }
+
+    public long getRemainMilliSeconds(String token) {
+        Date expiration = extractAllClaims(token).getExpiration();
+        Date now = new Date();
+        return expiration.getTime() - now.getTime();
+    }
 }

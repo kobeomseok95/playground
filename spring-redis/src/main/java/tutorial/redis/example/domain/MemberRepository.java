@@ -1,4 +1,4 @@
-package tutorial.redis.example.repository;
+package tutorial.redis.example.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import tutorial.redis.example.domain.Member;

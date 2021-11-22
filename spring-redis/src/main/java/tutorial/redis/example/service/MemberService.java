@@ -4,14 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tutorial.redis.example.api.JoinDto;
-import tutorial.redis.example.api.LoginDto;
-import tutorial.redis.example.api.MemberInfo;
-import tutorial.redis.example.api.TokenDto;
-import tutorial.redis.example.config.redis.RefreshToken;
-import tutorial.redis.example.domain.Member;
-import tutorial.redis.example.repository.MemberRepository;
-import tutorial.redis.example.repository.RefreshTokenRedisRepository;
+import tutorial.redis.example.domain.*;
+import tutorial.redis.example.domain.dto.JoinDto;
+import tutorial.redis.example.domain.dto.LoginDto;
+import tutorial.redis.example.domain.dto.MemberInfo;
+import tutorial.redis.example.domain.dto.TokenDto;
 import tutorial.redis.example.util.JwtTokenUtil;
 
 import java.util.NoSuchElementException;
@@ -26,6 +23,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final RefreshTokenRedisRepository refreshTokenRedisRepository;
+    private final LogoutAccessTokenRedisRepository logoutAccessTokenRedisRepository;
     private final JwtTokenUtil jwtTokenUtil;
 
     public void join(JoinDto joinDto) {
@@ -55,5 +53,17 @@ public class MemberService {
                 .username(member.getUsername())
                 .email(member.getEmail())
                 .build();
+    }
+
+    public void logout(TokenDto tokenDto) {
+        String accessToken = resolveToken(tokenDto.getAccessToken());
+        long remainMilliSeconds = jwtTokenUtil.getRemainMilliSeconds(accessToken);
+        String username = jwtTokenUtil.getUsername(accessToken);
+        refreshTokenRedisRepository.deleteById(username);
+        logoutAccessTokenRedisRepository.save(LogoutAccessToken.of(accessToken, username, remainMilliSeconds));
+    }
+
+    private String resolveToken(String token) {
+        return token.substring(7);
     }
 }

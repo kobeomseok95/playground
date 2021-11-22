@@ -1,7 +1,6 @@
-package tutorial.redis.example.repository;
+package tutorial.redis.example.domain;
 
 import org.springframework.data.repository.CrudRepository;
-import tutorial.redis.example.config.redis.RefreshToken;
 
 public interface RefreshTokenRedisRepository extends CrudRepository<RefreshToken, String> {
 }

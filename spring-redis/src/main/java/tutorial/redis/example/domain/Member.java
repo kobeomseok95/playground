@@ -1,18 +1,27 @@
 package tutorial.redis.example.domain;
 
-import lombok.*;
-import tutorial.redis.example.api.JoinDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import tutorial.redis.example.domain.dto.JoinDto;
 
-import javax.persistence.*;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Collection;
 import java.util.UUID;
 
-import static javax.persistence.GenerationType.*;
-import static lombok.AccessLevel.*;
+import static javax.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity @Getter @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PROTECTED) @Builder
-public class Member {
+public class Member implements UserDetails {
 
     @Id @GeneratedValue(strategy = IDENTITY) @Column(name = "MEMBER_ID")
     private Long id;
@@ -35,5 +44,34 @@ public class Member {
                 .password(joinDto.getPassword())
                 .nickname(joinDto.getNickname())
                 .build();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isEnabled() {
+        return false;
     }
 }

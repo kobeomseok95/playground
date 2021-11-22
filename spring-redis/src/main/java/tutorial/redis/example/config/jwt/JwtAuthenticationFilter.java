@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import tutorial.redis.example.config.security.CustomUserDetailService;
+import tutorial.redis.example.domain.LogoutAccessTokenRedisRepository;
 import tutorial.redis.example.util.JwtTokenUtil;
 
 import javax.servlet.FilterChain;
@@ -25,11 +26,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final CustomUserDetailService customUserDetailService;
+    private final LogoutAccessTokenRedisRepository logoutAccessTokenRedisRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String accessToken = checkAccessToken(request);
+            checkLogout(accessToken);
             String username = checkNullAndReturnUsername(accessToken);
             UserDetails userDetails = customUserDetailService.loadUserByUsername(username);
             checkMemberUsernameTokenUsername(userDetails.getUsername(), username);
@@ -42,12 +45,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+
+
     private String checkAccessToken(HttpServletRequest request) throws IllegalAccessException {
         String accessToken = getToken(request);
         if (accessToken == null) {
             throw new IllegalAccessException("Access Token이 없습니다.");
         }
         return accessToken;
+    }
+
+    private void checkLogout(String accessToken) {
+        if (logoutAccessTokenRedisRepository.existsById(accessToken)) {
+            throw new IllegalArgumentException("이미 로그아웃된 회원입니다.");
+        }
     }
 
     private String getToken(HttpServletRequest request) {
@@ -82,7 +93,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
         usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        System.out.println("===========================");
-        System.out.println(SecurityContextHolder.getContext());
     }
 }

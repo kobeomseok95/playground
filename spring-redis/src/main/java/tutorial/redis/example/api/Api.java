@@ -3,6 +3,10 @@ package tutorial.redis.example.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tutorial.redis.example.domain.dto.JoinDto;
+import tutorial.redis.example.domain.dto.LoginDto;
+import tutorial.redis.example.domain.dto.MemberInfo;
+import tutorial.redis.example.domain.dto.TokenDto;
 import tutorial.redis.example.service.MemberService;
 
 @RestController
@@ -32,5 +36,14 @@ public class Api {
         return memberService.getMemberInfo(email);
     }
 
-    // [TODO] refreshToken 구현하기
+    @PostMapping("/reissue")
+    public void reissue() {
+
+    }
+
+    @PostMapping("/logout")
+    public void logout(@RequestHeader("Authorization") String accessToken,
+                       @RequestHeader("RefreshToken") String refreshToken) {
+        memberService.logout(TokenDto.of(accessToken, refreshToken));
+    }
 }

@@ -1,4 +1,4 @@
-package tutorial.redis.example.api;
+package tutorial.redis.example.domain.dto;
 
 import lombok.*;
 import tutorial.redis.example.config.jwt.JwtHeaderUtilEnums;

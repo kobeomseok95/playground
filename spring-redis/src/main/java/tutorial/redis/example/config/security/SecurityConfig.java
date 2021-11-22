@@ -22,9 +22,9 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final JwtEntryPoint jwtEntryPoint;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomUserDetailService customUserDetailService;
-    private final JwtEntryPoint jwtEntryPoint;
 
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)
                 .and()
+                .logout().disable()
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 .and()
                         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
