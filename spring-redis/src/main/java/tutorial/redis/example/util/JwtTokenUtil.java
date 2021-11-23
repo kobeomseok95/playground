@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import tutorial.redis.example.domain.Member;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -46,23 +45,22 @@ public class JwtTokenUtil {
         return expiration.before(new Date());
     }
 
-    public String generateToken(Member member) {
-        return doGenerateToken(member.getUsername(), ACCESS_TOKEN_EXPIRATION_TIME.getValue());
+    public String generateAccessToken(String username) {
+        return doGenerateToken(username, ACCESS_TOKEN_EXPIRATION_TIME.getValue());
     }
 
-    public String generateRefreshToken(Member member) {
-        return doGenerateToken(member.getUsername(), REFRESH_TOKEN_EXPIRATION_TIME.getValue());
+    public String generateRefreshToken(String username) {
+        return doGenerateToken(username, REFRESH_TOKEN_EXPIRATION_TIME.getValue());
     }
 
     private String doGenerateToken(String username, long expireTime) {
         Claims claims = Jwts.claims();
         claims.put("username", username);
 
-        long currentMillis = System.currentTimeMillis();
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuedAt(new Date(currentMillis))
-                .setExpiration(new Date(currentMillis + expireTime))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expireTime))
                 .signWith(getSigningKey(SECRET_KEY), SignatureAlgorithm.HS256)
                 .compact();
     }

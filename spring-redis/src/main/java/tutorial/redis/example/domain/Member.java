@@ -1,27 +1,28 @@
 package tutorial.redis.example.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import tutorial.redis.example.domain.dto.JoinDto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.Collection;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
+import static java.util.stream.Collectors.toList;
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-@Entity @Getter @NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor(access = PROTECTED) @Builder
-public class Member implements UserDetails {
+@Entity
+@Getter
+@NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PROTECTED)
+@Builder
+public class Member {
 
     @Id @GeneratedValue(strategy = IDENTITY) @Column(name = "MEMBER_ID")
     private Long id;
@@ -37,41 +38,39 @@ public class Member implements UserDetails {
     @Column(unique = true)
     private String nickname;
 
-    public static Member of(JoinDto joinDto) {
-        return Member.builder()
+    @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<Authority> authorities = new HashSet<>();
+
+    public static Member ofUser(JoinDto joinDto) {
+        Member member = Member.builder()
                 .username(UUID.randomUUID().toString())
                 .email(joinDto.getEmail())
                 .password(joinDto.getPassword())
                 .nickname(joinDto.getNickname())
                 .build();
+        member.addAuthority(Authority.ofUser(member));
+        return member;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public static Member ofAdmin(JoinDto joinDto) {
+        Member member = Member.builder()
+                .username(UUID.randomUUID().toString())
+                .email(joinDto.getEmail())
+                .password(joinDto.getPassword())
+                .nickname(joinDto.getNickname())
+                .build();
+        member.addAuthority(Authority.ofAdmin(member));
+        return member;
     }
 
-    @JsonIgnore
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
+    private void addAuthority(Authority authority) {
+        authorities.add(authority);
     }
 
-    @JsonIgnore
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isEnabled() {
-        return false;
+    public List<String> getRoles() {
+        return authorities.stream()
+                .map(Authority::getRole)
+                .collect(toList());
     }
 }

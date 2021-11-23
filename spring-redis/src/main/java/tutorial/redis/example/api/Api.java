@@ -13,6 +13,7 @@ import tutorial.redis.example.service.MemberService;
 @RequiredArgsConstructor
 public class Api {
 
+    // TODO : 권한 처리, reissue, filter 예외 핸들러
     private final MemberService memberService;
 
     @GetMapping("/health")
@@ -26,6 +27,12 @@ public class Api {
         return "회원가입 완료";
     }
 
+    @PostMapping("/join/admin")
+    public String joinAdmin(@RequestBody JoinDto joinDto) {
+        memberService.joinAdmin(joinDto);
+        return "어드민 회원 가입 완료";
+    }
+
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) {
         return ResponseEntity.ok(memberService.login(loginDto));
@@ -37,8 +44,8 @@ public class Api {
     }
 
     @PostMapping("/reissue")
-    public void reissue() {
-
+    public ResponseEntity<TokenDto> reissue(@RequestHeader("RefreshToken") String refreshToken) {
+        return ResponseEntity.ok(memberService.reissue(refreshToken));
     }
 
     @PostMapping("/logout")

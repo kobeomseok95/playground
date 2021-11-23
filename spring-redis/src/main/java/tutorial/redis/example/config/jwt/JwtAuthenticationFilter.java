@@ -37,15 +37,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UserDetails userDetails = customUserDetailService.loadUserByUsername(username);
             checkMemberUsernameTokenUsername(userDetails.getUsername(), username);
             validateAccessToken(accessToken, userDetails);
-            securityProcess(request, userDetails);
+            processSecurity(request, userDetails);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         filterChain.doFilter(request, response);
     }
-
-
 
     private String checkAccessToken(HttpServletRequest request) throws IllegalAccessException {
         String accessToken = getToken(request);
@@ -89,7 +87,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
     }
 
-    private void securityProcess(HttpServletRequest request, UserDetails userDetails) {
+    private void processSecurity(HttpServletRequest request, UserDetails userDetails) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
         usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
