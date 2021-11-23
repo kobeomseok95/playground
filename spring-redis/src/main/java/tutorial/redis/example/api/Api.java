@@ -8,13 +8,14 @@ import tutorial.redis.example.domain.dto.LoginDto;
 import tutorial.redis.example.domain.dto.MemberInfo;
 import tutorial.redis.example.domain.dto.TokenDto;
 import tutorial.redis.example.service.MemberService;
+import tutorial.redis.example.util.JwtTokenUtil;
 
 @RestController
 @RequiredArgsConstructor
 public class Api {
 
-    // TODO : 권한 처리, reissue, filter 예외 핸들러
     private final MemberService memberService;
+    private final JwtTokenUtil jwtTokenUtil;
 
     @GetMapping("/health")
     public String health() {
@@ -39,7 +40,8 @@ public class Api {
     }
 
     @GetMapping("/members/{email}")
-    public MemberInfo getMemberInfo(@PathVariable String email) {
+    public MemberInfo getMemberInfo(@PathVariable String email,
+                                    @RequestHeader("Authorization") String accessToken) {
         return memberService.getMemberInfo(email);
     }
 
@@ -51,6 +53,11 @@ public class Api {
     @PostMapping("/logout")
     public void logout(@RequestHeader("Authorization") String accessToken,
                        @RequestHeader("RefreshToken") String refreshToken) {
-        memberService.logout(TokenDto.of(accessToken, refreshToken));
+        String username = jwtTokenUtil.getUsername(resolveToken(accessToken));
+        memberService.logout(TokenDto.of(accessToken, refreshToken), username);
+    }
+
+    private String resolveToken(String accessToken) {
+        return accessToken.substring(7);
     }
 }

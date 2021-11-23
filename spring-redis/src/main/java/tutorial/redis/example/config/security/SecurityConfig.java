@@ -38,15 +38,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring()
-                .antMatchers("/h2-console/**", "/favicon.ico");
+        web.ignoring().antMatchers("/h2-console/**", "/favicon.ico");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .cors()
 
+                .and()
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/join/**", "/login", "/health").permitAll()
                 .anyRequest().hasRole("USER")

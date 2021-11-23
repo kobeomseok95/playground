@@ -1,11 +1,14 @@
 package tutorial.redis.example.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tutorial.redis.example.config.cache.CacheKey;
 import tutorial.redis.example.config.jwt.JwtExpirationEnums;
 import tutorial.redis.example.domain.*;
 import tutorial.redis.example.domain.dto.JoinDto;
@@ -45,8 +48,7 @@ public class MemberService {
 
         String username = member.getUsername();
         String accessToken = jwtTokenUtil.generateAccessToken(username);
-        RefreshToken refreshToken = refreshTokenRedisRepository.save(RefreshToken.createRefreshToken(username,
-                jwtTokenUtil.generateRefreshToken(username), REFRESH_TOKEN_EXPIRATION_TIME.getValue()));
+        RefreshToken refreshToken = saveRefreshToken(username);
         return TokenDto.of(accessToken, refreshToken.getRefreshToken());
     }
 
@@ -56,49 +58,60 @@ public class MemberService {
         }
     }
 
+    private RefreshToken saveRefreshToken(String username) {
+        return refreshTokenRedisRepository.save(RefreshToken.createRefreshToken(username,
+                jwtTokenUtil.generateRefreshToken(username), REFRESH_TOKEN_EXPIRATION_TIME.getValue()));
+    }
+
     public MemberInfo getMemberInfo(String email) {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("회원이 없습니다."));
+        if (!member.getUsername().equals(getCurrentUsername())) {
+            throw new IllegalArgumentException("회원 정보가 일치하지 않습니다.");
+        }
         return MemberInfo.builder()
                 .username(member.getUsername())
                 .email(member.getEmail())
                 .build();
     }
 
-    public void logout(TokenDto tokenDto) {
+    @CacheEvict(value = CacheKey.USER, key = "#username")
+    public void logout(TokenDto tokenDto, String username) {
         String accessToken = resolveToken(tokenDto.getAccessToken());
         long remainMilliSeconds = jwtTokenUtil.getRemainMilliSeconds(accessToken);
-        String username = jwtTokenUtil.getUsername(accessToken);
         refreshTokenRedisRepository.deleteById(username);
         logoutAccessTokenRedisRepository.save(LogoutAccessToken.of(accessToken, username, remainMilliSeconds));
     }
 
-    public TokenDto reissue(String refreshToken) {
-        refreshToken = resolveToken(refreshToken);
-        String username = getUsername();
-        RefreshToken redisRefreshToken = refreshTokenRedisRepository.findById(username).orElseThrow(NoSuchElementException::new);
-        if (refreshToken.equals(redisRefreshToken.getRefreshToken())) {
-            if (lessThan3DaysLeft(refreshToken)) {
-                RefreshToken savedRefreshToken = refreshTokenRedisRepository.save(RefreshToken.createRefreshToken(username,
-                        jwtTokenUtil.generateRefreshToken(username), REFRESH_TOKEN_EXPIRATION_TIME.getValue()));
-                String accessToken = jwtTokenUtil.generateAccessToken(username);
-                return TokenDto.of(accessToken, savedRefreshToken.getRefreshToken());
-            }
-            return TokenDto.of(jwtTokenUtil.generateAccessToken(username), refreshToken);
-        }
-        throw new NoSuchElementException();
-    }
-
-    private boolean lessThan3DaysLeft(String refreshToken) {
-        return jwtTokenUtil.getRemainMilliSeconds(refreshToken) < JwtExpirationEnums.REISSUE_EXPIRATION_TIME.getValue();
-    }
-
-    private String getUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Member member = (Member) authentication.getPrincipal();
-        return member.getUsername();
-    }
-
     private String resolveToken(String token) {
         return token.substring(7);
+    }
+
+    public TokenDto reissue(String refreshToken) {
+        refreshToken = resolveToken(refreshToken);
+        String username = getCurrentUsername();
+        RefreshToken redisRefreshToken = refreshTokenRedisRepository.findById(username).orElseThrow(NoSuchElementException::new);
+
+        if (refreshToken.equals(redisRefreshToken.getRefreshToken())) {
+            return reissueRefreshToken(refreshToken, username);
+        }
+        throw new IllegalArgumentException("토큰이 일치하지 않습니다.");
+    }
+
+    private String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return principal.getUsername();
+    }
+
+    private TokenDto reissueRefreshToken(String refreshToken, String username) {
+        if (lessThanReissueExpirationTimesLeft(refreshToken)) {
+            String accessToken = jwtTokenUtil.generateAccessToken(username);
+            return TokenDto.of(accessToken, saveRefreshToken(username).getRefreshToken());
+        }
+        return TokenDto.of(jwtTokenUtil.generateAccessToken(username), refreshToken);
+    }
+
+    private boolean lessThanReissueExpirationTimesLeft(String refreshToken) {
+        return jwtTokenUtil.getRemainMilliSeconds(refreshToken) < JwtExpirationEnums.REISSUE_EXPIRATION_TIME.getValue();
     }
 }

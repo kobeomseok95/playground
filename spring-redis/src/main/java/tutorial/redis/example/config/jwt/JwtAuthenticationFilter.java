@@ -30,33 +30,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try {
-            String accessToken = checkAccessToken(request);
-            checkLogout(accessToken);
-            String username = checkNullAndReturnUsername(accessToken);
-            UserDetails userDetails = customUserDetailService.loadUserByUsername(username);
-            checkMemberUsernameTokenUsername(userDetails.getUsername(), username);
-            validateAccessToken(accessToken, userDetails);
-            processSecurity(request, userDetails);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        filterChain.doFilter(request, response);
-    }
-
-    private String checkAccessToken(HttpServletRequest request) throws IllegalAccessException {
         String accessToken = getToken(request);
-        if (accessToken == null) {
-            throw new IllegalAccessException("Access Token이 없습니다.");
+        if (accessToken != null) {
+            checkLogout(accessToken);
+            String username = jwtTokenUtil.getUsername(accessToken);
+            if (username != null) {
+                UserDetails userDetails = customUserDetailService.loadUserByUsername(username);
+                equalsUsernameFromTokenAndUserDetails(userDetails.getUsername(), username);
+                validateAccessToken(accessToken, userDetails);
+                processSecurity(request, userDetails);
+            }
         }
-        return accessToken;
-    }
-
-    private void checkLogout(String accessToken) {
-        if (logoutAccessTokenRedisRepository.existsById(accessToken)) {
-            throw new IllegalArgumentException("이미 로그아웃된 회원입니다.");
-        }
+        filterChain.doFilter(request, response);
     }
 
     private String getToken(HttpServletRequest request) {
@@ -67,15 +52,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 
-    private String checkNullAndReturnUsername(String accessToken) {
-        String username = jwtTokenUtil.getUsername(accessToken);
-        if (username == null) {
-            throw new IllegalArgumentException("찾을 수 없는 username입니다.");
+    private void checkLogout(String accessToken) {
+        if (logoutAccessTokenRedisRepository.existsById(accessToken)) {
+            throw new IllegalArgumentException("이미 로그아웃된 회원입니다.");
         }
-        return username;
     }
 
-    private void checkMemberUsernameTokenUsername(String userDetailsUsername, String tokenUsername) {
+    private void equalsUsernameFromTokenAndUserDetails(String userDetailsUsername, String tokenUsername) {
         if (!userDetailsUsername.equals(tokenUsername)) {
             throw new IllegalArgumentException("username이 토큰과 맞지 않습니다.");
         }
