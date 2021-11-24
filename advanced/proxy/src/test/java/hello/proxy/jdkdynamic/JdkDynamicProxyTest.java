@@ -10,26 +10,65 @@ import java.lang.reflect.Proxy;
 public class JdkDynamicProxyTest {
 
     @Test
-    void dynamicA() {
+    void dynamicA() throws Exception {
         AInterface target = new AImpl();
-        TimeInvocationHandler handler = new TimeInvocationHandler(target);
-
-        AInterface proxy = (AInterface) Proxy.newProxyInstance(AInterface.class.getClassLoader(), new Class[]{AInterface.class}, handler);
-
-        proxy.call();
-        log.info("targetClass={}", target.getClass());
-        log.info("proxyClass={}", proxy.getClass());
+        TimeInvocationHandler invocationHandler = new TimeInvocationHandler(target);
+        AInterface proxy = (AInterface) Proxy.newProxyInstance(AInterface.class.getClassLoader(),
+                new Class[]{AInterface.class},
+                invocationHandler);
+        int result = proxy.callInteger();
+        log.info("targetClass = {}", target.getClass());
+        log.info("proxyClass = {}", proxy.getClass());
+        log.info("result = {}", result);
     }
 
     @Test
-    void dynamicB() {
+    void dynamicB() throws Exception {
         BInterface target = new BImpl();
-        TimeInvocationHandler handler = new TimeInvocationHandler(target);
+        TimeInvocationHandler invocationHandler = new TimeInvocationHandler(target);
+        BInterface proxy = (BInterface) Proxy.newProxyInstance(BInterface.class.getClassLoader(),
+                new Class[]{BInterface.class},
+                invocationHandler);
+        String result = proxy.call();
+        log.info("targetClass = {}", target.getClass());
+        log.info("proxyClass = {}", proxy.getClass());
+        log.info("result = {}", result);
+    }
 
-        BInterface proxy = (BInterface) Proxy.newProxyInstance(BInterface.class.getClassLoader(), new Class[]{BInterface.class}, handler);
+    @Test
+    void integrationAB() throws Exception {
+        AInterface a = new AImpl();
+        TimeInvocationHandler aHandler = new TimeInvocationHandler(a);
+        AInterface proxyA = (AInterface) Proxy.newProxyInstance(AInterface.class.getClassLoader(),
+                new Class[] {AInterface.class},
+                aHandler);
+        log.info("================== {}", proxyA.callInteger());
 
-        proxy.call();
-        log.info("targetClass={}", target.getClass());
-        log.info("proxyClass={}", proxy.getClass());
+        BInterface b = new BImpl();
+        TimeInvocationHandler bHandler = new TimeInvocationHandler(b);
+        BInterface proxyB = (BInterface) Proxy.newProxyInstance(BInterface.class.getClassLoader(),
+                new Class[] {BInterface.class},
+                bHandler);
+        log.info("================== {}", proxyB.call());
+    }
+
+    @Test
+    void should_equal_type_A() throws Exception {
+        AInterface a = new AImpl();
+        TimeInvocationHandler aHandler = new TimeInvocationHandler(a);
+        AInterface proxyA = (AInterface) Proxy.newProxyInstance(AInterface.class.getClassLoader(),
+                        new Class[] {AInterface.class},
+                        aHandler);
+        log.info("================== {}", proxyA.callInteger());
+    }
+
+    @Test
+    void make_my_proxy() throws Exception {
+        CalculateInterface plusInterface = Integer::sum;
+        PrintInvocationHandler printInvocationHandler = new PrintInvocationHandler(plusInterface);
+        CalculateInterface calc = (CalculateInterface) Proxy.newProxyInstance(CalculateInterface.class.getClassLoader(),
+                new Class[]{CalculateInterface.class},
+                printInvocationHandler);
+        calc.calculate(1, 2);
     }
 }

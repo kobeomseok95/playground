@@ -21,8 +21,6 @@ public class LogTraceFilterHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-
-        //메서드 이름 필터
         String methodName = method.getName();
         if (!PatternMatchUtils.simpleMatch(patterns, methodName)) {
             return method.invoke(target, args);
@@ -30,11 +28,8 @@ public class LogTraceFilterHandler implements InvocationHandler {
 
         TraceStatus status = null;
         try {
-            String message = method.getDeclaringClass().getSimpleName() + "." +
-                    method.getName() + "()";
+            String message = method.getDeclaringClass().getSimpleName() + "." + method.getName() + "()";
             status = logTrace.begin(message);
-
-            //로직 호출
             Object result = method.invoke(target, args);
             logTrace.end(status);
             return result;

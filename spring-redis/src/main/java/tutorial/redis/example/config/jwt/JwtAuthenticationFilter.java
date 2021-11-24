@@ -36,7 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String username = jwtTokenUtil.getUsername(accessToken);
             if (username != null) {
                 UserDetails userDetails = customUserDetailService.loadUserByUsername(username);
-                equalsUsernameFromTokenAndUserDetails(userDetails.getUsername(), username);
                 validateAccessToken(accessToken, userDetails);
                 processSecurity(request, userDetails);
             }
@@ -55,12 +54,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void checkLogout(String accessToken) {
         if (logoutAccessTokenRedisRepository.existsById(accessToken)) {
             throw new IllegalArgumentException("이미 로그아웃된 회원입니다.");
-        }
-    }
-
-    private void equalsUsernameFromTokenAndUserDetails(String userDetailsUsername, String tokenUsername) {
-        if (!userDetailsUsername.equals(tokenUsername)) {
-            throw new IllegalArgumentException("username이 토큰과 맞지 않습니다.");
         }
     }
 

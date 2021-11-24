@@ -40,8 +40,7 @@ public class Api {
     }
 
     @GetMapping("/members/{email}")
-    public MemberInfo getMemberInfo(@PathVariable String email,
-                                    @RequestHeader("Authorization") String accessToken) {
+    public MemberInfo getMemberInfo(@PathVariable String email) {
         return memberService.getMemberInfo(email);
     }
 
@@ -52,7 +51,7 @@ public class Api {
 
     @PostMapping("/logout")
     public void logout(@RequestHeader("Authorization") String accessToken,
-                       @RequestHeader("RefreshToken") String refreshToken) {
+                                    @RequestHeader("RefreshToken") String refreshToken) {
         String username = jwtTokenUtil.getUsername(resolveToken(accessToken));
         memberService.logout(TokenDto.of(accessToken, refreshToken), username);
     }

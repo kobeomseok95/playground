@@ -18,14 +18,10 @@ public class LogTraceBasicHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-
         TraceStatus status = null;
         try {
-            String message = method.getDeclaringClass().getSimpleName() + "." +
-                    method.getName() + "()";
+            String message = method.getDeclaringClass().getSimpleName() + "." + method.getName() + "()";
             status = logTrace.begin(message);
-
-            //로직 호출
             Object result = method.invoke(target, args);
             logTrace.end(status);
             return result;

@@ -42,6 +42,7 @@ public class MemberService {
         memberRepository.save(Member.ofAdmin(joinDto));
     }
 
+    // 1
     public TokenDto login(LoginDto loginDto) {
         Member member = memberRepository.findByEmail(loginDto.getEmail()).orElseThrow(() -> new NoSuchElementException("회원이 없습니다."));
         checkPassword(loginDto.getPassword(), member.getPassword());
@@ -63,6 +64,7 @@ public class MemberService {
                 jwtTokenUtil.generateRefreshToken(username), REFRESH_TOKEN_EXPIRATION_TIME.getValue()));
     }
 
+    // 2
     public MemberInfo getMemberInfo(String email) {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("회원이 없습니다."));
         if (!member.getUsername().equals(getCurrentUsername())) {
@@ -74,6 +76,7 @@ public class MemberService {
                 .build();
     }
 
+    // 4
     @CacheEvict(value = CacheKey.USER, key = "#username")
     public void logout(TokenDto tokenDto, String username) {
         String accessToken = resolveToken(tokenDto.getAccessToken());
@@ -86,6 +89,7 @@ public class MemberService {
         return token.substring(7);
     }
 
+    // 3
     public TokenDto reissue(String refreshToken) {
         refreshToken = resolveToken(refreshToken);
         String username = getCurrentUsername();

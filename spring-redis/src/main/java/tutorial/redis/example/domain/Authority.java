@@ -17,7 +17,6 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PROTECTED)
 @Builder
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
 public class Authority implements GrantedAuthority {
 
     @Id @GeneratedValue(strategy = IDENTITY) @Column(name = "AUTHORITY_ID")
