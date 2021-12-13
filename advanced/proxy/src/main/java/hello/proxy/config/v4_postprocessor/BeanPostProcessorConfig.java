@@ -24,10 +24,8 @@ public class BeanPostProcessorConfig {
     }
 
     private Advisor getAdvisor(LogTrace logTrace) {
-        //pointcut
         NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
         pointcut.setMappedNames("request*", "order*", "save*");
-        //advice
         LogTraceAdvice advice = new LogTraceAdvice(logTrace);
         return new DefaultPointcutAdvisor(pointcut, advice);
     }

@@ -34,7 +34,7 @@ public class BeanPostProcessorTest {
         }
 
         @Bean
-        public AToBPostProcessor helloPostProcessor() {
+        public AToBPostProcessor aToBPostProcessor() {
             return new AToBPostProcessor();
         }
     }
@@ -55,10 +55,9 @@ public class BeanPostProcessorTest {
 
     @Slf4j
     static class AToBPostProcessor implements BeanPostProcessor {
-
         @Override
         public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-            log.info("beanName={} bean={}", beanName, bean);
+            log.info("beanName = {}, bean = {}", beanName, bean.getClass());
             if (bean instanceof A) {
                 return new B();
             }
