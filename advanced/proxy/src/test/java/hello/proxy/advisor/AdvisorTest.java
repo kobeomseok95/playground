@@ -13,7 +13,6 @@ import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
 
-import java.awt.*;
 import java.lang.reflect.Method;
 
 @Slf4j
@@ -25,7 +24,7 @@ public class AdvisorTest {
         ProxyFactory proxyFactory = new ProxyFactory(target);
         DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor(Pointcut.TRUE, new TimeAdvice());
         proxyFactory.addAdvisor(advisor);
-        ServiceInterface proxy = (ServiceInterface) proxyFactory.getProxy();
+        ServiceInterface proxy = (ServiceInterface)proxyFactory.getProxy();
 
         proxy.save();
         proxy.find();
@@ -62,9 +61,7 @@ public class AdvisorTest {
     static class MyPointcut implements Pointcut {
 
         @Override
-        public ClassFilter getClassFilter() {
-            return ClassFilter.TRUE;
-        }
+        public ClassFilter getClassFilter() { return ClassFilter.TRUE; }
 
         @Override
         public MethodMatcher getMethodMatcher() {
@@ -74,13 +71,15 @@ public class AdvisorTest {
 
     static class MyMethodMatcher implements MethodMatcher {
 
-        private String matchName = "save";
+        private final String matchName = "save";
 
         @Override
         public boolean matches(Method method, Class<?> targetClass) {
             boolean result = method.getName().equals(matchName);
-            log.info("포인트컷 호출 method={} targetClass={}", method.getName(), targetClass);
-            log.info("포인트컷 결과 result={}", result);
+            log.info("포인트컷 호출 메서드 호출, method = {}, targetClass = {}",
+                    method.getName(),
+                    targetClass);
+            log.info("포인트컷 결과, result = {}", result);
             return result;
         }
 
@@ -94,5 +93,4 @@ public class AdvisorTest {
             return false;
         }
     }
-
 }

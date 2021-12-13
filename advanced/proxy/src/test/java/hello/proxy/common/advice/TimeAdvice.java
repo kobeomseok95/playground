@@ -6,6 +6,7 @@ import org.aopalliance.intercept.MethodInvocation;
 
 @Slf4j
 public class TimeAdvice implements MethodInterceptor {
+
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
         log.info("TimeProxy 실행");
@@ -15,7 +16,7 @@ public class TimeAdvice implements MethodInterceptor {
 
         long endTime = System.currentTimeMillis();
         long resultTime = endTime - startTime;
-        log.info("TimeProxy 종료 resultTime={}", resultTime);
+        log.info("TimeProxy 종료 resultTime = {}", resultTime);
         return result;
     }
 }

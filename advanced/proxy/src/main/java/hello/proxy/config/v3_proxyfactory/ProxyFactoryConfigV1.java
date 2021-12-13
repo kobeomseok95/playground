@@ -21,7 +21,7 @@ public class ProxyFactoryConfigV1 {
         ProxyFactory factory = new ProxyFactory(orderController);
         factory.addAdvisor(getAdvisor(logTrace));
         OrderControllerV1 proxy = (OrderControllerV1) factory.getProxy();
-        log.info("ProxyFactory proxy={}, target={}", proxy.getClass(), orderController.getClass());
+        log.info("ProxyFactory proxy = {}, target = {}", proxy.getClass(), orderController.getClass());
         return proxy;
     }
 
@@ -31,27 +31,28 @@ public class ProxyFactoryConfigV1 {
         ProxyFactory factory = new ProxyFactory(orderService);
         factory.addAdvisor(getAdvisor(logTrace));
         OrderServiceV1 proxy = (OrderServiceV1) factory.getProxy();
-        log.info("ProxyFactory proxy={}, target={}", proxy.getClass(), orderService.getClass());
+        log.info("ProxyFactory proxy = {}, target = {}", proxy.getClass(), orderService.getClass());
         return proxy;
     }
 
     @Bean
     public OrderRepositoryV1 orderRepositoryV1(LogTrace logTrace) {
         OrderRepositoryV1Impl orderRepository = new OrderRepositoryV1Impl();
-
         ProxyFactory factory = new ProxyFactory(orderRepository);
         factory.addAdvisor(getAdvisor(logTrace));
         OrderRepositoryV1 proxy = (OrderRepositoryV1) factory.getProxy();
-        log.info("ProxyFactory proxy={}, target={}", proxy.getClass(), orderRepository.getClass());
+        log.info("ProxyFactory proxy = {}, target = {}", proxy.getClass(), orderRepository.getClass());
         return proxy;
     }
 
     private Advisor getAdvisor(LogTrace logTrace) {
-        //pointcut
+        // pointcut
         NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
         pointcut.setMappedNames("request*", "order*", "save*");
-        //advice
+
+        // advice
         LogTraceAdvice advice = new LogTraceAdvice(logTrace);
+
         return new DefaultPointcutAdvisor(pointcut, advice);
     }
 }
