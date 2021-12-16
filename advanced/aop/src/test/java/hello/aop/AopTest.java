@@ -2,7 +2,7 @@ package hello.aop;
 
 import hello.aop.order.OrderRepository;
 import hello.aop.order.OrderService;
-import hello.aop.order.aop.*;
+import hello.aop.order.aop.AspectV6Advice;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -29,8 +29,8 @@ public class AopTest {
 
     @Test
     void aopInfo() {
-        log.info("isAopProxy, orderService={}", AopUtils.isAopProxy(orderService));
-        log.info("isAopProxy, orderRepository={}", AopUtils.isAopProxy(orderRepository));
+        log.info("is AopProxy, orderService = {}", AopUtils.isAopProxy(orderService));
+        log.info("is AopProxy, orderRepository = {}", AopUtils.isAopProxy(orderRepository));
     }
 
     @Test
@@ -43,5 +43,4 @@ public class AopTest {
         Assertions.assertThatThrownBy(() -> orderService.orderItem("ex"))
                 .isInstanceOf(IllegalStateException.class);
     }
-
 }

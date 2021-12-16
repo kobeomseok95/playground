@@ -15,6 +15,10 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import({AppV1Config.class, AppV2Config.class})
 public class AutoProxyConfig {
+//    @Bean
+//    public LogTrace logTrace() {
+//        return new ThreadLocalLogTrace();
+//    }
 
 //    @Bean
     public Advisor advisor1(LogTrace logTrace) {

@@ -7,8 +7,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
-import java.lang.reflect.Method;
-
 @Slf4j
 @Aspect
 public class LogTraceAspect {
@@ -19,16 +17,15 @@ public class LogTraceAspect {
         this.logTrace = logTrace;
     }
 
-    @Around("execution(* hello.proxy.app..*(..))")
-    public Object execute(ProceedingJoinPoint joinPoint) throws Throwable {
+    // 하나의 메서드가 어드바이저가 된다.
+    @Around("execution(* hello.proxy.app..*(..))")  // 포인트컷
+    public Object execute(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+        // 어드바이스
         TraceStatus status = null;
         try {
-            String message = joinPoint.getSignature().toShortString();
+            String message = proceedingJoinPoint.getSignature().toShortString();
             status = logTrace.begin(message);
-
-            //로직 호출
-            Object result = joinPoint.proceed();
-
+            Object result = proceedingJoinPoint.proceed();
             logTrace.end(status);
             return result;
         } catch (Exception e) {

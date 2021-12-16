@@ -6,11 +6,13 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.annotation.Order;
 
+// @Order는 @Aspect 단위로 적용된다.
 @Slf4j
 public class AspectV5Order {
 
     @Aspect
     @Order(2)
+//    @Component
     public static class LogAspect {
         @Around("hello.aop.order.aop.Pointcuts.allOrder()")
         public Object doLog(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -21,6 +23,7 @@ public class AspectV5Order {
 
     @Aspect
     @Order(1)
+//    @Component
     public static class TxAspect {
         @Around("hello.aop.order.aop.Pointcuts.orderAndService()")
         public Object doTransaction(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -38,6 +41,4 @@ public class AspectV5Order {
             }
         }
     }
-
-
 }

@@ -6,13 +6,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 @Slf4j
-@Aspect
+@Aspect // 컴포넌트 스캔 대상이 아님에 유의하기
 public class AspectV1 {
 
-    //hello.aop.order 패키지와 하위 패키지
     @Around("execution(* hello.aop.order..*(..))")
-    public Object doLog(ProceedingJoinPoint joinPoint) throws Throwable {
-        log.info("[log] {}", joinPoint.getSignature()); //join point 시그니처
-        return joinPoint.proceed();
+    public Object doLog(ProceedingJoinPoint pjp) throws Throwable{
+        log.info("[log] {}", pjp.getSignature());
+        return pjp.proceed();
     }
 }
