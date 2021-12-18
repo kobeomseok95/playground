@@ -16,11 +16,8 @@ import org.springframework.context.annotation.Import;
 @Import(ProxyDIAspect.class)
 public class ProxyDITest {
 
-    @Autowired
-    MemberService memberService;
-
-    @Autowired
-    MemberServiceImpl memberServiceImpl;
+    @Autowired MemberService memberService;
+    @Autowired MemberServiceImpl memberServiceImpl;
 
     @Test
     void go() {
