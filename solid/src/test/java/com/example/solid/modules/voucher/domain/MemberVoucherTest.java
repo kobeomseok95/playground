@@ -1,4 +1,4 @@
-package com.example.solid.modules.voucher;
+package com.example.solid.modules.voucher.domain;
 
 import com.example.solid.modules.voucher.mock.MockVoucher;
 import org.junit.jupiter.api.DisplayName;

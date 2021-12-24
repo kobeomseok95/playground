@@ -1,6 +1,6 @@
 package com.example.solid.modules.seat;
 
-import com.example.solid.modules.voucher.MemberVoucher;
+import com.example.solid.modules.voucher.domain.MemberVoucher;
 import com.example.solid.modules.voucher.mock.MockMemberVoucher;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

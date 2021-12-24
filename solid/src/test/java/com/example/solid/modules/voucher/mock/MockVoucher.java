@@ -1,6 +1,6 @@
 package com.example.solid.modules.voucher.mock;
 
-import com.example.solid.modules.voucher.Voucher;
+import com.example.solid.modules.voucher.domain.Voucher;
 
 public class MockVoucher {
 

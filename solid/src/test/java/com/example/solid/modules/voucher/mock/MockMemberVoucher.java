@@ -1,6 +1,6 @@
 package com.example.solid.modules.voucher.mock;
 
-import com.example.solid.modules.voucher.MemberVoucher;
+import com.example.solid.modules.voucher.domain.MemberVoucher;
 
 import java.time.LocalDateTime;
 

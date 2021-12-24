@@ -2,6 +2,8 @@ package com.example.solid.modules.voucher;
 
 import com.example.solid.modules.voucher.controller.dto.BuyVoucherRequest;
 import com.example.solid.modules.voucher.controller.dto.MockBuyVoucherRequest;
+import com.example.solid.modules.voucher.domain.MemberVoucherRepository;
+import com.example.solid.modules.voucher.domain.VoucherRepository;
 import com.example.solid.modules.voucher.mock.MockVoucher;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,8 +23,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class VoucherServiceTest {
 
-    @Mock VoucherRepository voucherRepository;
-    @Mock MemberVoucherRepository memberVoucherRepository;
+    @Mock
+    VoucherRepository voucherRepository;
+    @Mock
+    MemberVoucherRepository memberVoucherRepository;
     @InjectMocks VoucherService voucherService;
 
     @Test

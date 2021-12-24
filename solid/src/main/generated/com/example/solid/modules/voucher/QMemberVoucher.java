@@ -2,6 +2,7 @@ package com.example.solid.modules.voucher;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
+import com.example.solid.modules.voucher.domain.MemberVoucher;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;

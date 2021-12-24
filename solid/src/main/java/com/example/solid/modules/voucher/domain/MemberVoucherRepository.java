@@ -1,4 +1,4 @@
-package com.example.solid.modules.voucher;
+package com.example.solid.modules.voucher.domain;
 
 public interface MemberVoucherRepository {
 

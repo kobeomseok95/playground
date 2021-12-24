@@ -2,7 +2,7 @@ package com.example.solid.modules.seat;
 
 
 import com.example.solid.modules.BaseEntity;
-import com.example.solid.modules.voucher.MemberVoucher;
+import com.example.solid.modules.voucher.domain.MemberVoucher;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

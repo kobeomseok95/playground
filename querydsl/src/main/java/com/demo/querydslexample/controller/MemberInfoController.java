@@ -19,4 +19,9 @@ public class MemberInfoController {
     public ResponseEntity<List<MemberInfo>> membersInfo() {
         return ResponseEntity.ok(service.getMembersInfo());
     }
+
+    @GetMapping("/members")
+    public ResponseEntity<Integer> getMembers() {
+        return ResponseEntity.ok(service.getMember().size());
+    }
 }
