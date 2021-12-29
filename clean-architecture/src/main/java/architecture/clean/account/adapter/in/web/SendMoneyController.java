@@ -27,7 +27,7 @@ class SendMoneyController {
         SendMoneyCommand command = new SendMoneyCommand(
                 new AccountId(sourceAccountId),
                 new AccountId(targetAccountId),
-                Money.of(amount);
+                Money.of(amount)
         );
         sendMoneyUseCase.sendMoney(command);
     }

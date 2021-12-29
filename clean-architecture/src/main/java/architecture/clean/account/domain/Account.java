@@ -1,16 +1,41 @@
 package architecture.clean.account.domain;
 
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Value;
 
 import java.time.LocalDateTime;
 
-@Getter
+import static lombok.AccessLevel.*;
+
+@AllArgsConstructor(access = PRIVATE)
 public class Account {
 
-    private AccountId id;
-    private Money baselineBalance;
-    private ActivityWindow activityWindow;
+    @Getter
+    private final AccountId id;
+
+    @Getter
+    private final Money baselineBalance;
+
+    @Getter
+    private final ActivityWindow activityWindow;
+
+    public static Account withoutId(
+            Money baselineBalance,
+            ActivityWindow activityWindow
+    ) {
+        return new Account(null, baselineBalance, activityWindow);
+    }
+
+    public static Account withId(
+            AccountId accountId,
+            Money baselineBalance,
+            ActivityWindow activityWindow
+    ) {
+        return new Account(accountId, baselineBalance, activityWindow);
+    }
 
     public Money calculateBalance() {
         return Money.add(
@@ -24,7 +49,7 @@ public class Account {
             return false;
         }
 
-        Activity withdrawal = new Activicy(
+        Activity withdrawal = new Activity(
                 this.id,
                 this.id,
                 targetAccountId,
@@ -53,7 +78,8 @@ public class Account {
         return true;
     }
 
+    @Value
     public static class AccountId {
-
+        private Long value;
     }
 }

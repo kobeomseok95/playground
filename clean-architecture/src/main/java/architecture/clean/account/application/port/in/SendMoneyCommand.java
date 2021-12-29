@@ -13,17 +13,22 @@ import static architecture.clean.account.domain.Account.AccountId;
 @Value
 @EqualsAndHashCode(callSuper = false)
 @Getter
-public class SendMoneyCommand extends SelfValidating<SendMoneyCommand> {
+public
+class SendMoneyCommand extends SelfValidating<SendMoneyCommand> {
 
     @NotNull
     private final AccountId sourceAccountId;
+
     @NotNull
     private final AccountId targetAccountId;
+
     @NotNull
     private final Money money;
 
     public SendMoneyCommand(
-            AccountId sourceAccountId) {
+            AccountId sourceAccountId,
+            AccountId targetAccountId,
+            Money money) {
         this.sourceAccountId = sourceAccountId;
         this.targetAccountId = targetAccountId;
         this.money = money;
