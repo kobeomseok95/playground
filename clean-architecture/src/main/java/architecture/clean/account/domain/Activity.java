@@ -7,6 +7,8 @@ import lombok.Value;
 
 import java.time.LocalDateTime;
 
+import static architecture.clean.account.domain.Account.*;
+
 @Value
 @RequiredArgsConstructor
 public class Activity {
@@ -16,15 +18,15 @@ public class Activity {
 
     @Getter
     @NonNull
-    private final Account.AccountId ownerAccountId;
+    private final AccountId ownerAccountId;
 
     @Getter
     @NonNull
-    private final Account.AccountId sourceAccountId;
+    private final AccountId sourceAccountId;
 
     @Getter
     @NonNull
-    private final Account.AccountId targetAccountId;
+    private final AccountId targetAccountId;
 
     @Getter
     @NonNull
@@ -35,9 +37,9 @@ public class Activity {
     private final Money money;
 
     public Activity(
-            @NonNull Account.AccountId ownerAccountId,
-            @NonNull Account.AccountId sourceAccountId,
-            @NonNull Account.AccountId targetAccountId,
+            @NonNull AccountId ownerAccountId,
+            @NonNull AccountId sourceAccountId,
+            @NonNull AccountId targetAccountId,
             @NonNull LocalDateTime timestamp,
             @NonNull Money money) {
         this.id = null;

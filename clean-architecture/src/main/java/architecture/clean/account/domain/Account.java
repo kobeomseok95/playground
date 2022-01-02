@@ -1,7 +1,6 @@
 package architecture.clean.account.domain;
 
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Value;
