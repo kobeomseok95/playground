@@ -13,11 +13,12 @@ public class Item14Test {
     @Test
     void test() throws Exception {
         LocalDateTime NOW = LocalDateTime.now();
+        CommonFields commonFields1 = new CommonFields("test", 20);
+        CommonFields commonFields2 = new CommonFields("test", 20);
 
-        ExChild ex1 = new ExChild(1L, NOW);
-        ExChild ex2 = new ExChild(1L, NOW);
+        ExChild ex1 = new ExChild(1L, NOW, commonFields1);
+        ExParent ex2 = new ExChild(1L, NOW, commonFields2);
 
-        log.info("name, age = {}, {}", ex1.getName(), ex1.getAge());
         assertEquals(ex1, ex2);
     }
 }

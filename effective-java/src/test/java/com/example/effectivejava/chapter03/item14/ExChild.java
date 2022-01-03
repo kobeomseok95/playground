@@ -9,11 +9,15 @@ import java.time.LocalDateTime;
 
 import static lombok.AccessLevel.PROTECTED;
 
-@EqualsAndHashCode(of = {"id", "createdDate"}, callSuper = true)
+@EqualsAndHashCode(
+        of = "commonFields",
+        callSuper = false
+)
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PROTECTED)
 public class ExChild extends ExParent{
 
     private Long id;
     private LocalDateTime createdDate;
+    private CommonFields commonFields;
 }
