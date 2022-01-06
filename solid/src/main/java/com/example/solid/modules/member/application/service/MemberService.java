@@ -1,5 +1,6 @@
 package com.example.solid.modules.member.application.service;
 
+import com.example.solid.modules.common.exception.member.MemberDuplicateException;
 import com.example.solid.modules.member.application.port.in.MemberJoinRequest;
 import com.example.solid.modules.member.application.port.in.MemberUseCase;
 import com.example.solid.modules.member.application.port.out.MemberFindQuery;
@@ -18,13 +19,12 @@ public class MemberService implements MemberUseCase {
     private final UpdateMemberState updateMemberState;
 
     @Override
-    public boolean join(MemberJoinRequest memberJoinRequest) {
-        if (!memberFindQuery.existsByPhone(
+    public void join(MemberJoinRequest memberJoinRequest) {
+        if (memberFindQuery.existsByPhone(
                 memberJoinRequest.getPhone())) {
-            updateMemberState.save(Member
-                    .build(memberJoinRequest.getPhone()));
-            return true;
+            throw new MemberDuplicateException();
         }
-        throw new IllegalArgumentException("이미 가입한 회원입니다.");
+        updateMemberState.save(Member
+                .build(memberJoinRequest.getPhone()));
     }
 }

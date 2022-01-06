@@ -35,7 +35,6 @@ class MemberIntegrationTest extends IntegrationTest {
                 .andExpect(status().isOk());
     }
 
-    // TODO : 에러 처리
     @Test
     @DisplayName("회원 가입 - 실패")
     void join_fail() throws Exception {

@@ -1,5 +1,6 @@
 package com.example.solid.unit.modules.member.application.service;
 
+import com.example.solid.modules.common.exception.BusinessException;
 import com.example.solid.modules.member.application.port.in.MemberJoinRequest;
 import com.example.solid.modules.member.application.port.out.MemberFindQuery;
 import com.example.solid.modules.member.application.port.out.UpdateMemberState;
@@ -23,7 +24,8 @@ class MemberServiceTest {
     MemberFindQuery memberFindQuery;
     @Mock
     UpdateMemberState updateMemberState;
-    @InjectMocks MemberService memberService;
+    @InjectMocks
+    MemberService memberService;
 
     @Test
     @DisplayName("회원 가입 / 성공")
@@ -31,14 +33,13 @@ class MemberServiceTest {
 
         // given
         MemberJoinRequest request = MockMemberJoinRequest.createRequest();
-        when(memberFindQuery.existsByPhone(request.getPhone())).thenReturn(false);
+        when(memberFindQuery.existsByPhone(any())).thenReturn(false);
 
         // when
-        boolean result = memberService.join(request);
+        memberService.join(request);
 
         // then
         assertAll(
-                () -> assertTrue(result),
                 () -> verify(memberFindQuery).existsByPhone(request.getPhone()),
                 () -> verify(updateMemberState).save(any(Member.class))
         );
@@ -53,7 +54,7 @@ class MemberServiceTest {
         when(memberFindQuery.existsByPhone(request.getPhone())).thenReturn(true);
 
         // when, then
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(BusinessException.class,
                 () -> memberService.join(request));
     }
 }

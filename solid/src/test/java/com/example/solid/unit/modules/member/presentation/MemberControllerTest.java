@@ -5,8 +5,6 @@ import com.example.solid.unit.modules.member.application.port.in.MockMemberJoinR
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -19,7 +17,6 @@ public class MemberControllerTest extends ControllerTest {
     void join() throws Exception {
 
         // given
-        when(memberUseCase.join(any())).thenReturn(true);
         String requestBody = objectMapper.writeValueAsString(
                 MockMemberJoinRequest.createRequest());
 
