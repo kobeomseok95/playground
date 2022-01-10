@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 자바스크립트 인라인 사용 전 -->
+<script>
+  var username = [[${user.username}]];
+  var age = [[${user.age}]];
+
+  var username2 = /*[[${user.username}]]*/ "test username";
+  var user = [[${user}]];
+</script>
+
+
+<!-- 자바스크립트 인라인 사용 후 -->
+<script th:inline="javascript">
+  var username = [[${user.username}]];
+  var age = [[${user.age}]];
+
+  var username2 = /*[[${user.username}]]*/ "test username";
+  var user = [[${user}]];
+</script>
+
+<script th:inline="javascript">
+  [# th:each="user, stat : ${users}"]
+  var user[[${stat.count}]] = [[${user}]];
+  [/]
+</script>
+</body>
+</html>

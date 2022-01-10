@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:fragment="common_header(title,links)">
+  <title th:replace="${title}">레이아웃 타이틀</title>
+  <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/awesomeapp.css}">
+  <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+  <script type="text/javascript" th:src="@{/sh/scripts/codebase.js}"></script>
+  <th:block th:replace="${links}" />
+</head>
+<body>
+메인 컨텐츠
+</body>
+</html>
