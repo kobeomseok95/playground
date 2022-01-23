@@ -1,13 +1,13 @@
-package com.querydsl.lesson;
+package com.mapping.relation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LessonApplication {
+public class RelationApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LessonApplication.class, args);
+        SpringApplication.run(RelationApplication.class, args);
     }
 
 }

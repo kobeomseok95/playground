@@ -22,155 +22,155 @@ import java.util.*;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class BoardServiceImpl /*implements BoardService*/ {
+public class BoardServiceImpl implements BoardService {
 
-//    private final S3Service s3Service;
-//    private final BoardRepository boardRepository;
+    private final S3Service s3Service;
+    private final BoardRepository boardRepository;
 
-//    @Override
-//    public Long createBoard(BoardDto boardDto, List<MultipartFile> files) {
-//
-//        if (validateFiles(files))
-//            return saveBoard(boardDto);
-//
-//        List<String> fileNames = getFilenames(files);
-//        return saveBoard(boardDto, fileNames, s3Service.getFileURL(fileNames));
-//    }
-//
-//    private boolean validateFiles(List<MultipartFile> files) {
-//        if (files.size() == 1) {
-//            MultipartFile file = files.get(0);
-//            String checkFilename = file.getOriginalFilename();
-//
-//            return checkFilename.isBlank() || checkFilename.isEmpty();
-//        }
-//        return false;
-//    }
-//
-//    private Long saveBoard(BoardDto boardDto) {
-//
-//        Board board = Board.from(boardDto);
-//        Board savedBoard = boardRepository.save(board);
-//        return savedBoard.getId();
-//    }
-//
-//    private List<String> getFilenames(List<MultipartFile> files) {
-//
-//        List<String> fileNames = new ArrayList<>();
-//        for (MultipartFile file : files) {
-//
-//            String filename = getFilename(file);
-//            fileNames.add(filename);
-//            uploadFile(file, filename);
-//        }
-//
-//        return fileNames;
-//    }
-//
-//    private void uploadFile(MultipartFile file, String fileName) {
-//        ObjectMetadata objectMetadata = new ObjectMetadata();
-//        objectMetadata.setContentType(file.getContentType());
-//
-//        try (InputStream inputStream = file.getInputStream()){
-//            s3Service.uploadFile(inputStream, objectMetadata, fileName);
-//        } catch(IOException e) {
-//            throw new IllegalArgumentException(String.format("파일 업로드 중 에러가 발생했습니다. (%s)", file.getOriginalFilename()));
-//        }
-//    }
-//
-//    private Long saveBoard(BoardDto boardDto, List<String> fileNames, List<String> fileURLs) {
-//
-//        String fileURL = insertSeparator(fileURLs);
-//        String fileName = insertSeparator(fileNames);
-//
-//        Board board = Board.of(boardDto, fileName, fileURL);
-//        Board savedBoard = boardRepository.save(board);
-//        return savedBoard.getId();
-//    }
-//
-//    private String insertSeparator(List<String> files) {
-//        return String.join(",", files);
-//    }
-//
-//    private String getFilename(MultipartFile file) {
-//        return UUID.randomUUID().toString()
-//                .concat(getFileExtension(file.getOriginalFilename()));
-//    }
-//
-//    private String getFileExtension(String fileName) {
-//        try {
-//            return fileName.substring(fileName.lastIndexOf("."));
-//        } catch (StringIndexOutOfBoundsException e) {
-//            throw new IllegalArgumentException(String.format("잘못된 형식의 파일 (%s) 입니다.", fileName));
-//        }
-//    }
-//
-//    @Override
-//    public BoardResponseDto getBoard(Long id) {
-//
-//        Board board = boardRepository.findById(id).orElseThrow();
-//        return map(board);
-//    }
-//
-//    private BoardResponseDto map(Board board) {
-//        return BoardResponseDto.builder()
-//                .id(String.valueOf(board.getId()))
-//                .text(board.getText())
-//                .title(board.getTitle())
-//                .imageURL(board.getImageURL())
-//                .build();
-//    }
-//
-//    @Override
-//    public void updateBoard(Long id, BoardDto boardDto, List<MultipartFile> files) {
-//
-//        Board board = boardRepository.findById(id).orElseThrow();
-//        deleteFilenamesInBoard(board);
-//
-//        if (!validateFiles(files))
-//            updateBoard(boardDto, files, board);
-//        else
-//            board.updateBoard(boardDto);
-//    }
-//
-//    private void updateBoard(BoardDto boardDto, List<MultipartFile> files, Board board) {
-//
-//        List<String> filenames = getFilenames(files);
-//        String newFilenames = insertSeparator(filenames);
-//        List<String> fileURLs = s3Service.getFileURL(filenames);
-//        String newFileURLs = insertSeparator(fileURLs);
-//        board.updateBoard(boardDto, newFilenames, newFileURLs);
-//    }
-//
-//    private void deleteFilenamesInBoard(Board board) {
-//        List<String> fileNames = separateFilenames(board.getFileName());
-//        deleteFilenames(fileNames);
-//    }
-//
-//    @Override
-//    public void deleteBoard(Long id) {
-//
-//        Board board = boardRepository.findById(id).orElseThrow();
-//        deleteFilenamesInBoard(board);
-//        boardRepository.deleteById(id);
-//    }
-//
-//    private void deleteFilenames(List<String> fileNames) {
-//        if (!validateFilenames(fileNames)) {
-//            s3Service.deleteFile(fileNames);
-//        }
-//    }
-//
-//    private boolean validateFilenames(List<String> fileNames) {
-//        if(fileNames.size() == 1) {
-//
-//            String name = fileNames.get(0);
-//            return name == null || name.equals("");
-//        }
-//        return false;
-//    }
-//
-//    private List<String> separateFilenames(String fileName) {
-//        return Arrays.asList(fileName.split(","));
-//    }
+    @Override
+    public Long createBoard(BoardDto boardDto, List<MultipartFile> files) {
+
+        if (validateFiles(files))
+            return saveBoard(boardDto);
+
+        List<String> fileNames = getFilenames(files);
+        return saveBoard(boardDto, fileNames, s3Service.getFileURL(fileNames));
+    }
+
+    private boolean validateFiles(List<MultipartFile> files) {
+        if (files.size() == 1) {
+            MultipartFile file = files.get(0);
+            String checkFilename = file.getOriginalFilename();
+
+            return checkFilename.isBlank() || checkFilename.isEmpty();
+        }
+        return false;
+    }
+
+    private Long saveBoard(BoardDto boardDto) {
+
+        Board board = Board.from(boardDto);
+        Board savedBoard = boardRepository.save(board);
+        return savedBoard.getId();
+    }
+
+    private List<String> getFilenames(List<MultipartFile> files) {
+
+        List<String> fileNames = new ArrayList<>();
+        for (MultipartFile file : files) {
+
+            String filename = getFilename(file);
+            fileNames.add(filename);
+            uploadFile(file, filename);
+        }
+
+        return fileNames;
+    }
+
+    private void uploadFile(MultipartFile file, String fileName) {
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentType(file.getContentType());
+
+        try (InputStream inputStream = file.getInputStream()){
+            s3Service.uploadFile(inputStream, objectMetadata, fileName);
+        } catch(IOException e) {
+            throw new IllegalArgumentException(String.format("파일 업로드 중 에러가 발생했습니다. (%s)", file.getOriginalFilename()));
+        }
+    }
+
+    private Long saveBoard(BoardDto boardDto, List<String> fileNames, List<String> fileURLs) {
+
+        String fileURL = insertSeparator(fileURLs);
+        String fileName = insertSeparator(fileNames);
+
+        Board board = Board.of(boardDto, fileName, fileURL);
+        Board savedBoard = boardRepository.save(board);
+        return savedBoard.getId();
+    }
+
+    private String insertSeparator(List<String> files) {
+        return String.join(",", files);
+    }
+
+    private String getFilename(MultipartFile file) {
+        return UUID.randomUUID().toString()
+                .concat(getFileExtension(file.getOriginalFilename()));
+    }
+
+    private String getFileExtension(String fileName) {
+        try {
+            return fileName.substring(fileName.lastIndexOf("."));
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(String.format("잘못된 형식의 파일 (%s) 입니다.", fileName));
+        }
+    }
+
+    @Override
+    public BoardResponseDto getBoard(Long id) {
+
+        Board board = boardRepository.findById(id).orElseThrow();
+        return map(board);
+    }
+
+    private BoardResponseDto map(Board board) {
+        return BoardResponseDto.builder()
+                .id(String.valueOf(board.getId()))
+                .text(board.getText())
+                .title(board.getTitle())
+                .imageURL(board.getImageURL())
+                .build();
+    }
+
+    @Override
+    public void updateBoard(Long id, BoardDto boardDto, List<MultipartFile> files) {
+
+        Board board = boardRepository.findById(id).orElseThrow();
+        deleteFilenamesInBoard(board);
+
+        if (!validateFiles(files))
+            updateBoard(boardDto, files, board);
+        else
+            board.updateBoard(boardDto);
+    }
+
+    private void updateBoard(BoardDto boardDto, List<MultipartFile> files, Board board) {
+
+        List<String> filenames = getFilenames(files);
+        String newFilenames = insertSeparator(filenames);
+        List<String> fileURLs = s3Service.getFileURL(filenames);
+        String newFileURLs = insertSeparator(fileURLs);
+        board.updateBoard(boardDto, newFilenames, newFileURLs);
+    }
+
+    private void deleteFilenamesInBoard(Board board) {
+        List<String> fileNames = separateFilenames(board.getFileName());
+        deleteFilenames(fileNames);
+    }
+
+    @Override
+    public void deleteBoard(Long id) {
+
+        Board board = boardRepository.findById(id).orElseThrow();
+        deleteFilenamesInBoard(board);
+        boardRepository.deleteById(id);
+    }
+
+    private void deleteFilenames(List<String> fileNames) {
+        if (!validateFilenames(fileNames)) {
+            s3Service.deleteFile(fileNames);
+        }
+    }
+
+    private boolean validateFilenames(List<String> fileNames) {
+        if(fileNames.size() == 1) {
+
+            String name = fileNames.get(0);
+            return name == null || name.equals("");
+        }
+        return false;
+    }
+
+    private List<String> separateFilenames(String fileName) {
+        return Arrays.asList(fileName.split(","));
+    }
 }

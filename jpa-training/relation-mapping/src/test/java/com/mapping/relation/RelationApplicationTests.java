@@ -1,10 +1,10 @@
-package com.querydsl.lesson;
+package com.mapping.relation;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LessonApplicationTests {
+class RelationApplicationTests {
 
     @Test
     void contextLoads() {
