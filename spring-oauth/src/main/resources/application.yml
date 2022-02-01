@@ -1,0 +1,61 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+  h2:
+    console:
+      enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            clientId: ENC(6F/Ea4fNRic5dWQ6Bhbyc8w0rHvIh6LTpbao8Mq1zS/b2vaaxYT6NNHr6pYntYIc)
+            clientSecret: ENC(2AA+DBLwJBQPGuG4feRKGJWDyKCOGUnJUg5b48xSu26/wPo3xD1SCXXD/i8RnGhW)
+            clientAuthenticationMethod: POST
+            authorizationGrantType: authorization_code
+            redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            scope:
+              - profile_nickname
+              - profile_image
+              - account_email
+            clientName: Kakao
+        provider:
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
+  redis:
+    port: 16379
+    host: localhost
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+    org.springframework.security.web: trace
+
+jwt:
+  secret-key: ENC(1en2hMqsEZsXUfCtosC7xCIwU/K/55LuLGurobbCpiJbE6Uds9MJ3jfj9Y3F3nzz)
+  access-expiration-time: 3600000
+  refresh-expiration-time: 86400000
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    property:
+      prefix: ENC(
+      suffix: )
