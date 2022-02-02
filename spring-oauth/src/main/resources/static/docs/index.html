@@ -446,14 +446,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_카카오_로그인">카카오 로그인</a>
-<ul class="sectlevel2">
-<li><a href="#_apioauth2authorizationprovider">/api/oauth2/authorization/{provider}</a></li>
-</ul>
-</li>
+<li><a href="#_카카오_로그인">카카오 로그인</a></li>
+<li><a href="#_로그아웃">로그아웃</a></li>
+<li><a href="#_jwt_재발급">JWT 재발급</a></li>
 <li><a href="#_사용자_정보_보기">사용자 정보 보기</a>
 <ul class="sectlevel2">
-<li><a href="#_apime">/api/me</a></li>
+<li><a href="#_권한이_없을_경우">권한이 없을 경우</a></li>
 </ul>
 </li>
 </ul>
@@ -463,8 +461,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="_카카오_로그인"><a class="link" href="#_카카오_로그인">카카오 로그인</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_apioauth2authorizationprovider"><a class="link" href="#_apioauth2authorizationprovider">/api/oauth2/authorization/{provider}</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/oauth2/authorization/kakao HTTP/1.1
@@ -499,8 +495,102 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: SAMEORIGIN
-Location: https://kauth.kakao.com/oauth/authorize?response_type=code&amp;client_id=ENC(6F/Ea4fNRic5dWQ6Bhbyc8w0rHvIh6LTpbao8Mq1zS/b2vaaxYT6NNHr6pYntYIc)&amp;scope=profile_nickname%20profile_image%20account_email&amp;state=4JG6ZafiTg4eqUGoybcPTDBIAdmYd99Gw17cgwozj9g%3D&amp;redirect_uri=http://localhost:8080/login/oauth2/code/kakao</code></pre>
+Location: https://kauth.kakao.com/oauth/authorize?response_type=code&amp;client_id=ENC(6F/Ea4fNRic5dWQ6Bhbyc8w0rHvIh6LTpbao8Mq1zS/b2vaaxYT6NNHr6pYntYIc)&amp;scope=profile_nickname%20profile_image%20account_email&amp;state=aBflxCqsrr5e4M_jF1-R2cTrr5fZ6t_cFDKp6p34TZQ%3D&amp;redirect_uri=http://localhost:8080/login/oauth2/code/kakao</code></pre>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_로그아웃"><a class="link" href="#_로그아웃">로그아웃</a></h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/logout HTTP/1.1
+Authorization: Bearer exampleAccessToken
+refreshToken: Bearer exampleRefreshToken
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT Access Token</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshToken</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT Refresh Token</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: SAMEORIGIN</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_jwt_재발급"><a class="link" href="#_jwt_재발급">JWT 재발급</a></h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/reissue HTTP/1.1
+Authorization: Bearer exampleAccessToken
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT Access Token</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: SAMEORIGIN
+Content-Length: 102
+
+{
+  "tokenType" : "Bearer",
+  "accessToken" : "newAccessToken",
+  "refreshToken" : "newRefreshToken"
+}</code></pre>
 </div>
 </div>
 </div>
@@ -508,12 +598,10 @@ Location: https://kauth.kakao.com/oauth/authorize?response_type=code&amp;client_
 <div class="sect1">
 <h2 id="_사용자_정보_보기"><a class="link" href="#_사용자_정보_보기">사용자 정보 보기</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_apime"><a class="link" href="#_apime">/api/me</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/me HTTP/1.1
-Authorization: Bearer accessToken
+Authorization: Bearer exampleAccessToken
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
@@ -546,11 +634,11 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: SAMEORIGIN
-Content-Length: 277
+Content-Length: 324
 
 {
-  "createdDate" : null,
-  "lastModifiedDate" : null,
+  "createdDate" : "2022-02-03T00:29:24.673936",
+  "lastModifiedDate" : "2022-02-03T00:29:24.67395",
   "id" : 1,
   "email" : "kobumssh@naver.com",
   "password" : "test",
@@ -619,12 +707,12 @@ Content-Length: 277
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">사용자 가입 날짜</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>lastModifiedDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">사용자 정보 수정 날짜</p></td>
 </tr>
 <tr>
@@ -634,6 +722,27 @@ Content-Length: 277
 </tr>
 </tbody>
 </table>
+<div class="sect2">
+<h3 id="_권한이_없을_경우"><a class="link" href="#_권한이_없을_경우">권한이 없을 경우</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/me HTTP/1.1
+Authorization: Bearer invalidToken
+Accept: application/json
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 401 Unauthorized
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: SAMEORIGIN</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -641,7 +750,7 @@ Content-Length: 277
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-02-02 21:20:22 +0900
+Last updated 2022-02-02 23:44:43 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

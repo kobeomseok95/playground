@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 
 @Getter
-public abstract class ApplicationException extends RuntimeException{
+public abstract class ApplicationException extends RuntimeException {
 
     private final String errorCode;
     private final HttpStatus httpStatus;

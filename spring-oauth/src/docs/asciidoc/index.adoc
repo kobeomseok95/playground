@@ -7,14 +7,25 @@
 :sectlinks:
 
 == 카카오 로그인
-=== /api/oauth2/authorization/{provider}
-include::{snippets}/auth/login_oauth2_kakao_success/http-request.adoc[]
-include::{snippets}/auth/login_oauth2_kakao_success/path-parameters.adoc[]
-include::{snippets}/auth/login_oauth2_kakao_success/http-response.adoc[]
+include::{snippets}/auth-controller-test/login_oauth2_kakao_success/http-request.adoc[]
+include::{snippets}/auth-controller-test/login_oauth2_kakao_success/path-parameters.adoc[]
+include::{snippets}/auth-controller-test/login_oauth2_kakao_success/http-response.adoc[]
+
+== 로그아웃
+include::{snippets}/auth-controller-test/logout_success/http-request.adoc[]
+include::{snippets}/auth-controller-test/logout_success/request-headers.adoc[]
+include::{snippets}/auth-controller-test/logout_success/http-response.adoc[]
+
+== JWT 재발급
+include::{snippets}/auth-controller-test/reissue_success/http-request.adoc[]
+include::{snippets}/auth-controller-test/reissue_success/request-headers.adoc[]
+include::{snippets}/auth-controller-test/reissue_success/http-response.adoc[]
 
 == 사용자 정보 보기
-=== /api/me
-include::{snippets}/member/get_me_test_success/http-request.adoc[]
-include::{snippets}/member/get_me_test_success/request-headers.adoc[]
-include::{snippets}/member/get_me_test_success/http-response.adoc[]
-include::{snippets}/member/get_me_test_success/response-fields.adoc[]
+include::{snippets}/member-controller-test/get_me_test_success/http-request.adoc[]
+include::{snippets}/member-controller-test/get_me_test_success/request-headers.adoc[]
+include::{snippets}/member-controller-test/get_me_test_success/http-response.adoc[]
+include::{snippets}/member-controller-test/get_me_test_success/response-fields.adoc[]
+=== 권한이 없을 경우
+include::{snippets}/member-controller-test/get_me_test_should_valid_jwt/http-request.adoc[]
+include::{snippets}/member-controller-test/get_me_test_should_valid_jwt/http-response.adoc[]

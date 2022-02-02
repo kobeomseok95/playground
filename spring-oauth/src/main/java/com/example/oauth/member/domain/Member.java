@@ -2,6 +2,7 @@ package com.example.oauth.member.domain;
 
 import com.example.oauth.common.entity.BaseEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
+@SuperBuilder
 public class Member extends BaseEntity {
 
     @Id
