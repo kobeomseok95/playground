@@ -1,0 +1,20 @@
+= OAuth2.0 소셜 로그인
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+== 카카오 로그인
+=== /api/oauth2/authorization/{provider}
+include::{snippets}/auth/login_oauth2_kakao_success/http-request.adoc[]
+include::{snippets}/auth/login_oauth2_kakao_success/path-parameters.adoc[]
+include::{snippets}/auth/login_oauth2_kakao_success/http-response.adoc[]
+
+== 사용자 정보 보기
+=== /api/me
+include::{snippets}/member/get_me_test_success/http-request.adoc[]
+include::{snippets}/member/get_me_test_success/request-headers.adoc[]
+include::{snippets}/member/get_me_test_success/http-response.adoc[]
+include::{snippets}/member/get_me_test_success/response-fields.adoc[]

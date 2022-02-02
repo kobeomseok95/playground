@@ -38,10 +38,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             if (isValidToken(jwt)) {
                 String email = tokenProvider.getUserEmail(jwt);
                 AuthProvider authProvider = tokenProvider.getAuthProvider(jwt);
-                UserDetails userDetails = customUserDetailsService.loadTokenUserByUsername(email,authProvider);
+                UserDetails userDetails = customUserDetailsService.loadTokenUserByUsername(email, authProvider);
                 UsernamePasswordAuthenticationToken authentication
                         = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {

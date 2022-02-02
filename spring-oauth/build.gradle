@@ -44,6 +44,7 @@ dependencies {
 }
 
 tasks.named('test') {
+    systemProperty 'jasypt.encryptor.password', findProperty("jasypt.encryptor.password")
     outputs.dir snippetsDir
     useJUnitPlatform()
 }
