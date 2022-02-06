@@ -28,7 +28,6 @@ public class OAuthAttributes {
                                      Map<String,Object> attributes){
 
         switch (registrationId){
-            // TODO apple 로그인 추가
             case "kakao":
                 return ofKakao("id",attributes);
             default:

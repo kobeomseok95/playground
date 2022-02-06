@@ -34,6 +34,7 @@ spring:
             clientName: Kakao
         provider:
           kakao:
+            # {baseUrl}/{action}/oauth2/code/{registrationId}
             authorizationUri: https://kauth.kakao.com/oauth/authorize
             tokenUri: https://kauth.kakao.com/oauth/token
             userInfoUri: https://kapi.kakao.com/v2/user/me
@@ -44,8 +45,8 @@ spring:
 
 logging:
   level:
-    org.hibernate.SQL: debug
-    org.hibernate.type: trace
+#    org.hibernate.SQL: debug
+#    org.hibernate.type: trace
     org.springframework.security.web: trace
 
 jwt:
