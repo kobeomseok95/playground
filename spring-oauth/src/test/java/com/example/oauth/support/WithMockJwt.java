@@ -14,4 +14,6 @@ public @interface WithMockJwt {
     String username() default "test@naver.com";
 
     String role() default "ROLE_USER";
+
+    String password() default "test";
 }

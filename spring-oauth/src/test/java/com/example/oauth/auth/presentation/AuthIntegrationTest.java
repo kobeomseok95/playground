@@ -20,13 +20,4 @@ class AuthIntegrationTest extends IntegrationTest {
         mockMvc.perform(get("/api/oauth2/authorization/{registrationId}", "kakao"))
                 .andExpect(status().is3xxRedirection());
     }
-
-    @DisplayName("로그인 / 리다이렉션 이후 로그인 성공")
-    @Test
-    void login_oauth2_obtain_access_token_success() throws Exception {
-
-        // given
-//        Mockito.when(restTemplate.exchange())
-//                .thenReturn();
-    }
 }

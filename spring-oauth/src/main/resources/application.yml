@@ -34,7 +34,6 @@ spring:
             clientName: Kakao
         provider:
           kakao:
-            # {baseUrl}/{action}/oauth2/code/{registrationId}
             authorizationUri: https://kauth.kakao.com/oauth/authorize
             tokenUri: https://kauth.kakao.com/oauth/token
             userInfoUri: https://kapi.kakao.com/v2/user/me
@@ -57,6 +56,7 @@ jwt:
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
+    password: ${JASYPT_PASSWORD}
     property:
       prefix: ENC(
       suffix: )
