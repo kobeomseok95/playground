@@ -5,7 +5,6 @@ import com.example.oauth.auth.domain.repository.LogoutRefreshTokenRepository;
 import com.example.oauth.auth.jwt.TokenProvider;
 import com.example.oauth.auth.service.CustomUserDetailsService;
 import com.example.oauth.common.exception.auth.TokenAuthenticationFilterException;
-import com.example.oauth.member.domain.AuthProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,8 +36,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             String jwt = getJwtFromRequest(request);
             if (isValidToken(jwt)) {
                 String email = tokenProvider.getUserEmail(jwt);
-                AuthProvider authProvider = tokenProvider.getAuthProvider(jwt);
-                UserDetails userDetails = customUserDetailsService.loadTokenUserByUsername(email, authProvider);
+//                AuthProvider authProvider = tokenProvider.getAuthProvider(jwt);
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
                 UsernamePasswordAuthenticationToken authentication
                         = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);

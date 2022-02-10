@@ -5,14 +5,13 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
 @Getter
-public class MemberPrincipal implements OAuth2User, UserDetails {
+public class MemberPrincipal implements UserDetails {
 
     private Member member;
     private Map<String, Object> attributes;
@@ -40,10 +39,10 @@ public class MemberPrincipal implements OAuth2User, UserDetails {
         return Collections.singletonList(new SimpleGrantedAuthority(member.getRoleKey()));
     }
 
-    @Override
-    public String getName() {
-        return member.getName();
-    }
+//    @Override
+//    public String getName() {
+//        return member.getName();
+//    }
 
     @Override
     public String getPassword() {

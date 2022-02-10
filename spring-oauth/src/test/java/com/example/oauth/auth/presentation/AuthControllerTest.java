@@ -1,8 +1,9 @@
 package com.example.oauth.auth.presentation;
 
 import com.example.oauth.SecuritySupport;
-import com.example.oauth.auth.dto.AuthResponse;
+import com.example.oauth.auth.dto.response.AuthResponse;
 import com.example.oauth.config.RestDocsConfig;
+import com.example.oauth.support.WithMockJwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,12 +16,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
@@ -36,8 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// TODO 통합 테스트 해보기
-@WebMvcTest
+@WebMvcTest(AuthController.class)
 @ExtendWith(RestDocumentationExtension.class)
 @Import(RestDocsConfig.class)
 class AuthControllerTest extends SecuritySupport {
@@ -58,18 +62,33 @@ class AuthControllerTest extends SecuritySupport {
                 .build();
     }
 
-    @DisplayName("oauth2 로그인 / 리다이렉션 성공")
+    @DisplayName("oauth2 로그인 / 성공")
     @Test
-    void login_oauth2_kakao_success() throws Exception {
+    void login_oauth2_success() throws Exception {
 
-        // when, then, docs
-        mockMvc.perform(get("/api/oauth2/authorization/{provider}", "kakao"))
-                .andExpect(status().is3xxRedirection())
+        // given
+        when(authService.login(any(), any()))
+                .thenReturn(AuthResponse.of("testAccessToken", "testRefreshToken"));
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("code", "test_code");
+
+        // when, then
+        mockMvc.perform(get("/api/login/oauth2/{provider}", "kakao")
+                .params(params))
                 .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.accessToken", is("testAccessToken")))
+                .andExpect(jsonPath("$.refreshToken", is("testRefreshToken")))
                 .andDo(restDocs.document(
                         pathParameters(
-                                parameterWithName("provider").description("OAuth2 소셜 로그인 제공자")
-                        )));
+                                parameterWithName("provider").description("소셜 로그인 제공자 kakao, apple")
+                        ),
+                        responseFields(
+                                fieldWithPath("tokenType").type(JsonFieldType.STRING).description("Bearer (fix)"),
+                                fieldWithPath("accessToken").type(JsonFieldType.STRING).description("jwt access token"),
+                                fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("jwt refresh token")
+                        )
+                ));
     }
 
     @DisplayName("로그아웃 / 성공")
@@ -89,12 +108,13 @@ class AuthControllerTest extends SecuritySupport {
                 ));
     }
 
+    @WithMockJwt
     @DisplayName("토큰 재발급 / 성공")
     @Test
     void reissue_success() throws Exception {
 
         // given
-        when(authService.reissue())
+        when(authService.reissue(any()))
                 .thenReturn(AuthResponse.of("newAccessToken", "newRefreshToken"));
 
         // when, then, docs
@@ -109,9 +129,9 @@ class AuthControllerTest extends SecuritySupport {
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("JWT Access Token")
                         ),
                         responseFields(
-                                fieldWithPath("tokenType").type(String.class).description("토큰의 타입, default: Bearer"),
-                                fieldWithPath("accessToken").type(String.class).description("재발급 받은 access token"),
-                                fieldWithPath("refreshToken").type(String.class).description("재발급 받은 refresh token")
+                                fieldWithPath("tokenType").type(JsonFieldType.STRING).description("토큰의 타입, default: Bearer"),
+                                fieldWithPath("accessToken").type(JsonFieldType.STRING).description("재발급 받은 access token"),
+                                fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("재발급 받은 refresh token")
                         )
                 ));
     }

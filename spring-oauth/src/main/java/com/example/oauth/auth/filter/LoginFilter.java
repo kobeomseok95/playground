@@ -1,6 +1,6 @@
 package com.example.oauth.auth.filter;
 
-import com.example.oauth.auth.dto.LoginRequest;
+import com.example.oauth.auth.dto.request.LoginRequest;
 import com.example.oauth.common.exception.auth.HttpMethodNotSupportedException;
 import com.example.oauth.common.exception.auth.LoginRequestParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -29,12 +29,30 @@ public class TokenProvider {
         this.refreshTokenExpirationTimeInMilliSeconds = refreshTokenExpirationTimeInMilliSeconds;
     }
 
-    public String createAccessToken(Authentication authentication) {
-        return createToken(authentication, accessTokenExpirationTimeInMilliSeconds);
+//    public String createAccessToken(Authentication authentication) {
+//        return createToken(authentication, accessTokenExpirationTimeInMilliSeconds);
+//    }
+//
+//    public String createRefreshToken(Authentication authentication){
+//        return createToken(authentication, refreshTokenExpirationTimeInMilliSeconds);
+//    }
+
+    public String createAccessToken(String payload) {
+        return createToken(payload, accessTokenExpirationTimeInMilliSeconds);
     }
 
-    public String createRefreshToken(Authentication authentication){
-        return createToken(authentication, refreshTokenExpirationTimeInMilliSeconds);
+    public String createRefreshToken(String payload){
+        return createToken(payload, refreshTokenExpirationTimeInMilliSeconds);
+    }
+
+    private String createToken(String payload, long expirationTimeMilliSeconds) {
+        Date now = new Date();
+        return Jwts.builder()
+            .setClaims(Jwts.claims().setSubject(payload))
+            .setIssuedAt(now)
+            .setExpiration(new Date(now.getTime() + expirationTimeMilliSeconds))
+            .signWith(SignatureAlgorithm.HS256, secretKey)
+            .compact();
     }
 
     private String createToken(Authentication authentication, long expirationTimeMilliSeconds) {

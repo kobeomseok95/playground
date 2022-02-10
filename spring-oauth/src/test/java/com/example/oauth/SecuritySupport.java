@@ -45,8 +45,7 @@ public abstract class SecuritySupport {
         when(logoutRefreshTokenRepository.existsById(any())).thenReturn(false);
         when(tokenProvider.validateToken(any())).thenReturn(true);
         when(tokenProvider.getUserEmail(any())).thenReturn(member.getEmail());
-        when(tokenProvider.getAuthProvider(any())).thenReturn(AuthProvider.kakao);
-        when(customUserDetailsService.loadTokenUserByUsername(anyString(), any())).thenReturn(MemberPrincipal.from(createMember()));
+        when(customUserDetailsService.loadUserByUsername(anyString())).thenReturn(MemberPrincipal.from(createMember()));
     }
 
     private Member createMember() {

@@ -3,6 +3,7 @@ package com.example.oauth.member.presentation;
 import com.example.oauth.SecuritySupport;
 import com.example.oauth.common.exception.GlobalControllerAdvice;
 import com.example.oauth.config.RestDocsConfig;
+import com.example.oauth.support.WithMockJwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,6 +58,7 @@ class MemberControllerTest extends SecuritySupport {
                 .build();
     }
 
+    @WithMockJwt
     @DisplayName("회원 정보 조회 / 성공")
     @Test
     void get_me_test_success() throws Exception {

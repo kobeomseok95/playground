@@ -1,4 +1,4 @@
-package com.example.oauth.auth.dto;
+package com.example.oauth.auth.dto.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthResponse {
 
-    private String tokenType = "Bearer";
+    private final String tokenType = "Bearer";
     private String accessToken;
     private String refreshToken;
 

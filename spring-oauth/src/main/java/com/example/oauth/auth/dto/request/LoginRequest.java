@@ -1,4 +1,4 @@
-package com.example.oauth.auth.dto;
+package com.example.oauth.auth.dto.request;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

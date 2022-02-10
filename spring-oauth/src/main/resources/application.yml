@@ -24,9 +24,9 @@ spring:
           kakao:
             clientId: ENC(6F/Ea4fNRic5dWQ6Bhbyc8w0rHvIh6LTpbao8Mq1zS/b2vaaxYT6NNHr6pYntYIc)
             clientSecret: ENC(2AA+DBLwJBQPGuG4feRKGJWDyKCOGUnJUg5b48xSu26/wPo3xD1SCXXD/i8RnGhW)
-            clientAuthenticationMethod: POST
-            authorizationGrantType: authorization_code
-            redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            redirectUri: http://localhost:8080/api/login/oauth2/kakao
+#            clientAuthenticationMethod: POST
+#            authorizationGrantType: authorization_code
             scope:
               - profile_nickname
               - profile_image
