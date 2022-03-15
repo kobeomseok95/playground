@@ -29,13 +29,26 @@ public class TokenProvider {
         this.refreshTokenExpirationTimeInMilliSeconds = refreshTokenExpirationTimeInMilliSeconds;
     }
 
-//    public String createAccessToken(Authentication authentication) {
-//        return createToken(authentication, accessTokenExpirationTimeInMilliSeconds);
-//    }
-//
-//    public String createRefreshToken(Authentication authentication){
-//        return createToken(authentication, refreshTokenExpirationTimeInMilliSeconds);
-//    }
+    public String createAccessToken(Authentication authentication) {
+        return createToken(authentication, accessTokenExpirationTimeInMilliSeconds);
+    }
+
+    public String createRefreshToken(Authentication authentication){
+        return createToken(authentication, refreshTokenExpirationTimeInMilliSeconds);
+    }
+
+    private String createToken(Authentication authentication, long expirationTimeMilliSeconds) {
+        MemberPrincipal principal = (MemberPrincipal) authentication.getPrincipal();
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + expirationTimeMilliSeconds);
+        return Jwts.builder()
+                .setSubject(principal.getUsername())
+                .claim(AUTH_PROVIDER, principal.getMember().getAuthProvider())
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(SignatureAlgorithm.HS512, secretKey)
+                .compact();
+    }
 
     public String createAccessToken(String payload) {
         return createToken(payload, accessTokenExpirationTimeInMilliSeconds);
@@ -53,19 +66,6 @@ public class TokenProvider {
             .setExpiration(new Date(now.getTime() + expirationTimeMilliSeconds))
             .signWith(SignatureAlgorithm.HS256, secretKey)
             .compact();
-    }
-
-    private String createToken(Authentication authentication, long expirationTimeMilliSeconds) {
-        MemberPrincipal principal = (MemberPrincipal) authentication.getPrincipal();
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + expirationTimeMilliSeconds);
-        return Jwts.builder()
-                .setSubject(principal.getUsername())
-                .claim(AUTH_PROVIDER, principal.getMember().getAuthProvider())
-                .setIssuedAt(now)
-                .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, secretKey)
-                .compact();
     }
 
     public String getUserEmail(String token) {

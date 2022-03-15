@@ -18,3 +18,7 @@ spring:
 logging:
   level:
     org.hibernate.sql: debug
+server:
+  tomcat:
+    threads:
+      min-spare: 2
