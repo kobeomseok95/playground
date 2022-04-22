@@ -1,5 +1,7 @@
 package com.mapping.relation;
 
+import com.mapping.relation.command.Product;
+import com.mapping.relation.command.ProductCommandRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class EntityTest {
     @Autowired
     EntityManager entityManager;
     @Autowired
-    ProductRepository productRepository;
+    ProductCommandRepository productCommandRepository;
 
     @Test
     @DisplayName("여러 장의 사진을 덮어씌울 때")
@@ -27,12 +29,12 @@ public class EntityTest {
         ProductImage image1 = ProductImage.builder().product(product).url("test1").build();
         ProductImage image2 = ProductImage.builder().product(product).url("test2").build();
         product.addImages(List.of(image1, image2));
-        productRepository.save(product);
+        productCommandRepository.save(product);
         entityManager.flush();
         entityManager.clear();
 
         // when
-        Product findProduct = productRepository.findById(product.getId()).orElseThrow();
+        Product findProduct = productCommandRepository.findById(product.getId()).orElseThrow();
         ProductImage image3 = ProductImage.builder().url("test3").build();
         ProductImage image4 = ProductImage.builder().url("test4").build();
         findProduct.putImages(List.of(image3, image4));
@@ -51,12 +53,12 @@ public class EntityTest {
         ProductImage image1 = ProductImage.builder().product(product).url("test1").build();
         ProductImage image2 = ProductImage.builder().product(product).url("test2").build();
         product.addImages(List.of(image1, image2));
-        productRepository.save(product);
+        productCommandRepository.save(product);
         entityManager.flush();
         entityManager.clear();
 
         // when
-        Product findProduct = productRepository.findById(product.getId()).orElseThrow();
+        Product findProduct = productCommandRepository.findById(product.getId()).orElseThrow();
         findProduct.removeImage(image1);
         entityManager.flush();
 

@@ -1,5 +1,6 @@
 package com.mapping.relation;
 
+import com.mapping.relation.command.Product;
 import lombok.*;
 
 import javax.persistence.*;
