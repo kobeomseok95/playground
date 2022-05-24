@@ -15,5 +15,9 @@ public class User {
     private Long id;
     private String name;
     private int age;
+
+    public void setId(Long autoIncrementId) {
+        this.id = autoIncrementId;
+    }
 }
 

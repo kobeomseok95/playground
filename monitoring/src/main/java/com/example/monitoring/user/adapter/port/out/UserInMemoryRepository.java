@@ -12,7 +12,7 @@ import java.util.Optional;
 class UserInMemoryRepository implements UserRepository {
 
     private static final Map<Long, User> userMap = new HashMap<>();
-    private static final Long autoIncrementId = 1L;
+    private static Long autoIncrementId = 1L;
 
     @Override
     public Optional<User> findById(Long userId) {
@@ -20,5 +20,12 @@ class UserInMemoryRepository implements UserRepository {
             return Optional.of(userMap.get(userId));
         }
         return Optional.empty();
+    }
+
+    @Override
+    public User save(User user) {
+        user.setId(autoIncrementId);
+        userMap.put(autoIncrementId++, user);
+        return user;
     }
 }
