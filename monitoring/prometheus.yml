@@ -12,4 +12,4 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     static_configs:
       - targets:
-        - '172.18.0.2:8080'
+        - 'app:8080'
