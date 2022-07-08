@@ -1,15 +1,15 @@
 package com.example.ddd.order.domain;
 
 import com.example.ddd.common.domainmodel.Address;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class ShippingInfo {
 
     @Embedded
@@ -23,4 +23,6 @@ public class ShippingInfo {
     @Column(name = "shipping_message")
     private String shippingMessage;
 
+    @Embedded
+    private Receiver receiver;
 }

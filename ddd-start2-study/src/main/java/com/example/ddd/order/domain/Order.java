@@ -1,8 +1,6 @@
 package com.example.ddd.order.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,7 +8,9 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "purchase_order")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@Table(name = "orders")
 public class Order {
 
     @EmbeddedId
@@ -18,6 +18,9 @@ public class Order {
 
     @Embedded
     private ShippingInfo shippingInfo;
+
+    @Embedded
+    private Orderer orderer;
 
     @Enumerated(EnumType.STRING)
     private OrderState orderState;
@@ -29,4 +32,16 @@ public class Order {
     )
     @OrderColumn(name = "line_idx")
     private List<OrderLine> orderLines;
+
+    public static Order from(Orderer orderer,
+                             ShippingInfo shippingInfo,
+                             List<OrderLine> orderLines) {
+        return Order.builder()
+                .orderNo(OrderNo.of())
+                .shippingInfo(shippingInfo)
+                .orderer(orderer)
+                .orderState(OrderState.PREPARING)
+                .orderLines(orderLines)
+                .build();
+    }
 }

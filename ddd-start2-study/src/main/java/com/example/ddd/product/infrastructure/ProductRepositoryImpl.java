@@ -5,6 +5,8 @@ import com.example.ddd.product.domain.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 class ProductRepositoryImpl implements ProductRepository {
@@ -14,5 +16,10 @@ class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Product save(Product product) {
         return productJpaRepository.save(product);
+    }
+
+    @Override
+    public Optional<Product> findById(Long productId) {
+        return productJpaRepository.findById(productId);
     }
 }

@@ -1,41 +1,35 @@
 package com.example.ddd.order.domain;
 
+import com.example.ddd.common.domainmodel.Money;
+import com.example.ddd.common.domainmodel.MoneyConverter;
 import com.example.ddd.product.domain.Product;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class OrderLine {
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
-
-    // TODO: 2022/07/07 kobeomseok95 Money 클래스 생성
-    @Column(name = "price")
-    private Long price;
 
     @Column(name = "quantity")
     private int quantity;
 
-    // TODO: 2022/07/07 kobeomseok95 Money 클래스 생성
+    @Convert(converter = MoneyConverter.class)
     @Column(name = "total_price")
-    private Long totalPrice;
+    private Money totalPrice;
 
-    // TODO: 2022/07/07 kobeomseok95 ProductId를 참조하는건 어떨까?
-    public static OrderLine of(Product product, Long price, int quantity) {
+    public static OrderLine to(Product product, int quantity) {
         return OrderLine.builder()
                 .product(product)
-                .price(price)
                 .quantity(quantity)
-                .totalPrice(quantity * price)
+                .totalPrice(product.getPrice().multiply(quantity))
                 .build();
     }
 }
