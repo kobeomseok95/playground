@@ -1,7 +1,7 @@
-package com.example.ddd.product.infrastructure;
+package com.example.ddd.catalog.product.infrastructure;
 
-import com.example.ddd.product.domain.Product;
-import com.example.ddd.product.domain.ProductRepository;
+import com.example.ddd.catalog.product.domain.Product;
+import com.example.ddd.catalog.product.domain.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

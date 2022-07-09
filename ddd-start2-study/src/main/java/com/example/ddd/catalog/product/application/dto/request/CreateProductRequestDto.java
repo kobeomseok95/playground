@@ -1,6 +1,6 @@
-package com.example.ddd.product.application.dto.request;
+package com.example.ddd.catalog.product.application.dto.request;
 
-import com.example.ddd.product.domain.Product;
+import com.example.ddd.catalog.product.domain.Product;
 import lombok.*;
 
 @Getter

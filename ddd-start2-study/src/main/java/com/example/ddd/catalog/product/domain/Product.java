@@ -1,10 +1,11 @@
-package com.example.ddd.product.domain;
+package com.example.ddd.catalog.product.domain;
 
 import com.example.ddd.common.domainmodel.Money;
 import com.example.ddd.common.domainmodel.MoneyConverter;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -18,9 +19,17 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
 
+    @Column(name = "product_name")
     private String name;
 
     @Convert(converter = MoneyConverter.class)
     @Column(name = "product_price")
     private Money price;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "product_category",
+            joinColumns = @JoinColumn(name = "product_id")
+    )
+    private Set<Long> categoryIds;
 }

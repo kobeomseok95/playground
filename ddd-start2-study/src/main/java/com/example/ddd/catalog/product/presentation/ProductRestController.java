@@ -1,7 +1,7 @@
-package com.example.ddd.product.presentation;
+package com.example.ddd.catalog.product.presentation;
 
-import com.example.ddd.product.application.ProductCommandService;
-import com.example.ddd.product.presentation.dto.request.CreateProductRequest;
+import com.example.ddd.catalog.product.application.ProductCommandService;
+import com.example.ddd.catalog.product.presentation.dto.request.CreateProductRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

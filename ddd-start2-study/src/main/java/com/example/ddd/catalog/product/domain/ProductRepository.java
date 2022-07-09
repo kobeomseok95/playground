@@ -1,4 +1,4 @@
-package com.example.ddd.product.domain;
+package com.example.ddd.catalog.product.domain;
 
 import java.util.Optional;
 

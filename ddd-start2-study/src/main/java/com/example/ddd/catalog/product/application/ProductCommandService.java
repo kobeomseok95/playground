@@ -1,7 +1,7 @@
-package com.example.ddd.product.application;
+package com.example.ddd.catalog.product.application;
 
-import com.example.ddd.product.application.dto.request.CreateProductRequestDto;
-import com.example.ddd.product.domain.ProductRepository;
+import com.example.ddd.catalog.product.application.dto.request.CreateProductRequestDto;
+import com.example.ddd.catalog.product.domain.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

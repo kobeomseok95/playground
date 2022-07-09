@@ -2,8 +2,8 @@ package com.example.ddd.order.application;
 
 import com.example.ddd.order.application.dto.request.OrderRequest;
 import com.example.ddd.order.domain.*;
-import com.example.ddd.product.domain.Product;
-import com.example.ddd.product.domain.ProductRepository;
+import com.example.ddd.catalog.product.domain.Product;
+import com.example.ddd.catalog.product.domain.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

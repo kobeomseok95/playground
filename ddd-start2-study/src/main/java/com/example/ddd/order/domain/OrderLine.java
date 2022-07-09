@@ -2,7 +2,7 @@ package com.example.ddd.order.domain;
 
 import com.example.ddd.common.domainmodel.Money;
 import com.example.ddd.common.domainmodel.MoneyConverter;
-import com.example.ddd.product.domain.Product;
+import com.example.ddd.catalog.product.domain.Product;
 import lombok.*;
 
 import javax.persistence.*;
