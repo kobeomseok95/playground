@@ -13,10 +13,12 @@ import lombok.Setter;
 public class CreateProductRequest {
 
     private String productName;
+    private Long price;
 
     public CreateProductRequestDto toRequestDto() {
         return CreateProductRequestDto.builder()
                 .productName(productName)
+                .price(price)
                 .build();
     }
 }

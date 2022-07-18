@@ -25,4 +25,8 @@ public class ShippingInfo {
 
     @Embedded
     private Receiver receiver;
+
+    public void changeAddress(Address address) {
+        this.address = address;
+    }
 }

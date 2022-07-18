@@ -1,7 +1,6 @@
 package com.example.ddd.order.infrastructure;
 
 import com.example.ddd.order.domain.Order;
-import com.example.ddd.order.domain.OrderNo;
 import com.example.ddd.order.domain.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -15,12 +14,17 @@ public class OrderRepositoryImpl implements OrderRepository {
     private final OrderJpaRepository orderJpaRepository;
 
     @Override
-    public Optional<Order> findById(OrderNo orderNo) {
-        return orderJpaRepository.findById(orderNo);
+    public Optional<Order> findById(Long orderId) {
+        return orderJpaRepository.findById(orderId);
     }
 
     @Override
     public Order save(Order order) {
         return orderJpaRepository.save(order);
+    }
+
+    @Override
+    public Optional<Order> findByIdForUpdate(Long orderId) {
+        return orderJpaRepository.findByIdForUpdate(orderId);
     }
 }
