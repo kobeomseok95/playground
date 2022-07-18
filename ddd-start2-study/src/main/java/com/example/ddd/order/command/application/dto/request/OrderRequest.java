@@ -1,6 +1,6 @@
-package com.example.ddd.order.application.dto.request;
+package com.example.ddd.order.command.application.dto.request;
 
-import com.example.ddd.order.domain.ShippingInfo;
+import com.example.ddd.order.command.domain.ShippingInfo;
 import lombok.Getter;
 import lombok.Setter;
 

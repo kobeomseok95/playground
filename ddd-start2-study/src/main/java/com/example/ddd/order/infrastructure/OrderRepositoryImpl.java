@@ -1,7 +1,7 @@
 package com.example.ddd.order.infrastructure;
 
-import com.example.ddd.order.domain.Order;
-import com.example.ddd.order.domain.OrderRepository;
+import com.example.ddd.order.command.domain.Order;
+import com.example.ddd.order.command.domain.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

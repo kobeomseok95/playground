@@ -1,4 +1,4 @@
-package com.example.ddd.order.application.dto.request;
+package com.example.ddd.order.command.application.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

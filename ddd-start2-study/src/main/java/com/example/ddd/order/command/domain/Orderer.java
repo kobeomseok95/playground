@@ -1,4 +1,4 @@
-package com.example.ddd.order.domain;
+package com.example.ddd.order.command.domain;
 
 import com.example.ddd.member.query.MemberData;
 import lombok.*;

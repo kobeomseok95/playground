@@ -1,6 +1,6 @@
 package com.example.ddd.order.infrastructure;
 
-import com.example.ddd.order.domain.Order;
+import com.example.ddd.order.command.domain.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;

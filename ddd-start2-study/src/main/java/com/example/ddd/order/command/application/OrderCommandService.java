@@ -1,10 +1,10 @@
-package com.example.ddd.order.application;
+package com.example.ddd.order.command.application;
 
 import com.example.ddd.catalog.product.domain.Product;
 import com.example.ddd.catalog.product.domain.ProductRepository;
-import com.example.ddd.order.application.dto.request.AddressRequest;
-import com.example.ddd.order.application.dto.request.OrderRequest;
-import com.example.ddd.order.domain.*;
+import com.example.ddd.order.command.application.dto.request.AddressRequest;
+import com.example.ddd.order.command.application.dto.request.OrderRequest;
+import com.example.ddd.order.command.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,9 +40,9 @@ public class OrderCommandService {
     }
 
     public void changeOrderAddress(Long orderId, AddressRequest addressRequest) {
-        Order order = orderRepository.findById(orderId).orElseThrow();
+//        Order order = orderRepository.findById(orderId).orElseThrow();
 //        잠금을 획득하는 쿼리를 호출해야하나?
-//        Order order = orderRepository.findByIdForUpdate(orderId).orElseThrow();
+        Order order = orderRepository.findByIdForUpdate(orderId).orElseThrow();
         order.changeOrderAddress(addressRequest.toAddress());
     }
 

@@ -1,4 +1,4 @@
-package com.example.ddd.order.domain;
+package com.example.ddd.order.command.domain;
 
 import com.example.ddd.common.domainmodel.Money;
 import com.example.ddd.common.domainmodel.MoneyConverter;

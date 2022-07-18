@@ -2,8 +2,8 @@ package com.example.ddd.order.infrastructure;
 
 import com.example.ddd.member.query.MemberData;
 import com.example.ddd.member.query.MemberDataJpaRepository;
-import com.example.ddd.order.domain.Orderer;
-import com.example.ddd.order.domain.OrdererService;
+import com.example.ddd.order.command.domain.Orderer;
+import com.example.ddd.order.command.domain.OrdererService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
