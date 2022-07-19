@@ -40,14 +40,14 @@ public class OrderCommandService {
     }
 
     public void changeOrderAddress(Long orderId, AddressRequest addressRequest) {
-//        Order order = orderRepository.findById(orderId).orElseThrow();
-//        잠금을 획득하는 쿼리를 호출해야하나?
-        Order order = orderRepository.findByIdForUpdate(orderId).orElseThrow();
+//        Order order = findWithOptimisticLockByIdOrElseThrow(orderId);
+        Order order = findWithOptimisticLockByIdOrElseThrow(orderId);
         order.changeOrderAddress(addressRequest.toAddress());
     }
 
     public void changeOrderState(Long orderId, String orderState) {
-        Order order = orderRepository.findByIdForUpdate(orderId).orElseThrow();
+//        Order order = findWithOptimisticLockByIdOrElseThrow(orderId);
+        Order order = findWithOptimisticLockByIdOrElseThrow(orderId);
         try {
             // 실험을 위해 10초 대기
             Thread.sleep(5000);
@@ -55,5 +55,13 @@ public class OrderCommandService {
             throw new IllegalStateException();
         }
         order.changeOrderState(OrderState.valueOf(orderState.toUpperCase()));
+    }
+
+    private Order findWithPessimisticLockByIdOrElseThrow(Long orderId) {
+        return orderRepository.findWithPessimisticLockById(orderId).orElseThrow();
+    }
+
+    private Order findWithOptimisticLockByIdOrElseThrow(Long orderId) {
+        return orderRepository.findWithOptimisticLockById(orderId).orElseThrow();
     }
 }

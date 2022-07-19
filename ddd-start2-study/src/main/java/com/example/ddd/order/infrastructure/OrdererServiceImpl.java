@@ -15,7 +15,7 @@ public class OrdererServiceImpl implements OrdererService {
 
     @Override
     public Orderer createOrderer(Long ordererId) {
-        MemberData orderer = memberDataJpaRepository.findById(ordererId)
+        MemberData orderer = memberDataJpaRepository.findMemberDataById(ordererId)
                 .orElseThrow(IllegalArgumentException::new);
         return Orderer.of(orderer);
     }

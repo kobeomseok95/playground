@@ -10,6 +10,7 @@ import lombok.*;
 public class OrderData {
 
     private Long id;
+    private Long version;
     private OrderState orderState;
     private String ordererName;
     private String firstAddress;

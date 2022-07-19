@@ -18,5 +18,9 @@ public interface OrderJpaRepository extends JpaRepository<Order, Long> {
             @QueryHint(name = "javax.persistence.lock.timeout", value = "5000")
     })
     @Query("select o from Order o where o.id = :id")
-    Optional<Order> findByIdForUpdate(@Param("id") Long orderId);
+    Optional<Order> findWithPessimisticLockById(@Param("id") Long orderId);
+
+    @Lock(LockModeType.OPTIMISTIC)
+    @Query("select o from Order o where o.id = :id")
+    Optional<Order> findWithOptimisticLockById(@Param("id") Long orderId);
 }

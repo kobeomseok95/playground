@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface OrderDataRepository extends JpaRepository<Order, Long> {
 
     @Query(
-            "select new com.example.ddd.order.query.OrderData(o.id, o.orderState, o.orderer.ordererName, o.shippingInfo.address.primaryAddress, o.shippingInfo.address.secondaryAddress, o.shippingInfo.address.zipCode) " +
+            "select new com.example.ddd.order.query.OrderData(o.id, o.version, o.orderState, o.orderer.ordererName, o.shippingInfo.address.primaryAddress, o.shippingInfo.address.secondaryAddress, o.shippingInfo.address.zipCode) " +
             "from Order o " +
             "where o.id = :id"
     )

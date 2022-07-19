@@ -14,12 +14,13 @@ import java.util.List;
 @Table(name = "orders")
 public class Order {
 
-//    @EmbeddedId
-//    private OrderNo orderNo;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long id;
+
+    @Version
+    private Long version;
 
     @Embedded
     private ShippingInfo shippingInfo;
@@ -49,10 +50,14 @@ public class Order {
                 .build();
     }
 
-    public void changeOrderAddress(Address address) {
+    private void checkOrderStatePreparing() {
         if (orderState != OrderState.PREPARING) {
             throw new IllegalStateException("준비 상태에서만 변경 가능합니다.");
         }
+    }
+
+    public void changeOrderAddress(Address address) {
+        checkOrderStatePreparing();
         shippingInfo.changeAddress(address);
     }
 

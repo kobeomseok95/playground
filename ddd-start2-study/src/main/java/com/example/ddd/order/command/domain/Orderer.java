@@ -21,7 +21,7 @@ public class Orderer {
 
     public static Orderer of(MemberData ordererData) {
         return Orderer.builder()
-                .ordererId(ordererData.getMemberId())
+                .ordererId(ordererData.getId())
                 .ordererName(ordererData.getMemberName())
                 .build();
     }

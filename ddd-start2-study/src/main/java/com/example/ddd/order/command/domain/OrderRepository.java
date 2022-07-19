@@ -8,5 +8,7 @@ public interface OrderRepository {
 
     Order save(Order order);
 
-    Optional<Order> findByIdForUpdate(Long orderId);
+    Optional<Order> findWithPessimisticLockById(Long orderId);
+
+    Optional<Order> findWithOptimisticLockById(Long orderId);
 }

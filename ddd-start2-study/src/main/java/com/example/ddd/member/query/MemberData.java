@@ -1,20 +1,16 @@
 package com.example.ddd.member.query;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "member")
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MemberData {
 
-    @Id
-    @Column(name = "member_id")
-    private Long memberId;
-
+    private Long id;
     private String memberName;
 }
