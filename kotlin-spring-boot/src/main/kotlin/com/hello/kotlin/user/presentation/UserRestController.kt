@@ -1,19 +1,21 @@
 package com.hello.kotlin.user.presentation
 
-import com.hello.kotlin.user.application.service.GetUserUseCase
+import com.hello.kotlin.user.application.UserUseCase
+import com.hello.kotlin.user.presentation.request.CreateUserRequest
 import com.hello.kotlin.user.presentation.response.UserResponse
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/users")
 class UserRestController(
-    val getUserUseCase: GetUserUseCase
+    val userUseCase: UserUseCase
 ) {
 
     @GetMapping("/{userId}")
-    fun getUser(@PathVariable userId: Long) : UserResponse =
-        UserResponse.from(getUserUseCase.findById(userId))
+    fun getUser(@PathVariable userId: Long) =
+        UserResponse.from(userUseCase.findById(userId))
+
+    @PostMapping("")
+    fun createUser(@RequestBody createUserRequest: CreateUserRequest) =
+        UserResponse.from(userUseCase.save(createUserRequest.toRequestDto()))
 }

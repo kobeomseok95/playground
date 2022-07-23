@@ -73,8 +73,8 @@ public class SpringLockManager implements LockManager {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void checkLock(LockId lockId) throws LockException {
-        Optional<LockData> lockData = getLockData(lockId);
-        if (!lockData.isPresent()) throw new NoLockException();
+        getLockData(lockId)
+                .orElseThrow(NoLockException::new);
     }
 
     private Optional<LockData> getLockData(LockId lockId) {
@@ -87,9 +87,8 @@ public class SpringLockManager implements LockManager {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public void extendLockExpiration(LockId lockId, long inc) throws LockException {
-        Optional<LockData> lockDataOpt = getLockData(lockId);
-        LockData lockData =
-                lockDataOpt.orElseThrow(() -> new NoLockException());
+        LockData lockData = getLockData(lockId)
+                .orElseThrow(NoLockException::new);
         jdbcTemplate.update(
                 "update locks set expiration_time = ? where type = ? AND id = ?",
                 new Timestamp(lockData.getTimestamp() + inc),
