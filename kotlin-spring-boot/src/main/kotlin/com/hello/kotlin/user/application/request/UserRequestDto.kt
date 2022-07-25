@@ -2,14 +2,15 @@ package com.hello.kotlin.user.application.request
 
 import com.hello.kotlin.user.domain.User
 
-data class CreateUserRequestDto (
+data class UserRequestDto (
     val name: String,
     val age: Int,
     val address: String,
 ) {
+
     fun toEntity() = User(
-        name,
-        age,
-        address
+        name = name,
+        age = age,
+        address = address
     )
 }
