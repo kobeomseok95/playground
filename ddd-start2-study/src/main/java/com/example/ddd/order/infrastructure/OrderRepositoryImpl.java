@@ -5,6 +5,7 @@ import com.example.ddd.order.command.domain.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -31,5 +32,10 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public Optional<Order> findWithOptimisticLockById(Long orderId) {
         return orderJpaRepository.findWithOptimisticLockById(orderId);
+    }
+
+    @Override
+    public List<Order> findByOrdererId(Long ordererId) {
+        return orderJpaRepository.findByOrdererId(ordererId);
     }
 }

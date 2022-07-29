@@ -1,4 +1,4 @@
-package com.example.ddd.common.domainmodel;
+package com.example.ddd.common.domain;
 
 import lombok.*;
 

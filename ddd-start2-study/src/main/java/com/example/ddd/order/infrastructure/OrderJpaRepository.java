@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.persistence.LockModeType;
 import javax.persistence.QueryHint;
+import java.util.List;
 import java.util.Optional;
 
 public interface OrderJpaRepository extends JpaRepository<Order, Long> {
@@ -23,4 +24,7 @@ public interface OrderJpaRepository extends JpaRepository<Order, Long> {
     @Lock(LockModeType.OPTIMISTIC)
     @Query("select o from Order o where o.id = :id")
     Optional<Order> findWithOptimisticLockById(@Param("id") Long orderId);
+
+    @Query("select o from Order o where o.orderer.ordererId = :ordererId")
+    List<Order> findByOrdererId(@Param("ordererId") Long ordererId);
 }

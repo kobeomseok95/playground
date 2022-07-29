@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @RequiredArgsConstructor
+@EnableAsync
 public class DddApplication implements CommandLineRunner {
 
     private final InitData initData;

@@ -25,4 +25,8 @@ public class Orderer {
                 .ordererName(ordererData.getMemberName())
                 .build();
     }
+
+    public void changeOrdererName(String ordererName) {
+        this.ordererName = ordererName;
+    }
 }

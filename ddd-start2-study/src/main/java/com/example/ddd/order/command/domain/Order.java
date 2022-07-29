@@ -1,6 +1,6 @@
 package com.example.ddd.order.command.domain;
 
-import com.example.ddd.common.domainmodel.Address;
+import com.example.ddd.common.domain.Address;
 import lombok.*;
 
 import javax.persistence.*;
@@ -63,5 +63,9 @@ public class Order {
 
     public void changeOrderState(OrderState state) {
         this.orderState = state;
+    }
+
+    public void changeOrderer(String ordererName) {
+        this.orderer.changeOrdererName(ordererName);
     }
 }

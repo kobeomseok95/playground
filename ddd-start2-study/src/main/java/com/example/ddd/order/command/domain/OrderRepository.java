@@ -1,5 +1,6 @@
 package com.example.ddd.order.command.domain;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface OrderRepository {
@@ -11,4 +12,6 @@ public interface OrderRepository {
     Optional<Order> findWithPessimisticLockById(Long orderId);
 
     Optional<Order> findWithOptimisticLockById(Long orderId);
+
+    List<Order> findByOrdererId(Long ordererId);
 }

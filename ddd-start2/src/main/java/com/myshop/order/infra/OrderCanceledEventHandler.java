@@ -2,7 +2,6 @@ package com.myshop.order.infra;
 
 import com.myshop.order.command.application.RefundService;
 import com.myshop.order.command.domain.OrderCanceledEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionPhase;

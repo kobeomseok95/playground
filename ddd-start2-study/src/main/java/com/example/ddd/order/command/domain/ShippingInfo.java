@@ -1,6 +1,6 @@
 package com.example.ddd.order.command.domain;
 
-import com.example.ddd.common.domainmodel.Address;
+import com.example.ddd.common.domain.Address;
 import lombok.*;
 
 import javax.persistence.*;

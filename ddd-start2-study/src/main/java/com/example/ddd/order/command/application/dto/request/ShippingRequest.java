@@ -1,6 +1,6 @@
 package com.example.ddd.order.command.application.dto.request;
 
-import com.example.ddd.common.domainmodel.Address;
+import com.example.ddd.common.domain.Address;
 import com.example.ddd.order.command.domain.Receiver;
 import lombok.Getter;
 import lombok.Setter;

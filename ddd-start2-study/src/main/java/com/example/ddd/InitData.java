@@ -2,7 +2,7 @@ package com.example.ddd;
 
 import com.example.ddd.catalog.product.domain.Product;
 import com.example.ddd.catalog.product.domain.ProductRepository;
-import com.example.ddd.common.domainmodel.Money;
+import com.example.ddd.common.domain.Money;
 import com.example.ddd.member.command.domain.Member;
 import com.example.ddd.member.command.domain.MemberRepository;
 import com.example.ddd.order.command.domain.OrderRepository;
