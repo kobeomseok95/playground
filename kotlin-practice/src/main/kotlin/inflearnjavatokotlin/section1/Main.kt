@@ -1,4 +1,4 @@
-package inflearnjavatokotlin
+package inflearnjavatokotlin.section1
 
 fun main() {
     val m1 = Money(1_000L)

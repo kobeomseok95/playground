@@ -1,4 +1,4 @@
-package inflearnjavatokotlin
+package inflearnjavatokotlin.section1
 
 class Person(
     val name: String,
