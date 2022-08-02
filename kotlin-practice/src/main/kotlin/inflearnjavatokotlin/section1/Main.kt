@@ -1,9 +1,11 @@
 package inflearnjavatokotlin.section1
 
 fun main() {
-    val m1 = Money(1_000L)
-    val m2 = Money(2_000L)
-    println("(m1 + m2) == (m1.plus(m2)) => ${(m1 + m2) == (m1.plus(m2))}")
+    val m1 = Money(200)
+    val m2 = Money(100)
+    if (m1 > m2) {
+        println("m1이 더 큼")
+    }
 }
 
 fun fun1(): Boolean {
