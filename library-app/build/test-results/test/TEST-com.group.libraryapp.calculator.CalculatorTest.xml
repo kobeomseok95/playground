@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.group.libraryapp.calculator.CalculatorTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-08-08T13:40:17" hostname="beomseok-MacBookPro.local" time="0.021">
+  <properties/>
+  <testcase name="divide()" classname="com.group.libraryapp.calculator.CalculatorTest" time="0.014"/>
+  <testcase name="addTest()" classname="com.group.libraryapp.calculator.CalculatorTest" time="0.004"/>
+  <testcase name="minus()" classname="com.group.libraryapp.calculator.CalculatorTest" time="0.001"/>
+  <testcase name="multiply()" classname="com.group.libraryapp.calculator.CalculatorTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
