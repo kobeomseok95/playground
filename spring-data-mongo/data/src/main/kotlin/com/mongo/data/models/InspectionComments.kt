@@ -1,6 +1,5 @@
 package com.mongo.data.models
 
-import com.mongo.data.models.FieldEnum.Companion.fieldHierarchyMap
 import java.util.*
 
 data class InspectionComments(
@@ -8,27 +7,6 @@ data class InspectionComments(
 ) {
     fun addAll(request: List<CommentRequest>) {
         validateFieldNames(request)
-        /** TODO: 리스트랑 depth 가 늘어나는 경우는 어떻게 처리할 것인가?
-         *  "inspectionComments" : {
-         *      "content" : {
-         *          "title" : {
-         *              "value" : "수정좀요",
-         *              "검수" : false
-         *          }
-         *      },
-         *      "attribute : {
-         *          "amount" : {
-         *              "value" : "수정",
-         *              "검수" : false
-         *          }
-         *      }
-         *  }
-         */
-        // TODO: 리스트랑 depth 가 늘어나는 경우는 어떻게 처리할 것인가?
-        request.forEach {
-            println("==================")
-            println(fieldHierarchyMap[it.fieldName])
-        }
     }
 
     private fun validateFieldNames(request: List<CommentRequest>) {
@@ -37,10 +15,7 @@ data class InspectionComments(
 
     companion object {
         fun create(request: List<CommentRequest>) {
-            request.forEach {
-                println("==================")
-                println(fieldHierarchyMap[it.fieldName])
-            }
+
         }
     }
 }
