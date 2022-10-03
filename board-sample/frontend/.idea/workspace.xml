@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40c0098e-f50d-4e55-b5bc-26428f846bc4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../backend/board/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/board/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/counters/counter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/counters/counter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/counters/counters-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pages/counters/counters-reducer.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +50,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1664785523342</updated>
-      <workItem from="1664785525993" duration="1353000" />
+      <workItem from="1664785525993" duration="4201000" />
     </task>
     <servers />
   </component>

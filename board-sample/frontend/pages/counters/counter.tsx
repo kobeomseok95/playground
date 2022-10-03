@@ -1,19 +1,27 @@
-import React, { useState } from 'react'
+import React, { useReducer } from 'react'
+import CountersReducer, {Action} from "./counters-reducer";
 
 export const Counter = () => {
-    // todo useReducer 방식으로 전환해보기
-    const [number, setNumber] = useState(0)
+    const [state, dispatch] = useReducer(CountersReducer, 0)
+
     const onIncrease = () => {
-        setNumber(number + 1)
+        dispatch({ type: 'increment' })
     }
+
     const onDecrease = () => {
-        setNumber(number - 1)
+        dispatch({ type: 'decrement' })
     }
+
+    const onReset = () => {
+        dispatch({ type: 'reset' })
+    }
+
     return (
         <div>
-            <h1>{number}</h1>
+            <h1>{state}</h1>
             <button onClick={onIncrease}> + 1 </button>
             <button onClick={onDecrease}> - 1 </button>
+            <button onClick={onReset}> reset </button>
         </div>
     )
 }
