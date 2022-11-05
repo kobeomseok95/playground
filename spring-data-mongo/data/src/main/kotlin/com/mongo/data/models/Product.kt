@@ -11,6 +11,9 @@ class Product(
     val attribute: Attribute?,
     val comments: InspectionComments?,
 ) {
+    val title: String?
+        get() = content?.title
+
     fun addComments(request: List<CommentRequest>) {
         comments?.addAll(request)
             ?: InspectionComments.create(request)
