@@ -1,6 +1,10 @@
 package com.pattern.design.creational.singleton;
 
-public class SingletonE {
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+public class SingletonE implements Serializable {
 
     private SingletonE () { }
 
