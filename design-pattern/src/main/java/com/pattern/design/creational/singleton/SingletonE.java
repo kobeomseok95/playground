@@ -1,12 +1,12 @@
 package com.pattern.design.creational.singleton;
 
 import java.io.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 public class SingletonE implements Serializable {
 
-    private SingletonE () { }
+    private SingletonE () {
+        System.out.println("SingletonE.SingletonE 생성자 호출");
+    }
 
     private static class SingletonEHolder {
         private static final SingletonE INSTANCE = new SingletonE();
