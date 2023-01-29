@@ -22,9 +22,6 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * TODO 파일 명을 파라미터로 전달하고 검증한다.
- */
 @Configuration
 @RequiredArgsConstructor
 public class ValidatedParamJobConfig {
