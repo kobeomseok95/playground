@@ -91,14 +91,14 @@ public class MigrationConfig {
                 .build();
     }
 
-    @StepScope
-    @Bean
-    public ItemWriter<Accounts> commonOrdersItemReader() {
-        return new ItemWriter<Accounts>() {
-            @Override
-            public void write(List<? extends Accounts> items) throws Exception {
-                items.forEach(item -> accountsRepository.save(item));
-            }
-        };
-    }
+//    @StepScope
+//    @Bean
+//    public ItemWriter<Accounts> commonOrdersItemReader() {
+//        return new ItemWriter<Accounts>() {
+//            @Override
+//            public void write(List<? extends Accounts> items) throws Exception {
+//                items.forEach(item -> accountsRepository.save(item));
+//            }
+//        };
+//    }
 }

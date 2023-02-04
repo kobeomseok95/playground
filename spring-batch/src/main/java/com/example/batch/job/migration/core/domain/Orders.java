@@ -1,6 +1,8 @@
 package com.example.batch.job.migration.core.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -12,6 +14,8 @@ import java.util.Date;
 @Getter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Orders {
 
     @Id
