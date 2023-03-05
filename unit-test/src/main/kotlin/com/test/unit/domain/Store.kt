@@ -13,13 +13,13 @@ class Store(
 
     fun removeInventory(
         product: Product,
-        count: Long,
+        quantity: Long,
     ): Boolean {
-        if (getInventory(product) - count < 0) {
+        if (!hasEnoughInventory(product, quantity)) {
             return false
         }
 
-        inventory[product] = getInventory(product) - count
+        inventory[product] = getInventory(product) - quantity
         return true
     }
 
@@ -30,4 +30,9 @@ class Store(
             "상품을 찾을 수 없습니다."
         }
     }
+
+    fun hasEnoughInventory(
+        product: Product,
+        quantity: Long,
+    ): Boolean = getInventory(product) >= quantity
 }

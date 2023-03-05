@@ -9,6 +9,10 @@ class Customer(
         product: Product,
         count: Long,
     ): Boolean {
-        return store.removeInventory(product, count)
+        if (!store.hasEnoughInventory(product, count)) {
+            return false
+        }
+        store.removeInventory(product, count)
+        return true
     }
 }

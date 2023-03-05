@@ -1,20 +1,23 @@
-package com.test.unit.domain.classical
+package com.test.unit.domain.london
 
 import com.test.unit.domain.Customer
 import com.test.unit.domain.Product
 import com.test.unit.domain.Store
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 /**
- *  협력자(store)가 격리되어 있지 않다.
+ * ??!
  */
 internal class StoreTest {
     @Test
     fun `재고가 충분할 경우 구매에 성공한다`() {
         // arrange
-        val store = Store()
-        store.addInventory(Product.SHAMPOO, 10)
+        val store = mockk<Store>(relaxed = true)
+        every { store.hasEnoughInventory(any(), any()) } returns true
         val customer = Customer()
 
         // act
@@ -22,21 +25,21 @@ internal class StoreTest {
 
         // assert
         assertTrue(result)
-        assertEquals(5, store.getInventory(Product.SHAMPOO))
+        verify { store.removeInventory(Product.SHAMPOO, 5) }
     }
 
     @Test
     fun `재고가 충분하지 않을 경우 구매에 실패한다`() {
         // arrange
-        val store = Store()
-        store.addInventory(Product.SHAMPOO, 10)
+        val store = mockk<Store>(relaxed = true)
+        every { store.hasEnoughInventory(any(), any()) } returns false
         val customer = Customer()
 
         // act
-        val result = customer.purchase(store, Product.SHAMPOO, 12)
+        val result = customer.purchase(store, Product.SHAMPOO, 5)
 
         // assert
         assertFalse(result)
-        assertEquals(10, store.getInventory(Product.SHAMPOO))
+        verify(exactly = 0) { store.removeInventory(Product.SHAMPOO, 5) }
     }
 }
