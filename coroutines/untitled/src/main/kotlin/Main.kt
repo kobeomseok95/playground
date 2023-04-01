@@ -1,13 +1,26 @@
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-fun main() = runBlocking {
-    repeat(100_000) {
+fun main() {
+    coroutine()
+}
+
+private fun coroutine() {
+    runBlocking {
         launch {
-            delay(5000L)
-            print(".")
+            repeat(5) { i ->
+                println("Coroutine A, $i")
+                delay(10L)
+            }
         }
+
+        launch {
+            repeat(5) { i ->
+                println("Coroutine B, $i")
+                delay(10L)
+            }
+        }
+        println("Coroutine Outer")
     }
 }
