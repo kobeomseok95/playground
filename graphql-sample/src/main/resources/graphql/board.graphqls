@@ -1,0 +1,15 @@
+type Board {
+    id: ID!
+    title: String!
+    content: String!
+}
+
+type Query {
+    findById(id: ID!): Board
+    findAll: [Board]
+    findPage(
+        ids: [ID],
+        page: Int,
+        size: Int,
+    ): [Board]
+}
