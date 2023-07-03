@@ -26,10 +26,3 @@ class `5` {
         return if (idx == -1) "" else this.substring(left - idx..right + idx)
     }
 }
-
-fun main() {
-    `5`().apply {
-        longestPalindrome("babad").apply(::println)
-        longestPalindrome("cbbd").apply(::println)
-    }
-}
