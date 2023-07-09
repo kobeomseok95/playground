@@ -24,27 +24,3 @@ class `3` {
         return answer
     }
 }
-
-fun main() {
-    `3`().apply {
-        // 1
-        lengthOfLongestSubstring(
-            s = "abcabcbb",
-        ).apply(::println)
-
-        // 2
-        lengthOfLongestSubstring(
-            s = "bbbbb",
-        ).apply(::println)
-
-        // 3
-        lengthOfLongestSubstring(
-            s = "pwwkew",
-        ).apply(::println)
-
-        // 4
-        lengthOfLongestSubstring(
-            s = "dvdf",
-        ).apply(::println)
-    }
-}
