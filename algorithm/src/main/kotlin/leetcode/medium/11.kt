@@ -17,17 +17,3 @@ class `11` {
         return maxArea
     }
 }
-
-fun main() {
-    `11`().apply {
-        maxArea(
-            height = intArrayOf(1,8,6,2,5,4,8,3,7),
-        ).apply(::println)
-        maxArea(
-            height = intArrayOf(1,1),
-        ).apply(::println)
-        maxArea(
-            height = intArrayOf(1,2,1),
-        ).apply(::println)
-    }
-}
