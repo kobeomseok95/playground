@@ -4,27 +4,26 @@ import com.spring.events.domain.CouponIssueCommand
 import com.spring.events.domain.RegisterMemberEvent
 import com.spring.events.infrastructure.MemberRepository
 import com.spring.events.service.CouponIssueService
-import mu.KotlinLogging
+import com.spring.events.utils.PrintUtils.printWithThread
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Service
+import org.springframework.scheduling.annotation.Async
+import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.transaction.event.TransactionPhase
 import org.springframework.transaction.event.TransactionalEventListener
-import org.springframework.transaction.support.TransactionSynchronizationManager
 
-private val logger = KotlinLogging.logger {}
-
-@Service
-class MemberRegisterEventListener(
+@Component
+class MemberRegisterTransactionalEventListener(
     private val memberRepository: MemberRepository,
     private val couponIssueService: CouponIssueService,
 ) {
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @Async
+    @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     @Transactional(propagation = Propagation.REQUIRED)
     fun issuedCoupon(event: RegisterMemberEvent) {
-        logger.info { "issuedCoupon() / transaction name = ${TransactionSynchronizationManager.getCurrentTransactionName()}" }
+        printWithThread(event)
         memberRepository.findByIdOrNull(event.memberId)
             ?.let {
                 couponIssueService.issue(
@@ -36,3 +35,28 @@ class MemberRegisterEventListener(
             } ?: throw IllegalArgumentException("not exists member ! memberId = ${event.memberId}")
     }
 }
+
+//@Component
+//class MemberRegisterEventListener(
+//    private val memberRepository: MemberRepository,
+//    private val couponIssueService: CouponIssueService,
+//) {
+//    @Async
+//    @EventListener
+//    fun issueCoupon(event: RegisterMemberEvent) {
+//        printWithThread(event)
+//        memberRepository.findByIdOrNull(event.memberId)
+//            ?.let { member ->
+//                issueCouponToMember(member)
+//            } ?: throw IllegalArgumentException("not exists member ! memberId = ${event.memberId}")
+//    }
+//
+//    private fun issueCouponToMember(member: Member) {
+//        couponIssueService.issue(
+//            command = CouponIssueCommand(
+//                memberId = member.requiredId,
+//                name = member.firstIssueCouponName,
+//            )
+//        )
+//    }
+//}

@@ -4,13 +4,10 @@ import com.spring.events.domain.Member
 import com.spring.events.domain.RegisterMember
 import com.spring.events.domain.RegisterMemberEvent
 import com.spring.events.infrastructure.MemberRepository
-import mu.KotlinLogging
+import com.spring.events.utils.PrintUtils.printWithThread
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.transaction.support.TransactionSynchronizationManager
-
-private val logger = KotlinLogging.logger {}
 
 @Service
 @Transactional
@@ -24,7 +21,11 @@ class MemberRegisterService(
     }
 
     private fun publishEvent(member: Member) {
-        logger.info { "publishEvent() / transaction name = ${TransactionSynchronizationManager.getCurrentTransactionName()}" }
-        publisher.publishEvent(RegisterMemberEvent(memberId = member.requiredId))
+        printWithThread("publishEvent()")
+        (1..10).forEach {
+            publisher.publishEvent(RegisterMemberEvent(memberId = member.requiredId))
+        }.also {
+            println("호출 완료")
+        }
     }
 }
