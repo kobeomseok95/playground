@@ -22,9 +22,3 @@ class `2024` {
         return answerKey.length - i
     }
 }
-
-fun main() {
-    `2024`().run { maxConsecutiveAnswers(answerKey = "TTFF", k = 2) }.apply(::println)
-    `2024`().run { maxConsecutiveAnswers(answerKey = "TFFT", k = 1) }.apply(::println)
-    `2024`().run { maxConsecutiveAnswers(answerKey = "TTFTTFTT", k = 1) }.apply(::println)
-}
