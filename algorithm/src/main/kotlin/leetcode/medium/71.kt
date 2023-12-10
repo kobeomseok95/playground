@@ -25,17 +25,3 @@ class `71` {
         private const val EMPTY_STRING = ""
     }
 }
-
-fun main() {
-    `71`().simplifyPath(path = "/home/").apply(::println)
-    println()
-    `71`().simplifyPath(path = "/../").apply(::println)
-    println()
-    `71`().simplifyPath(path = "/home//foo/").apply(::println)
-    println()
-    `71`().simplifyPath(path = "/home/foo/../..").apply(::println)
-    println()
-    `71`().simplifyPath(path = "/a/./b/../../c/").apply(::println)
-    println()
-    `71`().simplifyPath(path = "/a/../../b/../c//.//").apply(::println)
-}
