@@ -1,4 +1,4 @@
-package leetcode.medium
+package leetcode.easy
 
 class `1137` {
     fun tribonacci(n: Int): Int {
