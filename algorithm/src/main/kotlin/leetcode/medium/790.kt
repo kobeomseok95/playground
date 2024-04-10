@@ -24,3 +24,27 @@ class `790` {
         private const val MODULO = 1_000_000_000 + 7
     }
 }
+
+class `790_2` {
+    fun numTilings(n: Int): Int {
+        if (n == 1) return 1
+        if (n == 2) return 2
+        if (n == 3) return 5
+
+        val dp = LongArray(n + 1).apply {
+            this[1] = 1
+            this[2] = 2
+            this[3] = 5
+        }
+
+        (4..n).forEach { i ->
+            dp[i] = ((2 * dp[i - 1]) + dp[i - 3]) % MODULO
+        }
+
+        return dp[n].toInt()
+    }
+
+    companion object {
+        private const val MODULO = 1_000_000_000 + 7
+    }
+}
