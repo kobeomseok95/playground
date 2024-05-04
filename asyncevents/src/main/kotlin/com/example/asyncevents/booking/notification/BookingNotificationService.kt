@@ -17,7 +17,6 @@ class BookingNotificationService(
             bookingNotificationRepository.save(this)
         }
         logger.info(formattedMessage)
-        throw RuntimeException("예외 발생")
     }
 
     companion object {
