@@ -16,7 +16,7 @@ class BookingNotificationService(
         BookingNotification.of(bookingId, formattedMessage).apply {
             bookingNotificationRepository.save(this)
         }
-        logger.info(formattedMessage)
+        logger.info("$formattedMessage ${Thread.currentThread().name}")
     }
 
     companion object {
