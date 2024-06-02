@@ -1,0 +1,5 @@
+package generic
+
+fun main() {
+
+}
