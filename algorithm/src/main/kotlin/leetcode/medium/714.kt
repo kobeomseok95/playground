@@ -26,14 +26,3 @@ class `714` {
         private const val BUY = 1
     }
 }
-
-fun main() {
-    `714`().maxProfit(
-        prices = intArrayOf(1,3,2,8,4,9),
-        fee = 2,
-    ).apply(::println)
-    `714`().maxProfit(
-        prices = intArrayOf(1,3,7,5,10,3),
-        fee = 3,
-    ).apply(::println)
-}
