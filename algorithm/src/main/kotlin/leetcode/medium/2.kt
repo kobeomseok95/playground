@@ -1,20 +1,20 @@
 package leetcode.medium
 
 class ListNode(var `val`: Int) {
-    var next: ListNode? = null
+    var next: ListNode_2095? = null
 }
 
 class `2` {
     fun addTwoNumbers(
-        l1: ListNode?,
-        l2: ListNode?,
+        l1: ListNode_2095?,
+        l2: ListNode_2095?,
         carry: Int = 0,
-    ): ListNode? {
+    ): ListNode_2095? {
         if (l1 == null && l2 == null && carry == 0) {
             return null
         }
         val calculated = (l1.value()) + (l2.value()) + carry
-        return ListNode(
+        return ListNode_2095(
             `val` = calculated % 10,
         ).apply {
             next = addTwoNumbers(
@@ -25,7 +25,7 @@ class `2` {
         }
     }
 
-    private fun ListNode?.value(): Int {
+    private fun ListNode_2095?.value(): Int {
         return this?.`val` ?: 0
     }
 }
