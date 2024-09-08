@@ -1,24 +1,33 @@
 package boj.silver
 
-import java.io.BufferedReader
-import java.io.InputStreamReader
-
 fun solution(kg: Int): Int {
-    var kg = kg
-    var bags = 0
-    while (true) {
-        if (kg % 5 == 0) {
-            return (kg / 5) + bags
-        } else if (kg < 0) {
-            return -1
-        }
-        kg -= 3
-        bags++
+    val dp = IntArray(kg + 5) { 1e9.toInt() }
+    val result = recursive(0, dp, kg)
+    return when (dp[0]) {
+        1e9.toInt() -> -1
+        else -> result
     }
 }
 
+fun recursive(weight: Int, dp: IntArray, kg: Int): Int {
+    if (weight == kg) {
+        return 0
+    }
+    if (weight > kg) {
+        return 1e9.toInt()
+    }
+    if (dp[weight] != 1e9.toInt()) {
+        return dp[weight]
+    }
+
+    var result = 1e9.toInt()
+    result = result.coerceAtMost(recursive(weight + 3, dp, kg) + 1)
+    result = result.coerceAtMost(recursive(weight + 5, dp, kg) + 1)
+    dp[weight] = result
+    return result
+}
+
 fun main() {
-    val br = BufferedReader(InputStreamReader(System.`in`))
-    val kg = br.readLine().toInt()
-    println(solution(kg))
+    val n = readln().toInt()
+    println(solution(n))
 }
