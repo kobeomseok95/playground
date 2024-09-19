@@ -8,3 +8,4 @@
 - [ ] [2531 회전 초밥](https://www.acmicpc.net/problem/2531) 
 - [ ] [숫자고르기](https://www.acmicpc.net/problem/2668)
 - [ ] [1027 고층 건물](https://www.acmicpc.net/problem/1027) 기울기 및 카운트 시 주의할 것
+- [ ] [20437 문자열 게임 2](https://www.acmicpc.net/problem/20437)
