@@ -55,16 +55,63 @@ class `7490` {
     }
 }
 
+class `7490_2` {
+    fun solution(
+        n: Int,
+        index: Int,
+        number: Int,
+        sum: Int,
+        operator: Int,
+        expression: String,
+    ): List<String> {
+        if (index == n) {
+            if (sum + (number * operator) == 0) {
+                return listOf(expression)
+            }
+            return listOf()
+        }
+
+        val a = solution(
+            n = n,
+            index = index + 1,
+            number = number * 10 + (index + 1),
+            sum = sum,
+            operator = operator,
+            expression = "$expression ${index + 1}",
+        )
+        val b = solution(
+            n = n,
+            index = index + 1,
+            number = index + 1,
+            sum = sum + (number * operator),
+            operator = 1,
+            expression = "$expression+${index + 1}",
+        )
+        val c = solution(
+            n = n,
+            index = index + 1,
+            number = index + 1,
+            sum = sum + (number * operator),
+            operator = -1,
+            expression = "$expression-${index + 1}",
+        )
+        return a + b + c
+    }
+}
+
 fun main() {
     val test = readln().toInt()
-    val tests = (1..test).map { readln().toInt() }
-    val solution = `7490`()
-    tests.forEachIndexed { index, it ->
-        solution.solution(it).forEach {
-            println(it)
-        }
-        if (index != tests.size - 1) {
-            println()
-        }
+    val solution = `7490_2`()
+    repeat(test) {
+        val n = readln().toInt()
+        solution.solution(
+            n = n,
+            index = 1,
+            number = 1,
+            sum = 0,
+            operator = 1,
+            expression = "1",
+        ).forEach { println(it) }
+        println()
     }
 }
