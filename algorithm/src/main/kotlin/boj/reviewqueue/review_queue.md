@@ -10,3 +10,4 @@
 - [ ] [1027 고층 건물](https://www.acmicpc.net/problem/1027) 기울기 및 카운트 시 주의할 것
 - [ ] [20437 문자열 게임 2](https://www.acmicpc.net/problem/20437)
 - [ ] [7490 0 만들기](https://www.acmicpc.net/problem/7490)
+- [ ] [22866 탑 보기](https://www.acmicpc.net/problem/22866)
